@@ -1,6 +1,7 @@
 .env
 .env.*
-!.env.example
+CONTRIBUTING.md
+.github/
 
 # Python
 __pycache__/

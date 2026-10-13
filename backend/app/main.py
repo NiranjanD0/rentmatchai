@@ -9,6 +9,7 @@ from sqlalchemy import text
 from app.api import auth
 from app.core import database
 from app.core.config import settings
+from app.api import auth, profile, properties
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger("rentmatch")
@@ -62,3 +63,5 @@ def health() -> dict[str, str]:
         return {"status": "ok", "database": "ok"}
     except Exception as exc:  # noqa: BLE001
         return {"status": "degraded", "database": f"error: {exc.__class__.__name__}"}
+    
+app.include_router(properties.router, prefix=f"{settings.API_V1_PREFIX}/properties", tags=["properties"])

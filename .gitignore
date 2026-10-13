@@ -1,0 +1,26 @@
+.env
+.env.*
+CONTRIBUTING.md
+.github/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# JavaScript / frontend tooling
+node_modules/
+dist/
+build/
+.next/
+coverage/
+
+# IDE and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

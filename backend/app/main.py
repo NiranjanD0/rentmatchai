@@ -41,6 +41,12 @@ app.add_middleware(
 )
 
 app.include_router(auth.router, prefix=settings.API_V1_PREFIX)
+from app.api import auth, profile
+
+# Existing auth router
+app.include_router(auth.router, prefix=settings.API_V1_PREFIX)
+# New profile router
+app.include_router(profile.router, prefix=f"{settings.API_V1_PREFIX}/profile", tags=["profile"])
 
 
 @app.get("/", tags=["meta"])

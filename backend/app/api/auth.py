@@ -72,3 +72,20 @@ def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = 
     # 3. Generate JWT Token
     access_token = create_access_token(subject=str(user.id))
     return {"access_token": access_token, "token_type": "bearer"}
+
+from pydantic import BaseModel
+
+class GoogleAuthRequest(BaseModel):
+    token: str
+
+@router.post("/logout")
+def logout():
+    return {"message": "Successfully logged out. The frontend client must now delete the JWT token from local storage."}
+
+@router.post("/google", response_model=Token)
+def google_auth(auth_in: GoogleAuthRequest, db: Session = Depends(get_db)):
+    # Standard placeholder for Google ID token verification
+    raise HTTPException(
+        status_code=501, 
+        detail="Google Client ID required to fully implement verify_oauth2_token. Feature stubbed for frontend integration."
+    )

@@ -1,54 +1,36 @@
-"""Shared dependencies: DB session, current user from the OAuth2 bearer token, role guards (NFR-04)."""
-from collections.abc import Callable
 from typing import Annotated
-
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
+from jose import jwt, JWTError
 
 from app.core.config import settings
 from app.core.database import get_db
-from app.core.security import ACCESS_TOKEN_TYPE, TokenError, decode_token
-from app.models.user import User
+from app.core.security import SECRET_KEY, ALGORITHM
+from app.db.models import User, UserRole
 
-# tokenUrl points at the form-based endpoint so Swagger's "Authorize" button works.
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_PREFIX}/auth/token")
+# Points the security lock to your login route
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_PREFIX}/login")
 
-DbSession = Annotated[Session, Depends(get_db)]
-
-
-def get_current_user(db: DbSession, token: Annotated[str, Depends(oauth2_scheme)]) -> User:
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     try:
-        payload = decode_token(token, ACCESS_TOKEN_TYPE)
-    except TokenError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc), headers={"WWW-Authenticate": "Bearer"}
-        ) from exc
-    user = db.get(User, int(payload["sub"]))
+        # Decode the JWT to get the user's UUID
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: str = payload.get("sub")
+        if user_id is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+        
+    # Search the Supabase database for the matching User
+    user = db.query(User).filter(User.id == user_id).first()
     if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="User no longer exists",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        raise credentials_exception
     if not user.is_active:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account is deactivated")
+        raise HTTPException(status_code=400, detail="Inactive user")
     return user
-
-
-CurrentUser = Annotated[User, Depends(get_current_user)]
-
-
-def require_roles(*roles: str) -> Callable[[User], User]:
-    """Dependency factory for role-based access control, e.g. Depends(require_roles("admin"))."""
-
-    def checker(user: CurrentUser) -> User:
-        if user.role not in roles:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN, detail=f"Requires role: {' or '.join(roles)}"
-            )
-        return user
-
-    return checker
-
-
-CurrentAdmin = Annotated[User, Depends(require_roles("admin"))]

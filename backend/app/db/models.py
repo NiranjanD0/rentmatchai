@@ -227,3 +227,28 @@ class SavedQuestion(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
+
+class RentalPreference(Base):
+    __tablename__ = "rental_preferences"
+    __table_args__ = (
+        CheckConstraint("budget_min >= 0", name="preferences_budget_min_nonnegative"),
+        CheckConstraint("budget_max >= budget_min", name="preferences_budget_valid"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, unique=True
+    )
+    property_type: Mapped[str | None] = mapped_column(String(30))
+    budget_min: Mapped[Decimal | None] = mapped_column(Numeric(12, 2))
+    budget_max: Mapped[Decimal | None] = mapped_column(Numeric(12, 2))
+    city: Mapped[str | None] = mapped_column(String(100))
+    furnishing_status: Mapped[str | None] = mapped_column(String(20))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )

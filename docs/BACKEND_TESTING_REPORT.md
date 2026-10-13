@@ -18,18 +18,16 @@ between the test setup and the current security module.
 
 ### Checks Passed
 
-  Test                                      Result
-  ----------------------------------------- -----------------------------------
-  Python syntax compilation                 Passed
-  Dependency consistency (`pip check`)      Passed
-  Application import                        Passed
-  Authentication routes in OpenAPI schema   Passed
-  Health endpoint (`GET /health`)           Passed --- HTTP 200
-  Database connectivity check               Passed
-  User registration                         Passed --- HTTP 201
-  User login                                Passed --- HTTP 200
-  Duplicate registration                    Rejected as expected --- HTTP 400
-  Login with incorrect password             Rejected as expected --- HTTP 400
+ - Python syntax compilation: **Passed**
+- Dependency consistency (`pip check`): **Passed**
+- Application import: **Passed**
+- Authentication routes in OpenAPI schema: **Passed**
+- Health endpoint (`GET /health`): **Passed — HTTP 200**
+- Database connectivity check: **Passed**
+- User registration: **Passed — HTTP 201**
+- User login: **Passed — HTTP 200**
+- Duplicate registration: **Rejected as expected — HTTP 400**
+- Login with incorrect password: **Rejected as expected — HTTP 400**
 
 These results cover the checks performed in the local development
 environment; they do not mean that every backend feature has been

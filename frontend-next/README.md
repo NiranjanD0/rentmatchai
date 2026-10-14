@@ -69,18 +69,31 @@ Full Next.js (App Router) + TypeScript implementation of the RentMatch AI fronte
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure (Next.js App Router)
 
 ```
 frontend-next/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx                # Next.js App Router RootLayout & SEO metadata
-│   │   ├── page.tsx                  # Home Route mounting the Client App
-│   │   └── globals.css               # RentMatch AI Design System & Tailwind CSS
+│   │   ├── layout.tsx                # RootLayout with SEO metadata & Viewport
+│   │   ├── RootClientLayout.tsx      # Shared client app layout (Navbar, Footer, Modals)
+│   │   ├── providers.tsx             # Context Providers (Auth + Property)
+│   │   ├── globals.css               # RentMatch AI Design System & Tailwind CSS
+│   │   ├── page.tsx                  # / (Discover & Hero Home Route)
+│   │   ├── explore/
+│   │   │   └── page.tsx              # /explore (Active Listings Search & Filter Feed)
+│   │   ├── results/
+│   │   │   └── page.tsx              # /results (Explore Alias Route)
+│   │   ├── properties/
+│   │   │   └── [id]/
+│   │   │       └── page.tsx          # /properties/:id (Dynamic Property Details Route)
+│   │   ├── shortlist/
+│   │   │   └── page.tsx              # /shortlist (Saved Homes Route)
+│   │   └── profile/
+│   │       └── page.tsx              # /profile (User Profile & Lister Dashboard Route)
 │   ├── components/
 │   │   ├── AuthModal.tsx             # Sprint 1 Login, Register, Google OAuth
-│   │   ├── Navbar.tsx                # Navigation bar & User Profile dropdown
+│   │   ├── Navbar.tsx                # App Router Navigation bar & User Menu
 │   │   ├── PropertyCard.tsx          # Card with owner actions (Edit, Toggle, Delete)
 │   │   ├── PropertyFormModal.tsx     # Sprint 2 Create & Edit listing form
 │   │   ├── DeleteConfirmModal.tsx    # Sprint 2 Permanent deletion warning
@@ -89,17 +102,11 @@ frontend-next/
 │   ├── constants/
 │   │   └── initialData.ts            # Typed roles, models, seed users & properties
 │   ├── context/
-│   │   └── AuthContext.tsx           # Global typed authentication state
-│   ├── views/
-│   │   ├── HomePage.tsx              # Hero, AI search, role callout, featured listings
-│   │   ├── ExplorePage.tsx           # Active listings feed, filters, sorting
-│   │   ├── PropertyDetailsPage.tsx   # Detailed space specs, gallery, owner bar
-│   │   ├── ProfilePage.tsx           # Sprint 1 Profile + Sprint 2 Lister Dashboard
-│   │   └── ShortlistPage.tsx         # Saved properties collection
-│   ├── services/
-│   │   ├── authService.ts            # JWT, Password Hasher, Auth & Profile Service
-│   │   └── propertyService.ts        # Property CRUD, OwnershipChecker, Validator
-│   └── App.tsx                       # Master Application Coordinator
+│   │   ├── AuthContext.tsx           # Global typed authentication state & session
+│   │   └── PropertyContext.tsx       # Global properties, shortlist & modal coordinator
+│   └── services/
+│       ├── authService.ts            # JWT, Password Hasher, Auth & Profile Service
+│       └── propertyService.ts        # Property CRUD, OwnershipChecker, Validator
 ├── package.json
 ├── tsconfig.json
 └── next.config.ts

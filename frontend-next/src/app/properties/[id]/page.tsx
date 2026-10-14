@@ -1,38 +1,49 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, MapPin, Sparkles, Heart, BedDouble, Bath, Maximize2, CheckCircle2, Check, MessageCircle, Building2, Edit3, Eye, EyeOff, Trash2 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { PROPERTY_STATUS, type Property } from '../constants/initialData';
+import { useAuth } from '../../../context/AuthContext';
+import { useProperty } from '../../../context/PropertyContext';
+import { PropertyService } from '../../../services/propertyService';
+import { PROPERTY_STATUS } from '../../../constants/initialData';
 
 const money = (n: number) => '₹' + Number(n).toLocaleString('en-IN');
 
-interface PropertyDetailsPageProps {
-  property: Property;
-  isSaved: boolean;
-  onToggleSave: (id: string) => void;
-  onBack: () => void;
-  onEdit: (property: Property) => void;
-  onToggleStatus: (id: string) => void;
-  onDelete: (property: Property) => void;
-  onOpenEnquiry: () => void;
-}
+function PropertyDetailsContent() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params?.id as string;
 
-export default function PropertyDetailsPage({
-  property,
-  isSaved,
-  onToggleSave,
-  onBack,
-  onEdit,
-  onToggleStatus,
-  onDelete,
-  onOpenEnquiry
-}: PropertyDetailsPageProps) {
   const { user } = useAuth();
+  const {
+    properties,
+    saved,
+    toggleSave,
+    openEditProperty,
+    togglePropertyStatus,
+    openDeleteProperty,
+    openEnquiry
+  } = useProperty();
+
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  if (!property) return null;
+  // Find property from context or database
+  const property = properties.find((p) => String(p.id) === String(id)) || PropertyService.getProperty(id);
 
+  if (!property) {
+    return (
+      <div className="wrap detail-page empty-profile">
+        <h2>Property Not Found</h2>
+        <p>The listing you are looking for does not exist or may have been deleted.</p>
+        <button className="primary" onClick={() => router.push('/explore')}>
+          <ArrowLeft size={16} /> Return to Explore Homes
+        </button>
+      </div>
+    );
+  }
+
+  const isSaved = saved.includes(property.id);
   const isOwner = Boolean(user && String(user.id) === String(property.listerId));
   const isInactive = property.status === PROPERTY_STATUS.INACTIVE;
 
@@ -49,7 +60,7 @@ export default function PropertyDetailsPage({
   return (
     <div className="wrap detail-page">
       {/* Back Button */}
-      <button className="back" onClick={onBack}>
+      <button className="back" onClick={() => router.push('/explore')}>
         <ArrowLeft size={16} /> Back to results
       </button>
 
@@ -66,12 +77,12 @@ export default function PropertyDetailsPage({
             </div>
           </div>
           <div className="owner-banner-actions">
-            <button className="btn-owner-banner edit" onClick={() => onEdit(property)}>
+            <button className="btn-owner-banner edit" onClick={() => openEditProperty(property)}>
               <Edit3 size={14} /> Edit Details
             </button>
             <button
               className="btn-owner-banner status"
-              onClick={() => onToggleStatus(property.id)}
+              onClick={() => togglePropertyStatus(property.id)}
             >
               {isInactive ? (
                 <>
@@ -83,7 +94,7 @@ export default function PropertyDetailsPage({
                 </>
               )}
             </button>
-            <button className="btn-owner-banner delete" onClick={() => onDelete(property)}>
+            <button className="btn-owner-banner delete" onClick={() => openDeleteProperty(property)}>
               <Trash2 size={14} /> Delete
             </button>
           </div>
@@ -110,7 +121,7 @@ export default function PropertyDetailsPage({
           )}
           <button
             className={`outline ${isSaved ? 'saved-active' : ''}`}
-            onClick={() => onToggleSave(property.id)}
+            onClick={() => toggleSave(property.id)}
           >
             <Heart size={16} fill={isSaved ? 'currentColor' : 'none'} />
             {isSaved ? 'Saved to shortlist' : 'Save home'}
@@ -266,13 +277,13 @@ export default function PropertyDetailsPage({
             <b>{property.commute || '15-20 min'}</b>
           </div>
 
-          <button className="primary full" onClick={onOpenEnquiry}>
+          <button className="primary full" onClick={() => openEnquiry(property)}>
             <MessageCircle size={16} /> Contact / Enquire
           </button>
 
           <button
             className={`secondary full ${isSaved ? 'btn-saved-active' : ''}`}
-            onClick={() => onToggleSave(property.id)}
+            onClick={() => toggleSave(property.id)}
           >
             <Heart size={16} fill={isSaved ? 'currentColor' : 'none'} />
             {isSaved ? 'Saved to shortlist' : 'Save to shortlist'}
@@ -281,12 +292,12 @@ export default function PropertyDetailsPage({
           {isOwner && (
             <div className="rent-box-owner-tools">
               <span className="owner-tools-title">Lister Quick Actions</span>
-              <button className="btn-edit-quick" onClick={() => onEdit(property)}>
+              <button className="btn-edit-quick" onClick={() => openEditProperty(property)}>
                 <Edit3 size={14} /> Edit Listing Details
               </button>
               <button
                 className={`btn-toggle-quick ${isInactive ? 'react' : 'deact'}`}
-                onClick={() => onToggleStatus(property.id)}
+                onClick={() => togglePropertyStatus(property.id)}
               >
                 {isInactive ? 'Reactivate Property' : 'Deactivate Listing'}
               </button>
@@ -295,5 +306,13 @@ export default function PropertyDetailsPage({
         </aside>
       </div>
     </div>
+  );
+}
+
+export default function PropertyDetailsRoute() {
+  return (
+    <React.Suspense fallback={<div className="wrap detail-page"><p>Loading property details...</p></div>}>
+      <PropertyDetailsContent />
+    </React.Suspense>
   );
 }

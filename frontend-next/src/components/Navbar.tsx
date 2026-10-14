@@ -1,26 +1,37 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { Home, Building2, Plus, User, Heart, LogOut, LogIn, UserPlus, Menu, X, ChevronDown } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { USER_ROLES } from '../constants/initialData';
+import { useProperty } from '../context/PropertyContext';
+import { USER_ROLES, type UserRole } from '../constants/initialData';
 
 interface NavbarProps {
-  page: string;
-  onNavigate: (page: string, extraTab?: string | null) => void;
+  page?: string;
+  onNavigate?: (page: string, extraTab?: string | null) => void;
   savedCount?: number;
-  onOpenAddProperty: () => void;
-  onOpenAuth: (tab?: string, role?: string) => void;
+  onOpenAddProperty?: () => void;
+  onOpenAuth?: (tab?: string, role?: string) => void;
 }
 
 export default function Navbar({
-  page,
+  page: propPage,
   onNavigate,
-  savedCount = 0,
-  onOpenAddProperty,
-  onOpenAuth
-}: NavbarProps) {
-  const { user, isAuthenticated, isLister, logout } = useAuth();
+  savedCount: propSavedCount,
+  onOpenAddProperty: propOpenAddProperty,
+  onOpenAuth: propOpenAuth
+}: NavbarProps = {}) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const { user, isAuthenticated, isLister, logout, openAuthModal } = useAuth();
+  const propertyContext = useProperty();
+
+  const savedCount = propSavedCount !== undefined ? propSavedCount : propertyContext.saved.length;
+  const onOpenAddProperty = propOpenAddProperty || propertyContext.openAddProperty;
+  const onOpenAuth = propOpenAuth || ((tab, role) => openAuthModal(tab, role as UserRole));
+
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -36,8 +47,29 @@ export default function Navbar({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Determine active route
+  const activePage = propPage || (
+    pathname === '/' ? 'home'
+    : pathname.startsWith('/explore') || pathname.startsWith('/results') ? 'results'
+    : pathname.startsWith('/shortlist') ? 'shortlist'
+    : pathname.startsWith('/profile') ? 'profile'
+    : ''
+  );
+
   const handleNav = (targetPage: string, extraTab: string | null = null) => {
-    onNavigate(targetPage, extraTab);
+    if (onNavigate) {
+      onNavigate(targetPage, extraTab);
+    } else {
+      if (targetPage === 'home') {
+        router.push('/');
+      } else if (targetPage === 'results') {
+        router.push('/explore');
+      } else if (targetPage === 'shortlist') {
+        router.push('/shortlist');
+      } else if (targetPage === 'profile') {
+        router.push(extraTab ? `/profile?tab=${extraTab}` : '/profile');
+      }
+    }
     setMobileMenuOpen(false);
     setUserDropdownOpen(false);
   };
@@ -46,7 +78,7 @@ export default function Navbar({
     logout();
     setUserDropdownOpen(false);
     setMobileMenuOpen(false);
-    onNavigate('home');
+    handleNav('home');
   };
 
   const userInitials = user ? `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase() : 'G';
@@ -67,21 +99,21 @@ export default function Navbar({
       {/* Main Navigation (Desktop & Mobile) */}
       <nav className={`nav ${mobileMenuOpen ? 'open' : ''}`}>
         <button
-          className={page === 'home' ? 'active' : ''}
+          className={activePage === 'home' ? 'active' : ''}
           onClick={() => handleNav('home')}
         >
           Discover
         </button>
 
         <button
-          className={page === 'results' ? 'active' : ''}
+          className={activePage === 'results' ? 'active' : ''}
           onClick={() => handleNav('results')}
         >
           Explore Homes
         </button>
 
         <button
-          className={page === 'shortlist' ? 'active' : ''}
+          className={activePage === 'shortlist' ? 'active' : ''}
           onClick={() => handleNav('shortlist')}
         >
           My Shortlist
@@ -92,7 +124,7 @@ export default function Navbar({
         {isAuthenticated && isLister && (
           <>
             <button
-              className={page === 'profile' ? 'active' : ''}
+              className={activePage === 'profile' ? 'active' : ''}
               onClick={() => handleNav('profile', 'listings')}
             >
               <Building2 size={14} /> My Listings

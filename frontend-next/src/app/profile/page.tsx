@@ -1,40 +1,34 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { PropertyService } from '../services/propertyService';
-import { PROPERTY_STATUS, type Property } from '../constants/initialData';
-import PropertyCard from '../components/PropertyCard';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useAuth } from '../../context/AuthContext';
+import { useProperty } from '../../context/PropertyContext';
+import { PropertyService } from '../../services/propertyService';
+import { PROPERTY_STATUS, type Property } from '../../constants/initialData';
+import PropertyCard from '../../components/PropertyCard';
 import { User, Mail, Phone, Building2, ShieldCheck, Plus, CheckCircle2, AlertCircle, Lock, Sparkles } from 'lucide-react';
 
-interface ProfilePageProps {
-  initialTab?: string;
-  savedIds?: string[];
-  onToggleSave: (id: string) => void;
-  onOpenDetails: (id: string) => void;
-  onOpenAddProperty: () => void;
-  onEditProperty: (property: Property) => void;
-  onDeleteProperty: (property: Property) => void;
-  onToggleStatus: (id: string) => void;
-  notify?: (message: string, type: string) => void;
-}
+function ProfileContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialTab = searchParams.get('tab') || 'personal';
 
-export default function ProfilePage({
-  initialTab = 'personal',
-  savedIds = [],
-  onToggleSave,
-  onOpenDetails,
-  onOpenAddProperty,
-  onEditProperty,
-  onDeleteProperty,
-  onToggleStatus,
-  notify
-}: ProfilePageProps) {
   const { user, updateProfile, changePassword, isLister, isTenant } = useAuth();
+  const {
+    saved,
+    toggleSave,
+    openAddProperty,
+    openEditProperty,
+    openDeleteProperty,
+    togglePropertyStatus,
+    showToast,
+    properties
+  } = useProperty();
 
   const [activeTab, setActiveTab] = useState(initialTab); // 'personal' | 'listings' | 'security'
 
-  // Profile Form State (Sprint 1: Viewing Profile -> Edit Profile -> Updating Profile -> Profile Updated)
+  // Profile Form State
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
@@ -47,15 +41,15 @@ export default function ProfilePage({
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [updateError, setUpdateError] = useState('');
 
-  // Password Change Form
+  // Password Form State
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordUpdating, setPasswordUpdating] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
   const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
 
-  // Lister Properties State (Sprint 2)
+  // Lister Properties State
   const [listerProperties, setListerProperties] = useState<Property[]>([]);
   const [propertyFilter, setPropertyFilter] = useState('ALL'); // 'ALL' | 'ACTIVE' | 'INACTIVE'
 
@@ -67,8 +61,9 @@ export default function ProfilePage({
   }, [user]);
 
   useEffect(() => {
-    if (initialTab) setActiveTab(initialTab);
-  }, [initialTab]);
+    const tabParam = searchParams.get('tab');
+    if (tabParam) setActiveTab(tabParam);
+  }, [searchParams]);
 
   useEffect(() => {
     if (user) {
@@ -83,7 +78,7 @@ export default function ProfilePage({
       }
       loadListerProperties();
     }
-  }, [user, loadListerProperties]);
+  }, [user, loadListerProperties, properties]);
 
   if (!user) {
     return (
@@ -95,7 +90,7 @@ export default function ProfilePage({
     );
   }
 
-  // Handle Profile Update (Sprint 1 State Machine)
+  // Handle Profile Update
   const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsUpdating(true);
@@ -116,7 +111,7 @@ export default function ProfilePage({
       });
 
       setUpdateSuccess(true);
-      if (notify) notify('Profile updated successfully!', 'success');
+      showToast('Profile updated successfully!', 'success');
       setTimeout(() => setUpdateSuccess(false), 3000);
     } catch (err: unknown) {
       setUpdateError((err as Error).message || 'Failed to update profile details.');
@@ -148,7 +143,7 @@ export default function ProfilePage({
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
-      if (notify) notify('Password changed successfully!', 'success');
+      showToast('Password changed successfully!', 'success');
       setTimeout(() => setPasswordSuccess(false), 3000);
     } catch (err: unknown) {
       setPasswordError((err as Error).message || 'Failed to update password.');
@@ -214,7 +209,7 @@ export default function ProfilePage({
 
         {/* Quick Action Button for Lister */}
         {isLister && (
-          <button className="primary btn-add-listing-hero" onClick={onOpenAddProperty}>
+          <button className="primary btn-add-listing-hero" onClick={openAddProperty}>
             <Plus size={16} /> List New Property
           </button>
         )}
@@ -437,7 +432,7 @@ export default function ProfilePage({
               </button>
             </div>
 
-            <button className="primary" onClick={onOpenAddProperty}>
+            <button className="primary" onClick={openAddProperty}>
               <Plus size={16} /> + Add New Property Listing
             </button>
           </div>
@@ -449,13 +444,13 @@ export default function ProfilePage({
                 <PropertyCard
                   key={prop.id}
                   property={prop}
-                  isSaved={savedIds.includes(prop.id)}
-                  onToggleSave={onToggleSave}
-                  onOpenDetails={onOpenDetails}
+                  isSaved={saved.includes(prop.id)}
+                  onToggleSave={toggleSave}
+                  onOpenDetails={(id) => router.push(`/properties/${id}`)}
                   isOwner={true}
-                  onEdit={onEditProperty}
-                  onToggleStatus={onToggleStatus}
-                  onDelete={onDeleteProperty}
+                  onEdit={openEditProperty}
+                  onToggleStatus={togglePropertyStatus}
+                  onDelete={openDeleteProperty}
                 />
               ))}
             </div>
@@ -468,7 +463,7 @@ export default function ProfilePage({
                   ? 'You currently have no inactive listings.'
                   : 'Start by publishing your first property listing on RentMatch AI.'}
               </p>
-              <button className="primary" onClick={onOpenAddProperty}>
+              <button className="primary" onClick={openAddProperty}>
                 <Plus size={16} /> Add Your First Property
               </button>
             </div>
@@ -552,5 +547,13 @@ export default function ProfilePage({
         </div>
       )}
     </div>
+  );
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={<div className="wrap"><p>Loading profile...</p></div>}>
+      <ProfileContent />
+    </Suspense>
   );
 }

@@ -1,33 +1,22 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, SlidersHorizontal, RotateCcw, X, MapPin, CircleHelp } from 'lucide-react';
-import PropertyCard from '../components/PropertyCard';
-import { type Property } from '../constants/initialData';
+import PropertyCard from '../../components/PropertyCard';
+import { useProperty } from '../../context/PropertyContext';
 
 const money = (n: number | string) => '₹' + Number(n).toLocaleString('en-IN');
 
-interface ExplorePageProps {
-  properties?: Property[];
-  savedIds?: string[];
-  onToggleSave: (id: string) => void;
-  onOpenDetails: (id: string) => void;
-  onNavigate: (page: string) => void;
-  initialQuery?: string;
-  initialLocation?: string;
-  initialBudget?: string;
-}
+function ExploreContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { activeProperties, saved, toggleSave } = useProperty();
 
-export default function ExplorePage({
-  properties = [],
-  savedIds = [],
-  onToggleSave,
-  onOpenDetails,
-  onNavigate,
-  initialQuery = '',
-  initialLocation = 'Gandhinagar',
-  initialBudget = '25000'
-}: ExplorePageProps) {
+  const initialQuery = searchParams.get('query') || '';
+  const initialLocation = searchParams.get('location') || 'Gandhinagar';
+  const initialBudget = searchParams.get('budget') || '25000';
+
   const [query, setQuery] = useState(initialQuery);
   const [location, setLocation] = useState(initialLocation);
   const [budget, setBudget] = useState(initialBudget);
@@ -38,7 +27,7 @@ export default function ExplorePage({
 
   // Filter & Sort properties (Sprint 2 View Property Listings)
   const results = useMemo(() => {
-    const list = properties.filter((p) => {
+    const list = activeProperties.filter((p) => {
       // 1. Location match
       const locMatch =
         !location.trim() ||
@@ -76,7 +65,7 @@ export default function ExplorePage({
     }
 
     return list;
-  }, [properties, location, budget, bedrooms, furnishing, query, sort]);
+  }, [activeProperties, location, budget, bedrooms, furnishing, query, sort]);
 
   const resetFilters = () => {
     setQuery('');
@@ -91,7 +80,7 @@ export default function ExplorePage({
     <div className="wrap results-page">
       {/* Breadcrumb */}
       <div className="crumb">
-        <button onClick={() => onNavigate('home')}>Discover</button> / Explore Homes
+        <button onClick={() => router.push('/')}>Discover</button> / Explore Homes
       </div>
 
       {/* Header */}
@@ -231,9 +220,9 @@ export default function ExplorePage({
                 <PropertyCard
                   key={p.id}
                   property={p}
-                  isSaved={savedIds.includes(p.id)}
-                  onToggleSave={onToggleSave}
-                  onOpenDetails={onOpenDetails}
+                  isSaved={saved.includes(p.id)}
+                  onToggleSave={toggleSave}
+                  onOpenDetails={(id) => router.push(`/properties/${id}`)}
                 />
               ))}
             </div>
@@ -257,5 +246,13 @@ export default function ExplorePage({
         </section>
       </div>
     </div>
+  );
+}
+
+export default function ExplorePage() {
+  return (
+    <Suspense fallback={<div className="wrap"><p>Loading properties...</p></div>}>
+      <ExploreContent />
+    </Suspense>
   );
 }

@@ -9,13 +9,16 @@ import {
   Wallet,
   ChevronDown,
   Search,
+  ArrowRight,
   ArrowUpRight,
   Building2,
   UserPlus,
   ShieldCheck,
   Zap,
-  Clock,
   Compass,
+  GraduationCap,
+  Briefcase,
+  Users,
 } from 'lucide-react';
 import PropertyCard from '../components/PropertyCard';
 import { useAuth } from '../context/AuthContext';
@@ -27,19 +30,41 @@ export default function HomePage() {
   const { user, isAuthenticated, isLister, openAuthModal } = useAuth();
   const { activeProperties, saved, toggleSave, openAddProperty } = useProperty();
 
+  const [activeTab, setActiveTab] = useState<'all' | 'students' | 'pros' | 'families'>('all');
   const [query, setQuery] = useState('Furnished 2BHK near PDEU with balcony under ₹22,000');
   const [location, setLocation] = useState('Gandhinagar');
   const [budget, setBudget] = useState('25000');
 
   const samplePrompts = [
-    'Furnished 2BHK near PDEU under ₹20k',
-    'Studio apartment near Infocity with fast Wi-Fi',
-    'Pet-friendly 3BHK in Kudasan with covered parking',
-    'Budget 1BHK near Metro under ₹14,000',
+    { label: '🎓 Near PDEU (< ₹20k)', text: 'Furnished 2BHK near PDEU under ₹20,000' },
+    { label: '⚡ Studio at Infocity', text: 'Studio apartment near Infocity with fast Wi-Fi' },
+    { label: '🐾 Kudasan 3BHK Pet-friendly', text: 'Pet-friendly 3BHK in Kudasan with covered parking' },
+    { label: '🚇 Budget 1BHK near Metro', text: 'Budget 1BHK near Metro under ₹14,000' },
   ];
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleTabSelect = (tab: 'all' | 'students' | 'pros' | 'families') => {
+    setActiveTab(tab);
+    if (tab === 'students') {
+      setQuery('Student friendly shared apartment walking distance to PDEU or PDPU with high-speed internet');
+      setLocation('Raysan / PDEU');
+      setBudget('18000');
+    } else if (tab === 'pros') {
+      setQuery('Fully furnished 1BHK or studio apartment near Infocity tech park with power backup');
+      setLocation('Infocity, Gandhinagar');
+      setBudget('22000');
+    } else if (tab === 'families') {
+      setQuery('Spacious 3BHK family flat in Kudasan with elevator, covered parking, and gated security');
+      setLocation('Kudasan');
+      setBudget('35000');
+    } else {
+      setQuery('Furnished 2BHK near PDEU with balcony under ₹22,000');
+      setLocation('Gandhinagar');
+      setBudget('25000');
+    }
+  };
+
+  const handleSearchSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     router.push(
       `/explore?query=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}&budget=${encodeURIComponent(budget)}`
     );
@@ -48,283 +73,303 @@ export default function HomePage() {
   const featured = activeProperties.slice(0, 3);
 
   return (
-    <div className="wrap home-page">
-      {/* Hero Section */}
-      <section className="hero">
-        <div>
-          <div className="eyebrow">
-            <span className="pulse-indicator" />
-            <Sparkles size={14} /> AI-POWERED RENTAL INTELLIGENCE
+    <div className="home-page-wrapper relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="hero-glow-ambient" />
+
+      <div className="wrap">
+        {/* Modern Centered Hero */}
+        <section className="hero-modern">
+          <div className="hero-badge">
+            <span className="hero-badge-pulse" />
+            <Sparkles size={13} className="text-emerald-600 dark:text-emerald-400" />
+            <span>AI-Powered Rental Intelligence</span>
           </div>
-          <h1>
-            Find a home that<br />
-            <em>fits your life,</em> not just your filters.
+
+          <h1 className="hero-headline">
+            Find a home that fits your life,
+            <span className="hero-gradient-text"> not just your filters.</span>
           </h1>
-          <p className="hero-desc">
-            Describe what your ideal living space looks like in plain language. RentMatch AI pairs you with authentic, verified properties and direct landlord connections — with zero brokerage.
+
+          <p className="hero-subtitle">
+            Skip the broker calls and endless scrolling. Tell us how you live in plain language — we match you directly with verified properties and real landlords.
           </p>
 
-          <div className="proof">
-            <span>
-              <ShieldCheck size={16} /> 100% Verified Landlords
-            </span>
-            <span>
-              <Zap size={16} /> Zero Brokerage Fees
-            </span>
-            <span>
-              <CheckCircle2 size={16} /> Direct Lister Contact
-            </span>
-          </div>
-        </div>
-
-        <div className="hero-image">
-          <img
-            src={
-              activeProperties[0]?.image ||
-              'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85'
-            }
-            alt="Contemporary designed apartment interior"
-          />
-          <div className="float-card">
-            <span>
-              <Sparkles size={17} />
-            </span>
-            <div>
-              <b>98% Lifestyle Fit Score</b>
-              <small>7 mins to PDEU · High-speed Fiber</small>
+          <div className="hero-proof-strip">
+            <div className="proof-item">
+              <ShieldCheck size={16} className="text-emerald-600 dark:text-emerald-400" />
+              <span>100% Verified Landlords</span>
             </div>
-            <CheckCircle2 size={20} className="text-emerald-600" />
-          </div>
-          <div className="float-tag">
-            <b>⌂ &nbsp; Verified Direct Listing</b>
-            <small>Direct Landlord · Immediate Move-in</small>
-          </div>
-        </div>
-      </section>
-
-      {/* Role-Specific Announcement Callout */}
-      {!isAuthenticated && (
-        <section className="role-callout-banner">
-          <div className="callout-content">
-            <Building2 size={24} />
-            <div>
-              <strong>Are you a property owner or estate manager?</strong>
-              <p>List your rental apartments directly, screen verified tenants, and manage occupancy without middlemen.</p>
+            <div className="proof-sep">·</div>
+            <div className="proof-item">
+              <Zap size={16} className="text-amber-500" />
+              <span>Zero Brokerage Fees</span>
+            </div>
+            <div className="proof-sep">·</div>
+            <div className="proof-item">
+              <CheckCircle2 size={16} className="text-teal-600 dark:text-teal-400" />
+              <span>Direct Lister WhatsApp &amp; Chat</span>
             </div>
           </div>
-          <div className="callout-actions">
-            <button
-              type="button"
-              className="btn-lister-cta"
-              onClick={() => openAuthModal('register', USER_ROLES.PROPERTY_LISTER)}
-            >
-              <UserPlus size={15} /> List Your Property Free
-            </button>
-          </div>
-        </section>
-      )}
 
-      {isAuthenticated && isLister && (
-        <section className="role-callout-banner lister-active">
-          <div className="callout-content">
-            <Building2 size={24} />
-            <div>
-              <strong>Logged in as Property Lister ({user!.firstName})</strong>
-              <p>Manage your live listings, adjust rental pricing, review tenant enquiries, or add new properties.</p>
+          {/* AI Search Capsule */}
+          <div className="search-capsule-card">
+            {/* Filter Persona Tabs */}
+            <div className="capsule-tabs">
+              <button
+                type="button"
+                className={`capsule-tab ${activeTab === 'all' ? 'active' : ''}`}
+                onClick={() => handleTabSelect('all')}
+              >
+                <Compass size={14} /> All Rentals
+              </button>
+              <button
+                type="button"
+                className={`capsule-tab ${activeTab === 'students' ? 'active' : ''}`}
+                onClick={() => handleTabSelect('students')}
+              >
+                <GraduationCap size={14} /> Student Housing
+              </button>
+              <button
+                type="button"
+                className={`capsule-tab ${activeTab === 'pros' ? 'active' : ''}`}
+                onClick={() => handleTabSelect('pros')}
+              >
+                <Briefcase size={14} /> Tech &amp; Working Pros
+              </button>
+              <button
+                type="button"
+                className={`capsule-tab ${activeTab === 'families' ? 'active' : ''}`}
+                onClick={() => handleTabSelect('families')}
+              >
+                <Users size={14} /> Family Residences
+              </button>
             </div>
-          </div>
-          <div className="callout-actions">
-            <button type="button" className="primary" onClick={openAddProperty}>
-              + List New Property
-            </button>
-            <button type="button" className="secondary" onClick={() => router.push('/profile?tab=listings')}>
-              Manage Dashboard
-            </button>
-          </div>
-        </section>
-      )}
 
-      {/* AI Natural Language Search Console */}
-      <section className="search-panel">
-        <div className="panel-title">
-          <div>
-            <small className="kicker">INTELLIGENT PROPERTY DISCOVERY</small>
-            <h2>What are you looking for?</h2>
-          </div>
-          <span className="ai-label">
-            <Sparkles size={14} /> Semantic Match Engine
-          </span>
-        </div>
-
-        <label className="field-label" htmlFor="ideal">
-          Describe your routine, location preferences, or non-negotiables
-        </label>
-        <div className="natural-input">
-          <Sparkles size={19} className="text-emerald-600 mt-1 flex-shrink-0" />
-          <textarea
-            id="ideal"
-            rows={2}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="e.g. A peaceful 2BHK with balcony near PDEU, furnished with AC, budget under ₹22,000..."
-          />
-        </div>
-
-        {/* Prompt Recommendation Chips */}
-        <div className="prompt-chips-row">
-          <span className="chips-label">Popular searches:</span>
-          {samplePrompts.map((p, i) => (
-            <button
-              key={i}
-              type="button"
-              className="prompt-chip"
-              onClick={() => setQuery(p)}
-            >
-              &ldquo;{p}&rdquo;
-            </button>
-          ))}
-        </div>
-
-        <div className="quick-fields">
-          <div className="quick-field">
-            <MapPin size={17} />
-            <div>
-              <label htmlFor="loc-home">Preferred Region / Sector</label>
-              <input
-                id="loc-home"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="City or neighbourhood (e.g. Kudasan)"
+            {/* Natural Language Prompt Area */}
+            <div className="capsule-prompt-box">
+              <div className="prompt-icon-wrapper">
+                <Sparkles size={18} className="text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <textarea
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSearchSubmit();
+                  }
+                }}
+                rows={2}
+                placeholder="Describe your ideal place (e.g. Sunny 2BHK with balcony near PDEU, pet-friendly, under ₹22,000)..."
+                className="capsule-textarea"
               />
             </div>
-          </div>
 
-          <div className="quick-field">
-            <Wallet size={17} />
-            <div>
-              <label htmlFor="budget-home">Monthly Budget Cap</label>
-              <select
-                id="budget-home"
-                value={budget}
-                onChange={(e) => setBudget(e.target.value)}
+            {/* Quick Prompt Suggestions */}
+            <div className="capsule-chips-row">
+              <span className="chips-hint">Try:</span>
+              {samplePrompts.map((p, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className="capsule-chip-btn"
+                  onClick={() => setQuery(p.text)}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Controls & Search CTA Row */}
+            <div className="capsule-controls-row">
+              <div className="capsule-field">
+                <MapPin size={15} className="field-icon" />
+                <div className="field-text">
+                  <span className="field-label">Locality / Sector</span>
+                  <input
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Area or city"
+                    className="field-input"
+                  />
+                </div>
+              </div>
+
+              <div className="capsule-field">
+                <Wallet size={15} className="field-icon" />
+                <div className="field-text">
+                  <span className="field-label">Budget Limit</span>
+                  <select
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
+                    className="field-select"
+                  >
+                    <option value="15000">Up to ₹15,000 / mo</option>
+                    <option value="20000">Up to ₹20,000 / mo</option>
+                    <option value="25000">Up to ₹25,000 / mo</option>
+                    <option value="35000">Up to ₹35,000 / mo</option>
+                    <option value="50000">Up to ₹50,000 / mo</option>
+                  </select>
+                </div>
+                <ChevronDown size={14} className="text-slate-400" />
+              </div>
+
+              <button
+                type="button"
+                className="btn-capsule-submit"
+                onClick={() => handleSearchSubmit()}
               >
-                <option value="15000">Up to ₹15,000 / mo</option>
-                <option value="20000">Up to ₹20,000 / mo</option>
-                <option value="25000">Up to ₹25,000 / mo</option>
-                <option value="35000">Up to ₹35,000 / mo</option>
-                <option value="50000">Up to ₹50,000 / mo</option>
-              </select>
+                <span>Find My Match</span>
+                <ArrowRight size={16} />
+              </button>
             </div>
-            <ChevronDown size={14} />
           </div>
+        </section>
 
-          <button type="button" className="primary search-main" onClick={handleSearchSubmit}>
-            <Search size={18} /> Match Properties <ArrowUpRight size={17} />
-          </button>
-        </div>
-      </section>
-
-      {/* Platform Trust & Metric Stats Strip */}
-      <section className="stats-strip">
-        <div className="stat-card">
-          <div className="stat-num">2,500+</div>
-          <div className="stat-label">Verified Listings</div>
-          <p>Carefully inspected homes across top sectors</p>
-        </div>
-        <div className="stat-card">
-          <div className="stat-num">98%</div>
-          <div className="stat-label">Match Accuracy</div>
-          <p>Semantic scoring aligned with student &amp; pro habits</p>
-        </div>
-        <div className="stat-card">
-          <div className="stat-num">&lt; 12 hrs</div>
-          <div className="stat-label">Landlord Response</div>
-          <p>Direct chat between verified tenants and owners</p>
-        </div>
-        <div className="stat-card">
-          <div className="stat-num">₹0</div>
-          <div className="stat-label">Brokerage Fee</div>
-          <p>100% direct lister rentals with zero agent cuts</p>
-        </div>
-      </section>
-
-      {/* How It Works 3-Step Bento Strip */}
-      <section className="how-it-works-section">
-        <div className="section-head text-center">
-          <small className="kicker">TRANSPARENT &amp; DIRECT</small>
-          <h2>How RentMatch AI Simplifies Renting</h2>
-          <p>Skip weeks of broker calls and unverified classifieds in three intuitive steps.</p>
-        </div>
-
-        <div className="steps-grid">
-          <div className="step-card">
-            <span className="step-badge">01</span>
-            <div className="step-icon">
-              <Sparkles size={20} />
+        {/* Landlord Announcement Card */}
+        {!isAuthenticated && (
+          <section className="landlord-bento-banner">
+            <div className="bento-content">
+              <div className="bento-icon-box">
+                <Building2 size={24} />
+              </div>
+              <div>
+                <h3>Are you a property owner or lister in Gandhinagar?</h3>
+                <p>List directly with RentMatch AI. Zero brokerage, verified student and professional tenants, and full lifecycle control.</p>
+              </div>
             </div>
-            <h3>Describe in Natural Language</h3>
-            <p>Tell our engine about your daily commute, roommate preferences, budget, or quiet study requirements.</p>
-          </div>
+            <button
+              type="button"
+              className="btn-bento-cta"
+              onClick={() => openAuthModal('register', USER_ROLES.PROPERTY_LISTER)}
+            >
+              <UserPlus size={15} /> List Property Free
+            </button>
+          </section>
+        )}
 
-          <div className="step-card">
-            <span className="step-badge">02</span>
-            <div className="step-icon">
-              <Compass size={20} />
+        {isAuthenticated && isLister && (
+          <section className="landlord-bento-banner active-lister">
+            <div className="bento-content">
+              <div className="bento-icon-box">
+                <Building2 size={24} />
+              </div>
+              <div>
+                <h3>Welcome back, {user!.firstName}!</h3>
+                <p>Manage your live listings, adjust rental pricing, review tenant enquiries, or add new properties.</p>
+              </div>
             </div>
-            <h3>Intelligent Similarity Scoring</h3>
-            <p>Properties receive compatibility scores tailored specifically to your habits and lifestyle parameters.</p>
-          </div>
-
-          <div className="step-card">
-            <span className="step-badge">03</span>
-            <div className="step-icon">
-              <ShieldCheck size={20} />
+            <div className="flex items-center gap-2">
+              <button type="button" className="btn-bento-cta" onClick={openAddProperty}>
+                + Add Property
+              </button>
+              <button
+                type="button"
+                className="btn-bento-secondary"
+                onClick={() => router.push('/profile?tab=listings')}
+              >
+                Dashboard
+              </button>
             </div>
-            <h3>Direct Lister Connect</h3>
-            <p>Chat directly with landlords, schedule viewing tours, and finalize agreements without broker markups.</p>
+          </section>
+        )}
+
+        {/* Trust Metrics Bar */}
+        <section className="metrics-bento-strip">
+          <div className="metric-box">
+            <div className="metric-value">2,500+</div>
+            <div className="metric-title">Verified Rentals</div>
+            <p>Inspected homes in Gandhinagar &amp; Ahmedabad</p>
           </div>
-        </div>
-      </section>
-
-      {/* Featured Properties */}
-      <section className="featured">
-        <div className="section-head">
-          <div>
-            <small className="kicker">ACTIVE VERIFIED RENTALS</small>
-            <h2>Featured Available Homes</h2>
-            <p>Verified homes available for immediate lease in top student &amp; tech hubs.</p>
+          <div className="metric-box">
+            <div className="metric-value">98.4%</div>
+            <div className="metric-title">Match Precision</div>
+            <p>Semantic scoring aligned with student &amp; pro habits</p>
           </div>
-          <button type="button" className="link" onClick={() => router.push('/explore')}>
-            Explore all homes <ArrowUpRight size={16} />
-          </button>
-        </div>
+          <div className="metric-box">
+            <div className="metric-value">&lt; 12 hrs</div>
+            <div className="metric-title">Lister Response</div>
+            <p>Direct chat between verified tenants and owners</p>
+          </div>
+          <div className="metric-box">
+            <div className="metric-value">₹0</div>
+            <div className="metric-title">Broker Commission</div>
+            <p>100% direct lister rentals with zero agent cuts</p>
+          </div>
+        </section>
 
-        <div className="cards">
-          {featured.map((p) => (
-            <PropertyCard
-              key={p.id}
-              property={p}
-              isSaved={saved.includes(p.id)}
-              onToggleSave={toggleSave}
-              onOpenDetails={(id) => router.push(`/properties/${id}`)}
-            />
-          ))}
-        </div>
-      </section>
+        {/* Featured Listings Grid */}
+        <section className="featured-section-modern">
+          <div className="section-header-modern">
+            <div>
+              <small className="section-eyebrow">CURATED HOMES</small>
+              <h2 className="section-title">Featured Active Rentals</h2>
+              <p className="section-desc">Handpicked verified properties ready for immediate move-in.</p>
+            </div>
+            <button
+              type="button"
+              className="btn-link-modern"
+              onClick={() => router.push('/explore')}
+            >
+              <span>Explore all {activeProperties.length} homes</span>
+              <ArrowUpRight size={16} />
+            </button>
+          </div>
 
-      {/* CTA Banner */}
-      <section className="banner">
-        <span>
-          <Sparkles size={24} />
-        </span>
-        <div>
-          <b>Ready to find your next home without broker hassles?</b>
-          <p>Join thousands of verified students, professors, and professionals using RentMatch AI.</p>
-        </div>
-        <button type="button" onClick={() => router.push('/explore')}>
-          Start exploring homes <ArrowUpRight size={16} />
-        </button>
-      </section>
+          <div className="cards">
+            {featured.map((p) => (
+              <PropertyCard
+                key={p.id}
+                property={p}
+                isSaved={saved.includes(p.id)}
+                onToggleSave={toggleSave}
+                onOpenDetails={(id) => router.push(`/properties/${id}`)}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* 3-Step Walkthrough Bento */}
+        <section className="how-it-works-modern">
+          <div className="text-center mb-10">
+            <small className="section-eyebrow">HOW IT WORKS</small>
+            <h2 className="section-title">A Smarter Way to Rent</h2>
+            <p className="section-desc max-w-xl mx-auto">
+              Find the right apartment in minutes instead of weeks of frustrating broker calls.
+            </p>
+          </div>
+
+          <div className="steps-cards-grid">
+            <div className="step-card-modern">
+              <span className="step-number">01</span>
+              <div className="step-icon-modern">
+                <Sparkles size={22} />
+              </div>
+              <h4>Conversational Search</h4>
+              <p>Type what matters to you in plain English — proximity to university, balcony sunlight, or high-speed fiber.</p>
+            </div>
+
+            <div className="step-card-modern">
+              <span className="step-number">02</span>
+              <div className="step-icon-modern">
+                <Compass size={22} />
+              </div>
+              <h4>Lifestyle Fit Scoring</h4>
+              <p>Our match engine computes semantic compatibility scores based on your routine and budget limits.</p>
+            </div>
+
+            <div className="step-card-modern">
+              <span className="step-number">03</span>
+              <div className="step-icon-modern">
+                <ShieldCheck size={22} />
+              </div>
+              <h4>Zero-Brokerage Move-In</h4>
+              <p>Connect directly with verified owners, schedule site visits, and finalize agreements with zero broker fees.</p>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

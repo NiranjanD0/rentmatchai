@@ -39,11 +39,6 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
 
   return (
     <div className="app">
-      {/* Top Market Bar */}
-      <div className="top-announcement-bar">
-        <span className="announcement-pill">✦ Live</span>
-        <span>Verified Direct Rentals &amp; Zero Brokerage across Gandhinagar &amp; Ahmedabad</span>
-      </div>
 
       {/* Shared Navigation Bar */}
       <React.Suspense fallback={<div className="h-16 w-full" />}>

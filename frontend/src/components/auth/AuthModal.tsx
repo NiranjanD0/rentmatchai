@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { USER_ROLES, type UserRole } from '../constants/initialData';
+import { useAuth } from '@/src/context/AuthContext';
+import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { X, Mail, Lock, Eye, EyeOff, User, Phone, CheckCircle2, AlertCircle, Sparkles, Building2, KeyRound } from 'lucide-react';
 
 interface AuthModalProps {

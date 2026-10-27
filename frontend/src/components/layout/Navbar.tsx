@@ -19,11 +19,11 @@ import {
   X,
   Sparkles,
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { useProperty } from '../context/PropertyContext';
-import { USER_ROLES, type UserRole } from '../constants/initialData';
-import { ToggleTheme } from './lightswind/toggle-theme';
-import { usePageCurtains } from './ui/page-curtains';
+import { useAuth } from '@/src/context/AuthContext';
+import { useProperty } from '@/src/context/PropertyContext';
+import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
+import { ToggleTheme } from '../lightswind/toggle-theme';
+import { usePageCurtains } from '../ui/page-curtains';
 import BrandLogo from './BrandLogo';
 
 interface NavbarProps {

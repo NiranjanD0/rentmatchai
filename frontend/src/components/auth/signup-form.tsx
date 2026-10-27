@@ -13,7 +13,7 @@ import { useAuth } from '@/src/context/AuthContext';
 import { useProperty } from '@/src/context/PropertyContext';
 import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
-import BrandLogo from './BrandLogo';
+import BrandLogo from '../layout/BrandLogo';
 
 export function SignupForm({
   className,

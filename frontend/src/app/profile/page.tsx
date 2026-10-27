@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useProperty } from '../../context/PropertyContext';
 import { PropertyService } from '../../services/propertyService';
 import { PROPERTY_STATUS, type Property } from '../../constants/initialData';
-import PropertyCard from '../../components/PropertyCard';
+import { PropertyCard } from '@/src/components/property';
 import { User, Mail, Phone, Building2, ShieldCheck, Plus, CheckCircle2, AlertCircle, Lock, Sparkles } from 'lucide-react';
 import { usePageCurtains } from '../../components/ui/page-curtains';
 

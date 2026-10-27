@@ -2,13 +2,10 @@
 
 import React from 'react';
 import { Home, Check } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import BrandLogo from '../components/BrandLogo';
-import AuthModal from '../components/AuthModal';
-import PropertyFormModal from '../components/PropertyFormModal';
-import DeleteConfirmModal from '../components/DeleteConfirmModal';
-import EnquiryModal from '../components/EnquiryModal';
-import ToastNotification from '../components/ToastNotification';
+import { Navbar, BrandLogo } from '../components/layout';
+import { AuthModal } from '../components/auth';
+import { PropertyFormModal, DeleteConfirmModal, EnquiryModal } from '../components/property';
+import { ToastNotification } from '../components/feedback';
 import { useProperty } from '../context/PropertyContext';
 import { useAuth } from '../context/AuthContext';
 

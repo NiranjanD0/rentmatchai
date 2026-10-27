@@ -15,8 +15,8 @@ import {
   EyeOff,
   Trash2,
 } from 'lucide-react';
-import { PROPERTY_STATUS, type Property } from '../constants/initialData';
-import { cn } from '../lib/utils';
+import { PROPERTY_STATUS, type Property } from '@/src/constants/initialData';
+import { cn } from '@/lib/utils';
 
 const money = (n: number) => '₹' + Number(n).toLocaleString('en-IN');
 

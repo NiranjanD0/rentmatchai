@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Trash2, AlertTriangle, X } from 'lucide-react';
-import { type Property } from '../constants/initialData';
+import { type Property } from '@/src/constants/initialData';
 
 interface DeleteConfirmModalProps {
   isOpen: boolean;

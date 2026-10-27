@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { X, CheckCircle2, MessageCircle, Send, User, Mail, Phone } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { type Property } from '../constants/initialData';
+import { useAuth } from '@/src/context/AuthContext';
+import { type Property } from '@/src/constants/initialData';
 
 interface EnquiryModalProps {
   property: Property;

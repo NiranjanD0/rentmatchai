@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { PropertyService, PropertyValidator, type PropertyFormData } from '../services/propertyService';
-import { AVAILABLE_AMENITIES, CURATED_PHOTO_PRESETS, PROPERTY_STATUS, type Property, type PropertyStatus } from '../constants/initialData';
+import { useAuth } from '@/src/context/AuthContext';
+import { PropertyService, PropertyValidator, type PropertyFormData } from '@/src/services/propertyService';
+import { AVAILABLE_AMENITIES, CURATED_PHOTO_PRESETS, PROPERTY_STATUS, type Property, type PropertyStatus } from '@/src/constants/initialData';
 import { X, Building2, MapPin, IndianRupee, Maximize2, Image as ImageIcon, Sparkles, Check, AlertCircle } from 'lucide-react';
 
 interface PropertyFormModalProps {

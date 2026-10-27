@@ -3,7 +3,7 @@
 import React, { useState, useMemo, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, SlidersHorizontal, RotateCcw, X, MapPin, CircleHelp } from 'lucide-react';
-import PropertyCard from '../../components/PropertyCard';
+import { PropertyCard } from '@/src/components/property';
 import { useProperty } from '../../context/PropertyContext';
 import { usePageCurtains } from '../../components/ui/page-curtains';
 

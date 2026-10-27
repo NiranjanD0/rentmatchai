@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Heart, Search, ArrowUpRight, Bookmark, CircleHelp } from 'lucide-react';
-import PropertyCard from '../../components/PropertyCard';
+import { PropertyCard } from '@/src/components/property';
 import { useProperty } from '../../context/PropertyContext';
 import { usePageCurtains } from '../../components/ui/page-curtains';
 

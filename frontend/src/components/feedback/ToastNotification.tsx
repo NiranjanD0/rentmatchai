@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useToast } from './ui/Notifications';
+import { useToast } from '@/src/components/ui/Notifications';
 
 interface Toast {
   message: string;

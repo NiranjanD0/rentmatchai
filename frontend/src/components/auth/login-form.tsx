@@ -17,7 +17,7 @@ import { Input } from '@/src/components/ui/input';
 import { useAuth } from '@/src/context/AuthContext';
 import { useProperty } from '@/src/context/PropertyContext';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
-import BrandLogo from './BrandLogo';
+import BrandLogo from '../layout/BrandLogo';
 
 export function LoginForm({
   className,

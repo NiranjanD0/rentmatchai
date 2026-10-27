@@ -27,7 +27,7 @@ import {
   Clock,
   MessageCircle,
 } from 'lucide-react';
-import PropertyCard from '../components/PropertyCard';
+import { PropertyCard } from '../components/property';
 import { useAuth } from '../context/AuthContext';
 import { useProperty } from '../context/PropertyContext';
 import { usePageCurtains } from '../components/ui/page-curtains';

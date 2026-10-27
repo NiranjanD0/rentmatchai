@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles } from 'lucide-react';
 
 export function getRouteTitle(url: string): string {
   try {
@@ -217,44 +216,24 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
                 if (variant === 'closing') handleClosingComplete();
                 if (variant === 'opening') handleOpeningComplete();
               }}
-              className="absolute top-0 left-0 bottom-0 w-1/2 bg-zinc-950 border-r border-emerald-500/30 shadow-2xl flex flex-col justify-between p-8"
+              className="absolute top-0 left-0 bottom-0 w-1/2 bg-zinc-950 border-r border-emerald-500/30 shadow-2xl"
               style={{
                 backgroundImage:
                   'radial-gradient(circle at 100% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 60%)',
               }}
-            >
-              <div className="flex items-center gap-2 opacity-60">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                <span className="text-[11px] font-mono tracking-widest text-zinc-400 uppercase">
-                  RentMatch AI
-                </span>
-              </div>
-              <div />
-              <div className="text-[10px] font-mono text-zinc-600 tracking-wider">
-                STAGE TRANSITION // 01
-              </div>
-            </motion.div>
+            />
 
             {/* Right Curtain Panel */}
             <motion.div
               variants={rightCurtainVariants}
               initial="initial"
               animate={isClosing ? 'closing' : isCovered ? 'covered' : 'opening'}
-              className="absolute top-0 right-0 bottom-0 w-1/2 bg-zinc-950 border-l border-emerald-500/30 shadow-2xl flex flex-col justify-between items-end p-8"
+              className="absolute top-0 right-0 bottom-0 w-1/2 bg-zinc-950 border-l border-emerald-500/30 shadow-2xl"
               style={{
                 backgroundImage:
                   'radial-gradient(circle at 0% 50%, rgba(13, 148, 136, 0.08) 0%, transparent 60%)',
               }}
-            >
-              <div className="text-[11px] font-mono tracking-widest text-emerald-400 uppercase flex items-center gap-1.5">
-                <Sparkles size={12} />
-                <span>Next Generation</span>
-              </div>
-              <div />
-              <div className="text-[10px] font-mono text-zinc-600 tracking-wider">
-                STAGE TRANSITION // 02
-              </div>
-            </motion.div>
+            />
 
             {/* Center Destination Title & Brand Badge */}
             <motion.div

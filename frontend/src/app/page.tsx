@@ -4,19 +4,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Search,
-  MapPin,
-  Wallet,
-  Home as HomeIcon,
   Building2,
-  Users,
-  GraduationCap,
-  Laptop,
-  PawPrint,
-  TrainTrack,
-  Sparkles,
   ShieldCheck,
-  CheckCircle2,
   ArrowRight,
   ArrowUpRight,
   Star,
@@ -39,42 +28,11 @@ export default function HomePage() {
   const { user, isAuthenticated, isLister, openAuthModal } = useAuth();
   const { activeProperties, saved, toggleSave, openAddProperty } = useProperty();
 
-  // Search Segment States
-  const [selectedLocality, setSelectedLocality] = useState('Gandhinagar');
-  const [selectedBhk, setSelectedBhk] = useState('Any');
-  const [selectedBudget, setSelectedBudget] = useState('25000');
+  // Category tab state
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'students' | 'pros' | 'families'>('all');
 
   // Savings Calculator State
   const [calculatorRent, setCalculatorRent] = useState(22000);
-
-  // Quick Chips
-  const quickChips = [
-    { label: 'Near PDEU Campus', icon: GraduationCap, loc: 'Raysan / PDEU', bhk: '2', budget: '20000' },
-    { label: 'Infocity Tech Hub', icon: Laptop, loc: 'Infocity', bhk: '1', budget: '22000' },
-    { label: 'Pet-Friendly Flats', icon: PawPrint, loc: 'Kudasan', bhk: '3', budget: '35000' },
-    { label: 'Near Metro Station', icon: TrainTrack, loc: 'Gandhinagar', bhk: '1', budget: '15000' },
-    { label: 'Furnished Studios', icon: Sparkles, loc: 'Infocity', bhk: '1', budget: '18000' },
-  ];
-
-  const handleChipClick = (chip: typeof quickChips[0]) => {
-    setSelectedLocality(chip.loc);
-    setSelectedBhk(chip.bhk);
-    setSelectedBudget(chip.budget);
-    navigateWithCurtains(
-      `/explore?location=${encodeURIComponent(chip.loc)}&budget=${encodeURIComponent(chip.budget)}&bedrooms=${encodeURIComponent(chip.bhk)}`,
-      'Explore Homes'
-    );
-  };
-
-  const handleSearchSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    const params = new URLSearchParams();
-    if (selectedLocality && selectedLocality !== 'Any Locality') params.set('location', selectedLocality);
-    if (selectedBudget) params.set('budget', selectedBudget);
-    if (selectedBhk && selectedBhk !== 'Any') params.set('bedrooms', selectedBhk);
-    navigateWithCurtains(`/explore?${params.toString()}`, 'Explore Homes');
-  };
 
   // Filter properties based on featured category tab
   const filteredFeatured = activeProperties.filter((p) => {
@@ -144,105 +102,35 @@ export default function HomePage() {
             Connect directly with verified property owners near PDEU, Infocity, Kudasan, and SG Highway. Verified photographs, direct WhatsApp messaging, and zero broker fees.
           </motion.p>
 
-          {/* ===================== MULTI-SEGMENT SEARCH HUB ===================== */}
+          {/* Hero CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mx-auto max-w-4xl rounded-3xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 sm:p-6 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 text-left"
+            className="flex flex-wrap items-center justify-center gap-4"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              {/* Segment 1: Locality */}
-              <div className="flex flex-col p-3 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900/60 hover:border-emerald-500/50 transition-colors">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1">
-                  <MapPin className="h-3.5 w-3.5" />
-                  <span>Locality</span>
-                </div>
-                <select
-                  value={selectedLocality}
-                  onChange={(e) => setSelectedLocality(e.target.value)}
-                  className="bg-transparent text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 focus:outline-none cursor-pointer"
-                >
-                  <option value="Gandhinagar" className="dark:bg-zinc-900">Gandhinagar (All)</option>
-                  <option value="Infocity" className="dark:bg-zinc-900">Infocity / TCS Hub</option>
-                  <option value="Kudasan" className="dark:bg-zinc-900">Kudasan (Family / Pro)</option>
-                  <option value="Raysan / PDEU" className="dark:bg-zinc-900">Raysan / PDEU Campus</option>
-                  <option value="Bhaijipura" className="dark:bg-zinc-900">Bhaijipura</option>
-                  <option value="Sargasan" className="dark:bg-zinc-900">Sargasan / SG Highway</option>
-                </select>
-              </div>
-
-              {/* Segment 2: BHK Configuration */}
-              <div className="flex flex-col p-3 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900/60 hover:border-emerald-500/50 transition-colors">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 mb-1">
-                  <HomeIcon className="h-3.5 w-3.5" />
-                  <span>Bedrooms</span>
-                </div>
-                <select
-                  value={selectedBhk}
-                  onChange={(e) => setSelectedBhk(e.target.value)}
-                  className="bg-transparent text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 focus:outline-none cursor-pointer"
-                >
-                  <option value="Any" className="dark:bg-zinc-900">Any Configuration</option>
-                  <option value="1" className="dark:bg-zinc-900">1 BHK / Studio</option>
-                  <option value="2" className="dark:bg-zinc-900">2 BHK Flat</option>
-                  <option value="3" className="dark:bg-zinc-900">3 BHK Flat / Penthouse</option>
-                  <option value="3+" className="dark:bg-zinc-900">4+ BHK Villa</option>
-                </select>
-              </div>
-
-              {/* Segment 3: Budget Limit */}
-              <div className="flex flex-col p-3 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900/60 hover:border-emerald-500/50 transition-colors">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-1">
-                  <Wallet className="h-3.5 w-3.5" />
-                  <span>Max Budget</span>
-                </div>
-                <select
-                  value={selectedBudget}
-                  onChange={(e) => setSelectedBudget(e.target.value)}
-                  className="bg-transparent text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 focus:outline-none cursor-pointer"
-                >
-                  <option value="15000" className="dark:bg-zinc-900">Up to ₹15,000 / mo</option>
-                  <option value="20000" className="dark:bg-zinc-900">Up to ₹20,000 / mo</option>
-                  <option value="25000" className="dark:bg-zinc-900">Up to ₹25,000 / mo</option>
-                  <option value="35000" className="dark:bg-zinc-900">Up to ₹35,000 / mo</option>
-                  <option value="50000" className="dark:bg-zinc-900">Up to ₹50,000 / mo</option>
-                </select>
-              </div>
-
-              {/* Segment 4: CTA Button */}
-              <div className="flex items-center">
-                <button
-                  type="button"
-                  onClick={() => handleSearchSubmit()}
-                  className="w-full h-full min-h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3 px-5 shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/35 transition-all duration-200 active:scale-[0.98] cursor-pointer"
-                >
-                  <Search className="h-4 w-4" />
-                  <span className="text-sm">Find Homes</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Quick Filter Tag Chips */}
-            <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/80">
-              <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mr-1">
-                Popular:
-              </span>
-              {quickChips.map((chip, idx) => {
-                const Icon = chip.icon;
-                return (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => handleChipClick(chip)}
-                    className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-zinc-100/80 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-950/60 dark:hover:text-emerald-300 border border-zinc-200/70 dark:border-zinc-800 transition-all cursor-pointer shadow-2xs hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <Icon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <span>{chip.label}</span>
-                  </button>
-                );
-              })}
-            </div>
+            <button
+              type="button"
+              onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}
+              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3.5 px-7 shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/35 transition-all duration-200 active:scale-[0.98] cursor-pointer text-sm"
+            >
+              <span>Explore Verified Rentals</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (!isAuthenticated) {
+                  openAuthModal(USER_ROLES.PROPERTY_LISTER);
+                } else {
+                  openAddProperty();
+                }
+              }}
+              className="inline-flex items-center gap-2 rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold py-3.5 px-6 shadow-xs hover:border-emerald-500/50 transition-all duration-200 active:scale-[0.98] cursor-pointer text-sm"
+            >
+              <Plus className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              <span>List Property Free</span>
+            </button>
           </motion.div>
         </section>
 

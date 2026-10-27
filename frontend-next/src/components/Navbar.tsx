@@ -6,6 +6,7 @@ import { Home, Building2, Plus, User, Heart, LogOut, LogIn, UserPlus, Menu, X, C
 import { useAuth } from '../context/AuthContext';
 import { useProperty } from '../context/PropertyContext';
 import { USER_ROLES, type UserRole } from '../constants/initialData';
+import AnimatedThemeToggler from './ui/animated-theme-toggler';
 
 interface NavbarProps {
   page?: string;
@@ -191,6 +192,9 @@ export default function Navbar({
 
       {/* Right Header Section: Authentication & Profile Menu */}
       <div className="header-actions">
+        {/* Animated Theme Toggler */}
+        <AnimatedThemeToggler />
+
         {isAuthenticated ? (
           <div className="user-menu-wrapper" ref={dropdownRef}>
             <button

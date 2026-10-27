@@ -3448,3 +3448,176 @@ footer > small {
   
   .toast-container { left: 16px; right: 16px; bottom: 16px; }
 }
+
+/* ------------------------------------------------------------------ */
+/* View Transitions API (Circular reveal for AnimatedThemeToggler)     */
+/* ------------------------------------------------------------------ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+.dark::view-transition-old(root) {
+  z-index: 9999;
+}
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Animated Theme Toggler Component Styling                           */
+/* ------------------------------------------------------------------ */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+
+.theme-icon.sun {
+  color: #f59e0b;
+}
+
+.theme-icon.moon {
+  color: #475569;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dark Mode Palette & Overrides                                       */
+/* ------------------------------------------------------------------ */
+html.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --navy: #e2e8f0;
+  --navy-dark: #f8fafc;
+  --green: #34d399;
+  --green-hover: #10b981;
+  --green-light: rgba(52, 211, 153, 0.14);
+  --line: #263544;
+  --muted: #94a3b8;
+  --danger: #f87171;
+  --danger-light: rgba(248, 113, 113, 0.15);
+  background: #0d151e;
+  color: #e2e8f0;
+}
+
+html.dark body,
+[data-theme="dark"] body {
+  background: #0d151e;
+  color: #e2e8f0;
+}
+
+html.dark .topbar,
+[data-theme="dark"] .topbar {
+  background: rgba(13, 21, 30, 0.92);
+  border-bottom-color: #202e3c;
+}
+
+html.dark .prototype-strip,
+[data-theme="dark"] .prototype-strip {
+  background: #14202b;
+  border-bottom-color: #202e3c;
+  color: #94a3b8;
+}
+
+html.dark .theme-toggle-btn,
+[data-theme="dark"] .theme-toggle-btn {
+  background: #162432;
+  border-color: #2a3c4e;
+  color: #f8fafc;
+}
+
+html.dark .theme-toggle-btn:hover,
+[data-theme="dark"] .theme-toggle-btn:hover {
+  background: #1d3042;
+  border-color: #34d399;
+  color: #34d399;
+}
+
+html.dark .property-card,
+html.dark .detail-card,
+html.dark .auth-card,
+html.dark .modal-content,
+html.dark .filter-card,
+html.dark .user-dropdown-card,
+html.dark .rent-box,
+html.dark .profile-banner-card,
+html.dark .profile-content-card,
+html.dark .empty-state,
+html.dark .action-card,
+html.dark .stat-card,
+[data-theme="dark"] .property-card,
+[data-theme="dark"] .detail-card,
+[data-theme="dark"] .auth-card,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .filter-card,
+[data-theme="dark"] .user-dropdown-card,
+[data-theme="dark"] .rent-box,
+[data-theme="dark"] .profile-banner-card,
+[data-theme="dark"] .profile-content-card,
+[data-theme="dark"] .empty-state,
+[data-theme="dark"] .action-card,
+[data-theme="dark"] .stat-card {
+  background: #13202c;
+  border-color: #223242;
+  color: #e2e8f0;
+}
+
+html.dark .property-body,
+[data-theme="dark"] .property-body {
+  background: #13202c;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea,
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background: #0f1922;
+  border-color: #273748;
+  color: #f8fafc;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus,
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+  border-color: #34d399;
+}
+
+html.dark .nav.open,
+[data-theme="dark"] .nav.open {
+  background: #13202c;
+  border-left-color: #223242;
+}
+
+html.dark footer,
+[data-theme="dark"] footer {
+  background: #090e15;
+  border-top-color: #1a2836;
+}
+

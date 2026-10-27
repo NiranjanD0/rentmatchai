@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { useToast } from './ui/Notifications';
 
 interface Toast {
   message: string;
@@ -15,23 +15,24 @@ interface ToastNotificationProps {
 }
 
 export default function ToastNotification({ toast, onClose }: ToastNotificationProps) {
-  if (!toast) return null;
+  const { notify } = useToast();
+  const lastToastRef = useRef<Toast | null>(null);
 
-  const isError = toast.type === 'error';
-  const isInfo = toast.type === 'info';
+  useEffect(() => {
+    if (toast && toast !== lastToastRef.current) {
+      lastToastRef.current = toast;
+      const isError = toast.type === 'error';
+      const isInfo = toast.type === 'info';
 
-  return (
-    <div className={`toast-container ${isError ? 'toast-error' : isInfo ? 'toast-info' : 'toast-success'}`}>
-      <div className="toast-icon">
-        {isError ? <AlertCircle size={18} /> : isInfo ? <Info size={18} /> : <CheckCircle2 size={18} />}
-      </div>
-      <div className="toast-message">
-        {toast.title && <div className="toast-title">{toast.title}</div>}
-        <div>{toast.message}</div>
-      </div>
-      <button className="toast-close" onClick={onClose} aria-label="Close notification">
-        <X size={15} />
-      </button>
-    </div>
-  );
+      notify({
+        icon: isError ? 'alert' : isInfo ? 'info' : 'success',
+        title: toast.title || (isError ? 'Action Failed' : isInfo ? 'Notice' : 'Success'),
+        description: toast.message,
+        duration: 4500,
+      });
+      onClose();
+    }
+  }, [toast, notify, onClose]);
+
+  return null;
 }

@@ -303,7 +303,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
             {/* Quick Demo Credentials Fill for Testing/Grading */}
             <div className="demo-credentials-box">
               <div className="demo-credentials-title">
-                <KeyRound size={13} /> Quick Fill Demo Accounts (Sprint 1 &amp; 2):
+                <KeyRound size={13} /> Instant Demo Credentials (1-Click Fill):
               </div>
               <div className="demo-credentials-buttons">
                 <button

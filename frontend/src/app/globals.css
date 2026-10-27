@@ -3685,3 +3685,357 @@ footer > small {
   border-top-color: #1e293b;
   color: #94a3b8;
 }
+
+/* Top Announcement Bar */
+.top-announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #183244;
+  color: #e5edf2;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.dark .top-announcement-bar {
+  background: #0f172a;
+  color: #cbd5e1;
+  border-bottom: 1px solid #1e293b;
+}
+
+.announcement-pill {
+  background: #286b50;
+  color: #ecfdf5;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pulse-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Prompt recommendation chips */
+.prompt-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 10px 0 18px;
+}
+
+.chips-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #74838b;
+}
+
+.prompt-chip {
+  background: #f0f5f2;
+  border: 1px solid #dbe6df;
+  color: #286b50;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.prompt-chip:hover {
+  background: #e1efe5;
+  border-color: #286b50;
+  transform: translateY(-1px);
+}
+
+.dark .prompt-chip {
+  background: #1e293b;
+  border-color: #334155;
+  color: #34d399;
+}
+
+.dark .prompt-chip:hover {
+  background: #334155;
+  border-color: #34d399;
+}
+
+/* Trust Stats Strip */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 36px 0 44px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #e5ebe5;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(24, 50, 68, 0.05);
+}
+
+.stat-num {
+  font-family: 'Manrope', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #183244;
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #286b50;
+  margin-top: 2px;
+}
+
+.stat-card p {
+  font-size: 11.5px;
+  color: #74838b;
+  margin: 6px 0 0;
+  line-height: 1.4;
+}
+
+.dark .stat-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.dark .stat-num {
+  color: #f8fafc;
+}
+
+.dark .stat-label {
+  color: #34d399;
+}
+
+.dark .stat-card p {
+  color: #94a3b8;
+}
+
+/* How It Works Section */
+.how-it-works-section {
+  padding: 30px 0 45px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.step-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e4eae5;
+  border-radius: 16px;
+  padding: 26px 22px;
+  transition: all 0.2s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-3px);
+  border-color: #bcd4c2;
+  box-shadow: 0 12px 28px rgba(40, 107, 80, 0.07);
+}
+
+.step-badge {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #e2ede5;
+}
+
+.dark .step-badge {
+  color: #334155;
+}
+
+.step-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #eaf3ed;
+  color: #286b50;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+.dark .step-icon {
+  background: #162c20;
+  color: #34d399;
+}
+
+.step-card h3 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #183244;
+  margin: 0 0 8px;
+}
+
+.dark .step-card h3 {
+  color: #f8fafc;
+}
+
+.step-card p {
+  font-size: 13px;
+  color: #6a7980;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.dark .step-card p {
+  color: #94a3b8;
+}
+
+.dark .step-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+/* Site Footer */
+.site-footer {
+  background: #0f222e;
+  color: #cbd5e1;
+  padding: 56px max(calc((100vw - 1200px) / 2), 5.3%) 28px;
+  margin-top: 50px;
+  border-top: 1px solid #1a394c;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  gap: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid #1a394c;
+}
+
+.footer-col-brand .footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.footer-col-brand .footer-brand b {
+  font-family: 'Manrope', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #94a3b8;
+  max-width: 320px;
+  margin: 0 0 16px;
+}
+
+.footer-trust-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #34d399;
+}
+
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 16px;
+}
+
+.footer-col a, .footer-col span {
+  display: block;
+  font-size: 12.5px;
+  color: #94a3b8;
+  margin-bottom: 10px;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footer-col a:hover {
+  color: #34d399;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  font-size: 11.5px;
+  color: #64748b;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 18px;
+}
+
+.footer-links span {
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.footer-links span:hover {
+  color: #94a3b8;
+}
+
+@media (max-width: 900px) {
+  .stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-strip {
+    grid-template-columns: 1fr;
+  }
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+}

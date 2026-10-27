@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
-  title: "RentMatch AI | Find a place that fits",
-  description: "Personalized AI Rental Matching · Sprint 1 & 2 Prototype",
+  title: "RentMatch AI | Intelligent Rental Matching",
+  description: "Find verified apartments, flats, and student rentals directly from trusted landlords in Gandhinagar & Ahmedabad with zero brokerage.",
 };
+
 
 export const viewport: Viewport = {
   themeColor: "#f7f9f7",

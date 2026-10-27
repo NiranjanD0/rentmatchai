@@ -86,10 +86,11 @@ function ExploreContent() {
       {/* Header */}
       <div className="results-title">
         <div>
-          <small className="kicker">SPRINT 2 ACTIVE LISTINGS</small>
+          <small className="kicker">VERIFIED RENTALS</small>
           <h1>Find your kind of home.</h1>
           <p>Explore verified active rental listings matching your requirements.</p>
         </div>
+
         <span className="result-count">
           <i /> {results.length} active homes available
         </span>
@@ -240,9 +241,10 @@ function ExploreContent() {
           <div className="sample-note">
             <CircleHelp size={16} />
             <span>
-              <b>Sprint 2 State Verification:</b> Only <strong>ACTIVE</strong> properties are displayed in this public feed. Inactive listings are hidden until reactivated by their owner.
+              <b>Verified Listings:</b> Only active and verified properties are shown. Leased or paused listings are automatically archived.
             </span>
           </div>
+
         </section>
       </div>
     </div>

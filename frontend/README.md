@@ -51,9 +51,9 @@ Full Next.js (App Router) + TypeScript implementation of the RentMatch AI fronte
 
 ## 💻 How to Run
 
-1. Open a terminal in `frontend-next/`:
+1. Open a terminal in `frontend/`:
    ```bash
-   cd frontend-next
+   cd frontend
    npm install
    npm run dev
    ```
@@ -72,7 +72,7 @@ Full Next.js (App Router) + TypeScript implementation of the RentMatch AI fronte
 ## 📁 Project Structure (Next.js App Router)
 
 ```
-frontend-next/
+frontend/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx                # RootLayout with SEO metadata & Viewport

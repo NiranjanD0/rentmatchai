@@ -7,6 +7,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { useProperty } from '../../../context/PropertyContext';
 import { PropertyService } from '../../../services/propertyService';
 import { PROPERTY_STATUS } from '../../../constants/initialData';
+import { usePageCurtains } from '../../../components/ui/page-curtains';
 
 const money = (n: number) => '₹' + Number(n).toLocaleString('en-IN');
 
@@ -14,6 +15,7 @@ function PropertyDetailsContent() {
   const router = useRouter();
   const params = useParams();
   const id = params?.id as string;
+  const { navigateWithCurtains } = usePageCurtains();
 
   const { user } = useAuth();
   const {
@@ -36,7 +38,7 @@ function PropertyDetailsContent() {
       <div className="wrap detail-page empty-profile">
         <h2>Property Not Found</h2>
         <p>The listing you are looking for does not exist or may have been deleted.</p>
-        <button className="primary" onClick={() => router.push('/explore')}>
+        <button className="primary" onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}>
           <ArrowLeft size={16} /> Return to Explore Homes
         </button>
       </div>
@@ -60,7 +62,7 @@ function PropertyDetailsContent() {
   return (
     <div className="wrap detail-page">
       {/* Back Button */}
-      <button className="back" onClick={() => router.push('/explore')}>
+      <button className="back" onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}>
         <ArrowLeft size={16} /> Back to results
       </button>
 

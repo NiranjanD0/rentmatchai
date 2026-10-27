@@ -14,11 +14,13 @@ import {
   ChevronDown,
   Compass,
   Sparkles,
+  LayoutDashboard,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useProperty } from '../context/PropertyContext';
 import { USER_ROLES, type UserRole } from '../constants/initialData';
 import AnimatedThemeToggler from './ui/animated-theme-toggler';
+import { usePageCurtains } from './ui/page-curtains';
 import {
   Navbar as AceternityNavbar,
   NavBody,
@@ -47,6 +49,7 @@ export default function Navbar({
 }: NavbarProps = {}) {
   const router = useRouter();
   const pathname = usePathname();
+  const { navigateWithCurtains } = usePageCurtains();
 
   const { user, isAuthenticated, isLister, logout, openAuthModal } = useAuth();
   const propertyContext = useProperty();
@@ -84,13 +87,17 @@ export default function Navbar({
       onNavigate(targetPage, extraTab);
     } else {
       if (targetPage === 'home') {
-        router.push('/');
+        navigateWithCurtains('/', 'Discover');
       } else if (targetPage === 'results') {
-        router.push('/explore');
+        navigateWithCurtains('/explore', 'Explore Homes');
       } else if (targetPage === 'shortlist') {
-        router.push('/shortlist');
+        navigateWithCurtains('/shortlist', 'My Shortlist');
       } else if (targetPage === 'profile') {
-        router.push(extraTab ? `/profile?tab=${extraTab}` : '/profile');
+        navigateWithCurtains(extraTab ? `/profile?tab=${extraTab}` : '/profile', 'Dashboard & Profile');
+      } else if (targetPage === 'login') {
+        navigateWithCurtains('/login', 'Login');
+      } else if (targetPage === 'signup') {
+        navigateWithCurtains('/signup', 'Create Account');
       }
     }
     setMobileMenuOpen(false);
@@ -201,111 +208,116 @@ export default function Navbar({
           {/* Theme Toggler */}
           <AnimatedThemeToggler />
 
-          {/* Authenticated User Menu */}
+          {/* Authenticated User Menu vs Login Action Button */}
           {isAuthenticated ? (
-            <div className="relative" ref={dropdownRef}>
+            <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="user-profile-trigger flex items-center gap-2 border border-line rounded-full bg-white dark:bg-slate-900 dark:border-slate-800 px-2.5 py-1 transition-all hover:shadow-sm"
-                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                aria-expanded={userDropdownOpen}
+                className="text-xs font-bold px-4 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white text-white dark:text-zinc-900 shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                onClick={() => handleNav('profile')}
               >
-                <div className="user-avatar-circle w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-700 to-teal-500 text-white font-bold text-[10px] flex items-center justify-center overflow-hidden">
-                  {user!.avatar && !user!.avatar.includes('dicebear') ? (
-                    <img src={user!.avatar} alt={user!.firstName} className="w-full h-full object-cover" />
-                  ) : (
-                    <span>{userInitials}</span>
-                  )}
-                </div>
-                <div className="hidden sm:flex flex-col items-start leading-tight">
-                  <span className="text-xs font-bold text-slate-900 dark:text-slate-100 max-w-[90px] truncate">
-                    {user!.firstName}
-                  </span>
-                  <span className="text-[9px] font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
-                    {isLister ? 'Lister' : 'Tenant'}
-                  </span>
-                </div>
-                <ChevronDown
-                  size={13}
-                  className={`text-slate-400 transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`}
-                />
+                <LayoutDashboard size={13} />
+                <span>Dashboard</span>
               </button>
 
-              {/* User Dropdown */}
-              {userDropdownOpen && (
-                <div className="user-dropdown-card">
-                  <div className="dropdown-user-header">
-                    <div className="dropdown-avatar-large">
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  type="button"
+                  className="user-profile-trigger flex items-center gap-2 border border-line rounded-full bg-white dark:bg-slate-900 dark:border-slate-800 px-2.5 py-1 transition-all hover:shadow-sm"
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  aria-expanded={userDropdownOpen}
+                >
+                  <div className="user-avatar-circle w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-700 to-teal-500 text-white font-bold text-[10px] flex items-center justify-center overflow-hidden">
+                    {user!.avatar && !user!.avatar.includes('dicebear') ? (
+                      <img src={user!.avatar} alt={user!.firstName} className="w-full h-full object-cover" />
+                    ) : (
                       <span>{userInitials}</span>
-                    </div>
-                    <div className="dropdown-meta">
-                      <strong>{user!.firstName} {user!.lastName}</strong>
-                      <span className="dropdown-email">{user!.email}</span>
-                      <span className={`dropdown-role-chip ${isLister ? 'lister' : 'tenant'}`}>
-                        {isLister ? 'Property Lister' : 'Verified Tenant'}
-                      </span>
-                    </div>
+                    )}
                   </div>
+                  <div className="hidden sm:flex flex-col items-start leading-tight">
+                    <span className="text-xs font-bold text-slate-900 dark:text-slate-100 max-w-[90px] truncate">
+                      {user!.firstName}
+                    </span>
+                    <span className="text-[9px] font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                      {isLister ? 'Lister' : 'Tenant'}
+                    </span>
+                  </div>
+                  <ChevronDown
+                    size={13}
+                    className={`text-slate-400 transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
 
-                  <div className="dropdown-divider" />
+                {/* User Dropdown */}
+                {userDropdownOpen && (
+                  <div className="user-dropdown-card">
+                    <div className="dropdown-user-header">
+                      <div className="dropdown-avatar-large">
+                        <span>{userInitials}</span>
+                      </div>
+                      <div className="dropdown-meta">
+                        <strong>{user!.firstName} {user!.lastName}</strong>
+                        <span className="dropdown-email">{user!.email}</span>
+                        <span className={`dropdown-role-chip ${isLister ? 'lister' : 'tenant'}`}>
+                          {isLister ? 'Property Lister' : 'Verified Tenant'}
+                        </span>
+                      </div>
+                    </div>
 
-                  <button
-                    className="dropdown-item"
-                    onClick={() => handleNav('profile', 'personal')}
-                  >
-                    <User size={15} /> My Profile &amp; Preferences
-                  </button>
+                    <div className="dropdown-divider" />
 
-                  {isLister ? (
-                    <>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => handleNav('profile', 'listings')}
-                      >
-                        <Building2 size={15} /> My Properties Dashboard
-                      </button>
-                      <button
-                        className="dropdown-item highlight"
-                        onClick={() => {
-                          setUserDropdownOpen(false);
-                          onOpenAddProperty();
-                        }}
-                      >
-                        <Plus size={15} /> + Add New Property
-                      </button>
-                    </>
-                  ) : (
                     <button
                       className="dropdown-item"
-                      onClick={() => handleNav('shortlist')}
+                      onClick={() => handleNav('profile', 'personal')}
                     >
-                      <Heart size={15} /> My Shortlisted Homes ({savedCount})
+                      <User size={15} /> My Profile &amp; Preferences
                     </button>
-                  )}
 
-                  <div className="dropdown-divider" />
+                    {isLister ? (
+                      <>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => handleNav('profile', 'listings')}
+                        >
+                          <Building2 size={15} /> My Properties Dashboard
+                        </button>
+                        <button
+                          className="dropdown-item highlight"
+                          onClick={() => {
+                            setUserDropdownOpen(false);
+                            onOpenAddProperty();
+                          }}
+                        >
+                          <Plus size={15} /> + Add New Property
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="dropdown-item"
+                        onClick={() => handleNav('shortlist')}
+                      >
+                        <Heart size={15} /> My Shortlisted Homes ({savedCount})
+                      </button>
+                    )}
 
-                  <button className="dropdown-item danger" onClick={handleLogout}>
-                    <LogOut size={15} /> Sign Out
-                  </button>
-                </div>
-              )}
+                    <div className="dropdown-divider" />
+
+                    <button className="dropdown-item danger" onClick={handleLogout}>
+                      <LogOut size={15} /> Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
-            <div className="auth-buttons-group flex items-center gap-1.5">
+            <div className="auth-buttons-group flex items-center">
               <button
                 type="button"
-                className="btn-text-signin text-xs font-bold px-3 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors"
-                onClick={() => onOpenAuth('login')}
+                className="btn-create-account text-xs font-bold px-4 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                onClick={() => handleNav('login')}
               >
-                Sign In
-              </button>
-              <button
-                type="button"
-                className="btn-create-account text-xs font-bold px-4 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm transition-all"
-                onClick={() => onOpenAuth('register')}
-              >
-                Get Started
+                <LogIn size={13} />
+                <span>Login</span>
               </button>
             </div>
           )}
@@ -429,22 +441,11 @@ export default function Navbar({
           {/* Mobile Auth Section */}
           {isAuthenticated ? (
             <div className="flex flex-col gap-2 w-full pt-1">
-              <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/60 rounded-xl">
-                <div className="w-9 h-9 rounded-full bg-emerald-700 text-white font-bold text-xs flex items-center justify-center">
-                  {userInitials}
-                </div>
-                <div className="flex flex-col">
-                  <strong className="text-xs text-slate-900 dark:text-slate-100">
-                    {user!.firstName} {user!.lastName}
-                  </strong>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400">{user!.email}</span>
-                </div>
-              </div>
               <button
-                className="flex items-center gap-2 w-full p-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-white bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 shadow-sm cursor-pointer"
                 onClick={() => handleNav('profile')}
               >
-                <User size={15} /> My Profile &amp; Preferences
+                <LayoutDashboard size={15} /> Dashboard
               </button>
               <button
                 className="flex items-center gap-2 w-full p-2.5 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40"
@@ -456,22 +457,16 @@ export default function Navbar({
           ) : (
             <div className="flex flex-col gap-2 w-full pt-1">
               <button
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-sm"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenAuth('register');
-                }}
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-sm cursor-pointer"
+                onClick={() => handleNav('login')}
               >
-                <UserPlus size={15} /> Create Account
+                <LogIn size={15} /> Login
               </button>
               <button
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenAuth('login');
-                }}
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
+                onClick={() => handleNav('signup')}
               >
-                <LogIn size={15} /> Sign In
+                <UserPlus size={15} /> Create Account
               </button>
             </div>
           )}

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, SlidersHorizontal, RotateCcw, X, MapPin, CircleHelp } from 'lucide-react';
 import PropertyCard from '../../components/PropertyCard';
 import { useProperty } from '../../context/PropertyContext';
+import { usePageCurtains } from '../../components/ui/page-curtains';
 
 const money = (n: number | string) => '₹' + Number(n).toLocaleString('en-IN');
 
@@ -12,6 +13,7 @@ function ExploreContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { activeProperties, saved, toggleSave } = useProperty();
+  const { navigateWithCurtains } = usePageCurtains();
 
   const initialQuery = searchParams.get('query') || '';
   const initialLocation = searchParams.get('location') || 'Gandhinagar';
@@ -77,10 +79,18 @@ function ExploreContent() {
   };
 
   return (
-    <div className="wrap results-page">
+    <div className="wrap results-page text-zinc-900 dark:text-zinc-100">
       {/* Breadcrumb */}
-      <div className="crumb">
-        <button onClick={() => router.push('/')}>Discover</button> / Explore Homes
+      <div className="crumb text-xs text-zinc-500 dark:text-zinc-400 mb-4 flex items-center gap-1.5">
+        <button
+          type="button"
+          onClick={() => navigateWithCurtains('/', 'Discover')}
+          className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold cursor-pointer"
+        >
+          Discover
+        </button>
+        <span>/</span>
+        <span>Explore Homes</span>
       </div>
 
       {/* Header */}
@@ -223,7 +233,7 @@ function ExploreContent() {
                   property={p}
                   isSaved={saved.includes(p.id)}
                   onToggleSave={toggleSave}
-                  onOpenDetails={(id) => router.push(`/properties/${id}`)}
+                  onOpenDetails={(id) => navigateWithCurtains(`/properties/${id}`, 'Property Details')}
                 />
               ))}
             </div>

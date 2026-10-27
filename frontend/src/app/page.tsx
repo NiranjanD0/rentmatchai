@@ -24,9 +24,11 @@ import PropertyCard from '../components/PropertyCard';
 import { useAuth } from '../context/AuthContext';
 import { useProperty } from '../context/PropertyContext';
 import { USER_ROLES } from '../constants/initialData';
+import { usePageCurtains } from '../components/ui/page-curtains';
 
 export default function HomePage() {
   const router = useRouter();
+  const { navigateWithCurtains } = usePageCurtains();
   const { user, isAuthenticated, isLister, openAuthModal } = useAuth();
   const { activeProperties, saved, toggleSave, openAddProperty } = useProperty();
 
@@ -65,8 +67,9 @@ export default function HomePage() {
 
   const handleSearchSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    router.push(
-      `/explore?query=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}&budget=${encodeURIComponent(budget)}`
+    navigateWithCurtains(
+      `/explore?query=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}&budget=${encodeURIComponent(budget)}`,
+      'Explore Homes'
     );
   };
 
@@ -271,7 +274,7 @@ export default function HomePage() {
             </div>
             <button
               type="button"
-              onClick={() => openAuthModal('register', USER_ROLES.PROPERTY_LISTER)}
+              onClick={() => navigateWithCurtains('/signup', 'Create Account')}
               className="shrink-0 flex items-center gap-2 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-5 py-3 text-sm hover:opacity-90 transition-all shadow-md active:scale-95 cursor-pointer"
             >
               <UserPlus size={16} />
@@ -305,7 +308,7 @@ export default function HomePage() {
               </button>
               <button
                 type="button"
-                onClick={() => router.push('/profile?tab=listings')}
+                onClick={() => navigateWithCurtains('/profile?tab=listings', 'Dashboard & Profile')}
                 className="flex items-center gap-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-semibold px-4 py-2.5 text-sm hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all active:scale-95 cursor-pointer"
               >
                 Dashboard
@@ -359,7 +362,7 @@ export default function HomePage() {
             </div>
             <button
               type="button"
-              onClick={() => router.push('/explore')}
+              onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors cursor-pointer group"
             >
               <span>Explore all {activeProperties.length} homes</span>
@@ -374,7 +377,7 @@ export default function HomePage() {
                 property={p}
                 isSaved={saved.includes(p.id)}
                 onToggleSave={toggleSave}
-                onOpenDetails={(id) => router.push(`/properties/${id}`)}
+                onOpenDetails={(id) => navigateWithCurtains(`/properties/${id}`, 'Property Details')}
               />
             ))}
           </div>

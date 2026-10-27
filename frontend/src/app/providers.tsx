@@ -5,6 +5,7 @@ import { ThemeProvider } from 'next-themes';
 import { AuthProvider } from '../context/AuthContext';
 import { PropertyProvider } from '../context/PropertyContext';
 import { ToastProvider } from '../components/ui/Notifications';
+import { PageCurtains } from '../components/ui/page-curtains';
 import RootClientLayout from './RootClientLayout';
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -18,7 +19,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <AuthProvider>
         <ToastProvider position="bottom-right">
           <PropertyProvider>
-            <RootClientLayout>{children}</RootClientLayout>
+            <PageCurtains>
+              <RootClientLayout>{children}</RootClientLayout>
+            </PageCurtains>
           </PropertyProvider>
         </ToastProvider>
       </AuthProvider>

@@ -8,10 +8,12 @@ import { PropertyService } from '../../services/propertyService';
 import { PROPERTY_STATUS, type Property } from '../../constants/initialData';
 import PropertyCard from '../../components/PropertyCard';
 import { User, Mail, Phone, Building2, ShieldCheck, Plus, CheckCircle2, AlertCircle, Lock, Sparkles } from 'lucide-react';
+import { usePageCurtains } from '../../components/ui/page-curtains';
 
 function ProfileContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { navigateWithCurtains } = usePageCurtains();
   const initialTab = searchParams.get('tab') || 'personal';
 
   const { user, updateProfile, changePassword, isLister, isTenant } = useAuth();
@@ -86,6 +88,13 @@ function ProfileContent() {
         <User size={48} />
         <h2>Sign In Required</h2>
         <p>Please log in or register to access your personal profile and manage listings.</p>
+        <button
+          type="button"
+          className="btn-create-account text-xs font-bold px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-all cursor-pointer inline-flex items-center gap-1.5 mt-4"
+          onClick={() => navigateWithCurtains('/login', 'Login')}
+        >
+          Login to Continue
+        </button>
       </div>
     );
   }

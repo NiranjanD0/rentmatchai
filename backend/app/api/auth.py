@@ -3,6 +3,11 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from sqlalchemy import select, func
 
+import os
+import secrets
+from google.oauth2 import id_token
+from google.auth.transport import requests
+
 # Import your database connection and security logic
 from app.core.database import get_db
 from app.core.security import get_password_hash, verify_password, create_access_token
@@ -84,8 +89,60 @@ def logout():
 
 @router.post("/google", response_model=Token)
 def google_auth(auth_in: GoogleAuthRequest, db: Session = Depends(get_db)):
-    # Standard placeholder for Google ID token verification
-    raise HTTPException(
-        status_code=501, 
-        detail="Google Client ID required to fully implement verify_oauth2_token. Feature stubbed for frontend integration."
-    )
+    client_id = os.getenv("GOOGLE_CLIENT_ID")
+    if not client_id:
+        raise HTTPException(status_code=500, detail="Server OAuth configuration missing")
+
+    try:
+        # 1. Verify the token signature with Google
+        idinfo = id_token.verify_oauth2_token(
+            auth_in.token, 
+            requests.Request(), 
+            client_id
+        )
+        
+        email = idinfo.get("email")
+        first_name = idinfo.get("given_name", "")
+        last_name = idinfo.get("family_name", "")
+        
+        # 2. Check if the user already exists in your database
+        stmt = select(User).where(func.lower(User.email) == email.lower())
+        user = db.execute(stmt).scalar_one_or_none()
+        
+        if not user:
+            # 3. Create a new user record for first-time Google Sign-In
+            # We generate a random secure string for the password hash since they use Google
+            dummy_password = secrets.token_urlsafe(32)
+            
+            user = User(
+                email=email,
+                password_hash=get_password_hash(dummy_password),
+                first_name=first_name,
+                last_name=last_name,
+                phone=""  # Default empty string
+            )
+            db.add(user)
+            db.flush()
+            
+            # Assign a default role
+            db_role = UserRole(user_id=user.id, role="tenant")
+            db.add(db_role)
+            
+            db.commit()
+            db.refresh(user)
+            
+        elif not user.is_active:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, 
+                detail="Inactive user account"
+            )
+        
+        # 4. Generate your application's JWT Token using the user's ID
+        access_token = create_access_token(subject=str(user.id))
+        return {"access_token": access_token, "token_type": "bearer"}
+        
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail="Invalid or expired Google token"
+        )

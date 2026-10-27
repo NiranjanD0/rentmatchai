@@ -342,7 +342,7 @@ export const ToggleTheme = ({
             <button
                 type="button"
                 className={cn(
-                    "p-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 transition-colors opacity-0",
+                    "p-2 rounded-full border border-black/25 dark:border-white/30 bg-white dark:bg-black text-black dark:text-white transition-colors opacity-0",
                     className
                 )}
                 aria-label="Toggle theme"
@@ -359,12 +359,12 @@ export const ToggleTheme = ({
             onClick={toggleTheme}
             aria-label="Toggle theme"
             className={cn(
-                "p-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all cursor-pointer shadow-xs",
+                "p-2 rounded-full border border-black/25 dark:border-white/30 bg-white dark:bg-black text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-200 cursor-pointer shadow-xs active:scale-95",
                 className
             )}
             {...props}
         >
-            {isDark ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-zinc-700" />}
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
         </button>
     )
 }

@@ -7,7 +7,6 @@ import {
   Compass,
   Building2,
   Heart,
-  KeyRound,
   Plus,
   User,
   LogOut,
@@ -17,7 +16,7 @@ import {
   LayoutDashboard,
   Menu,
   X,
-  Sparkles,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '@/src/context/AuthContext';
 import { useProperty } from '@/src/context/PropertyContext';
@@ -100,6 +99,7 @@ export default function Navbar({
 
   const handleListPropertyClick = () => {
     setMobileMenuOpen(false);
+    setUserDropdownOpen(false);
     if (isAuthenticated && isLister) {
       onOpenAddProperty();
     } else if (!isAuthenticated) {
@@ -121,48 +121,75 @@ export default function Navbar({
     ? `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase()
     : 'U';
 
-  const navLinks = [
-    { id: 'home', label: 'Discover', icon: Compass, href: '/' },
-    { id: 'results', label: 'Explore Homes', icon: Building2, href: '/explore' },
-    { id: 'shortlist', label: 'Shortlist', icon: Heart, href: '/shortlist', badge: savedCount > 0 ? savedCount : null },
+  // Unified central navigation items (Discover, Explore Homes, Shortlist + List Property moved together!)
+  const navItems = [
+    { id: 'home', label: 'Discover', icon: Compass, onClick: () => handleNav('home') },
+    { id: 'results', label: 'Explore Homes', icon: Building2, onClick: () => handleNav('results') },
+    {
+      id: 'shortlist',
+      label: 'Shortlist',
+      icon: Heart,
+      badge: savedCount > 0 ? savedCount : null,
+      onClick: () => handleNav('shortlist'),
+    },
+    {
+      id: 'list-property',
+      label: 'List Property',
+      icon: Plus,
+      isSpecial: true,
+      onClick: handleListPropertyClick,
+    },
   ];
 
-  if (isAuthenticated && isLister) {
-    navLinks.push({ id: 'profile', label: 'My Listings', icon: KeyRound, href: '/profile?tab=listings', badge: null });
-  }
-
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md transition-colors shadow-xs">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/70 dark:border-zinc-800/70 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-zinc-950/70 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <button
           type="button"
-          className="text-left border-0 bg-transparent p-0 cursor-pointer group flex items-center"
+          className="text-left border-0 bg-transparent p-0 cursor-pointer group flex items-center focus:outline-none"
           onClick={() => handleNav('home')}
         >
           <BrandLogo size="md" />
         </button>
 
-        {/* Center Desktop Navigation Links with Icons */}
-        <nav className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-zinc-100/80 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60">
-          {navLinks.map((item) => {
+        {/* Center Floating Dock with Discover, Explore, Shortlist AND List Property */}
+        <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-zinc-100/80 dark:bg-zinc-900/80 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs">
+          {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activePage === item.id;
             return (
               <button
                 key={item.id}
                 type="button"
-                onClick={() => handleNav(item.id)}
-                className={`relative flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                onClick={item.onClick}
+                className={`relative flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs transition-all duration-150 cursor-pointer ${
                   isActive
-                    ? 'text-emerald-700 dark:text-emerald-300 bg-white dark:bg-zinc-800 shadow-xs'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-white/50 dark:hover:bg-zinc-800/50'
+                    ? 'text-zinc-950 dark:text-white font-semibold'
+                    : item.isSpecial
+                    ? 'text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 font-medium'
                 }`}
               >
-                <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    className="absolute inset-0 bg-white dark:bg-zinc-800 rounded-full shadow-xs border border-zinc-200/60 dark:border-zinc-700/60 -z-10"
+                    transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                  />
+                )}
+                <Icon
+                  className={`h-3.5 w-3.5 ${
+                    isActive
+                      ? 'text-zinc-950 dark:text-white'
+                      : item.isSpecial
+                      ? 'text-emerald-600 dark:text-emerald-400'
+                      : 'text-zinc-500 dark:text-zinc-400'
+                  }`}
+                />
                 <span>{item.label}</span>
-                {item.badge !== null && (
-                  <span className="rounded-full bg-emerald-600 text-white dark:bg-emerald-500 dark:text-zinc-950 text-[10px] font-bold px-1.5 py-0.2">
+                {item.badge !== null && item.badge !== undefined && (
+                  <span className="rounded-full bg-emerald-600 text-white dark:bg-emerald-500 dark:text-zinc-950 text-[10px] font-bold px-1.5 py-0.2 leading-tight">
                     {item.badge}
                   </span>
                 )}
@@ -172,80 +199,82 @@ export default function Navbar({
         </nav>
 
         {/* Right Action Cluster */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Prominent List Property Action Button */}
-          <button
-            type="button"
-            onClick={handleListPropertyClick}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-100/90 hover:bg-emerald-200/90 border border-emerald-300/60 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/80 transition-all shadow-xs hover:shadow-sm cursor-pointer"
-          >
-            <Plus className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-            <span>List Property</span>
-          </button>
-
-          {/* Lightswind Theme Toggle */}
+        <div className="flex items-center gap-2.5">
+          {/* Black & White Theme Toggle */}
           <ToggleTheme />
 
-          {/* Authenticated Dashboard / User Profile vs Login Button */}
+          {/* Authenticated Dashboard / User Profile vs Minimal Modern Login Button */}
           {isAuthenticated ? (
-            <div className="flex items-center gap-2">
+            <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
-                className="hidden sm:flex text-xs font-semibold px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-800 dark:text-zinc-200 transition-colors cursor-pointer items-center gap-1.5"
-                onClick={() => handleNav('profile')}
+                className="flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 pl-1.5 pr-2.5 py-1 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all cursor-pointer shadow-xs active:scale-95"
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                aria-expanded={userDropdownOpen}
               >
-                <LayoutDashboard className="h-3.5 w-3.5 text-zinc-500 dark:text-zinc-400" />
-                <span>Dashboard</span>
+                <div className="w-6 h-6 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-bold text-[10px] flex items-center justify-center overflow-hidden shrink-0">
+                  {user!.avatar && !user!.avatar.includes('dicebear') ? (
+                    <img src={user!.avatar} alt={user!.firstName} className="w-full h-full object-cover" />
+                  ) : (
+                    <span>{userInitials}</span>
+                  )}
+                </div>
+                <span className="hidden sm:inline-block max-w-[100px] truncate">
+                  {user!.firstName}
+                </span>
+                <ChevronDown
+                  className={`h-3 w-3 text-zinc-400 transition-transform duration-200 ${
+                    userDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
 
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  type="button"
-                  className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-full bg-white dark:bg-zinc-900 p-1 pr-2 transition-all hover:border-emerald-500/50 cursor-pointer shadow-xs"
-                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  aria-expanded={userDropdownOpen}
-                >
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-bold text-[11px] flex items-center justify-center overflow-hidden shadow-xs">
-                    {user!.avatar && !user!.avatar.includes('dicebear') ? (
-                      <img src={user!.avatar} alt={user!.firstName} className="w-full h-full object-cover" />
-                    ) : (
-                      <span>{userInitials}</span>
-                    )}
-                  </div>
-                  <ChevronDown
-                    className={`h-3 w-3 text-zinc-500 dark:text-zinc-400 transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-
-                {/* User Dropdown Card */}
+              {/* User Dropdown Card */}
+              <AnimatePresence>
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-60 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-150">
-                    <div className="px-3 py-2.5 border-b border-zinc-100 dark:border-zinc-800 mb-1">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.96, y: 6 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 mt-2 w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl p-2 shadow-xl shadow-zinc-950/10 dark:shadow-black/50 z-50"
+                  >
+                    <div className="px-3 py-2.5 border-b border-zinc-100 dark:border-zinc-800/80 mb-1">
                       <div className="font-bold text-xs text-zinc-900 dark:text-zinc-100">
                         {user!.firstName} {user!.lastName}
                       </div>
                       <div className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">
                         {user!.email}
                       </div>
-                      <span className="inline-block mt-1.5 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-800/40">
-                        {isLister ? 'Property Lister' : 'Verified Tenant'}
-                      </span>
+                      <div className="mt-1.5 flex items-center gap-1.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400">
+                        <ShieldCheck className="h-3 w-3" />
+                        <span>{isLister ? 'Verified Landlord' : 'Verified Renter'}</span>
+                      </div>
                     </div>
 
                     <button
                       type="button"
-                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
                       onClick={() => handleNav('profile', 'personal')}
                     >
                       <User className="h-3.5 w-3.5 text-zinc-500" />
-                      <span>Profile &amp; Preferences</span>
+                      <span>Profile &amp; Account</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                      onClick={() => handleNav('profile')}
+                    >
+                      <LayoutDashboard className="h-3.5 w-3.5 text-zinc-500" />
+                      <span>Dashboard</span>
                     </button>
 
                     {isLister ? (
                       <>
                         <button
                           type="button"
-                          className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                          className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
                           onClick={() => handleNav('profile', 'listings')}
                         >
                           <Building2 className="h-3.5 w-3.5 text-zinc-500" />
@@ -266,7 +295,7 @@ export default function Navbar({
                     ) : (
                       <button
                         type="button"
-                        className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                        className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
                         onClick={() => handleNav('shortlist')}
                       >
                         <Heart className="h-3.5 w-3.5 text-zinc-500" />
@@ -274,37 +303,35 @@ export default function Navbar({
                       </button>
                     )}
 
-                    <div className="h-px bg-zinc-100 dark:bg-zinc-800 my-1" />
+                    <div className="h-px bg-zinc-100 dark:bg-zinc-800/80 my-1" />
 
                     <button
                       type="button"
-                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl text-left transition-colors cursor-pointer"
+                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl text-left transition-colors cursor-pointer"
                       onClick={handleLogout}
                     >
                       <LogOut className="h-3.5 w-3.5" />
                       <span>Sign Out</span>
                     </button>
-                  </div>
+                  </motion.div>
                 )}
-              </div>
+              </AnimatePresence>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition-all shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer"
-                onClick={() => handleNav('login')}
-              >
-                <LogIn className="h-3.5 w-3.5" />
-                <span>Login</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-full bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-950 transition-all shadow-xs active:scale-95 cursor-pointer"
+              onClick={() => handleNav('login')}
+            >
+              <LogIn className="h-3.5 w-3.5" />
+              <span>Login</span>
+            </button>
           )}
 
           {/* Mobile Menu Hamburger */}
           <button
             type="button"
-            className="md:hidden p-2 rounded-xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+            className="md:hidden p-2 rounded-full text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
           >
@@ -321,46 +348,41 @@ export default function Navbar({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/98 dark:bg-zinc-950/98 px-4 pt-3 pb-6 space-y-1.5 backdrop-blur-md overflow-hidden"
+            className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 px-4 pt-3 pb-6 space-y-1.5 backdrop-blur-xl overflow-hidden"
           >
-            {navLinks.map((item) => {
+            {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activePage === item.id;
               return (
                 <button
                   key={item.id}
                   type="button"
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-left transition-colors ${
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-left transition-colors ${
                     isActive
-                      ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300'
+                      ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
+                      : item.isSpecial
+                      ? 'text-emerald-700 dark:text-emerald-400 font-semibold hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
                       : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900'
                   }`}
-                  onClick={() => handleNav(item.id)}
+                  onClick={item.onClick}
                 >
                   <span className="flex items-center gap-2.5">
-                    <Icon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    <Icon className={`h-4 w-4 ${item.isSpecial ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
                     <span>{item.label}</span>
                   </span>
-                  {item.badge !== null && (
+                  {item.badge !== null && item.badge !== undefined && (
                     <span className="rounded-full bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5">
                       {item.badge}
+                    </span>
+                  )}
+                  {item.isSpecial && (
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200/50 dark:border-emerald-800/50">
+                      Free
                     </span>
                   )}
                 </button>
               );
             })}
-
-            <button
-              type="button"
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-100 dark:bg-emerald-950/80 dark:text-emerald-200 mt-2"
-              onClick={handleListPropertyClick}
-            >
-              <span className="flex items-center gap-2">
-                <Plus className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                <span>List a Property (Zero Commission)</span>
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-700 dark:text-emerald-300">Free</span>
-            </button>
 
             <div className="h-px bg-zinc-100 dark:bg-zinc-800 my-2" />
 
@@ -385,14 +407,14 @@ export default function Navbar({
               <div className="space-y-2 pt-1">
                 <button
                   type="button"
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/20"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold bg-zinc-900 text-white dark:bg-white dark:text-zinc-950"
                   onClick={() => handleNav('login')}
                 >
                   <LogIn className="h-4 w-4" /> Login
                 </button>
                 <button
                   type="button"
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-medium border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200"
                   onClick={() => handleNav('signup')}
                 >
                   <UserPlus className="h-4 w-4" /> Create Account

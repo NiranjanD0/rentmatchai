@@ -49,58 +49,110 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
       <main>{children}</main>
 
       {/* Shared Global Footer */}
-      <footer className="site-footer">
-        <div className="footer-top">
-          <div className="footer-col-brand">
-            <div className="footer-brand">
-              <span className="brand-mark">
-                <span style={{ fontSize: '13px' }}>✦</span>
-              </span>
-              <b>
-                rentmatch<span>ai</span>
-              </b>
+      <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md text-zinc-600 dark:text-zinc-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-600 text-white font-extrabold text-sm shadow-md shadow-emerald-600/30">
+                  ✦
+                </span>
+                <span className="text-xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
+                  rentmatch<span className="text-emerald-600 dark:text-emerald-400">ai</span>
+                </span>
+              </div>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed mb-5">
+                Intelligent rental matching that connects verified tenants directly with authentic landlords and property managers across Gandhinagar and Ahmedabad.
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs font-medium text-emerald-700 dark:text-emerald-300">
+                <span className="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/20">
+                  ✓ 100% Verified Listers
+                </span>
+                <span className="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/20">
+                  ✓ Zero Brokerage
+                </span>
+                <span className="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/20">
+                  ✓ Direct Landlord Chat
+                </span>
+              </div>
             </div>
-            <p className="footer-tagline">
-              Intelligent rental matching that connects verified tenants directly with authentic landlords and property managers.
-            </p>
-            <div className="footer-trust-chips">
-              <span>✓ 100% Verified Listers</span>
-              <span>✓ Zero Brokerage</span>
-              <span>✓ Direct Tenant Chat</span>
+
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 mb-4">
+                Explore
+              </h4>
+              <ul className="space-y-2.5 text-sm">
+                <li>
+                  <a href="/explore" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    All Available Homes
+                  </a>
+                </li>
+                <li>
+                  <a href="/explore?query=furnished" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    Furnished 2BHKs
+                  </a>
+                </li>
+                <li>
+                  <a href="/explore?query=student" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    Student Housing near PDEU
+                  </a>
+                </li>
+                <li>
+                  <a href="/explore?query=pet-friendly" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    Pet-Friendly Rentals
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 mb-4">
+                For Landlords
+              </h4>
+              <ul className="space-y-2.5 text-sm">
+                <li>
+                  <a href="/profile?tab=listings" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    List Your Property
+                  </a>
+                </li>
+                <li>
+                  <a href="/profile" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    Listing Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a href="/explore" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    Rental Pricing Guide
+                  </a>
+                </li>
+                <li>
+                  <a href="/explore" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    Tenant Verification
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 mb-4">
+                Locations
+              </h4>
+              <ul className="space-y-2.5 text-sm text-zinc-500 dark:text-zinc-400">
+                <li>Gandhinagar Core</li>
+                <li>Infocity &amp; Kudasan</li>
+                <li>Raysan &amp; PDEU Road</li>
+                <li>Ahmedabad SG Highway</li>
+              </ul>
             </div>
           </div>
 
-          <div className="footer-col">
-            <h4>Explore</h4>
-            <a href="/explore">All Available Homes</a>
-            <a href="/explore?query=furnished">Furnished 2BHKs</a>
-            <a href="/explore?query=student">Student Housing near PDEU</a>
-            <a href="/explore?query=pet-friendly">Pet-Friendly Rentals</a>
-          </div>
-
-          <div className="footer-col">
-            <h4>For Landlords</h4>
-            <a href="/profile?tab=listings">List Your Property</a>
-            <a href="/profile">Listing Dashboard</a>
-            <a href="/explore">Rental Pricing Guide</a>
-            <a href="/explore">Tenant Verification</a>
-          </div>
-
-          <div className="footer-col">
-            <h4>Locations</h4>
-            <span>Gandhinagar</span>
-            <span>Infocity &amp; Kudasan</span>
-            <span>Raysan &amp; PDEU Road</span>
-            <span>Ahmedabad SG Highway</span>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <span>&copy; 2026 RentMatch AI. All rights reserved.</span>
-          <div className="footer-links">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Security &amp; Verification</span>
+          <div className="mt-12 pt-8 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
+            <span>&copy; 2026 RentMatch AI. All rights reserved.</span>
+            <div className="flex gap-6">
+              <span className="hover:text-zinc-700 dark:hover:text-zinc-200 cursor-pointer transition-colors">Privacy Policy</span>
+              <span className="hover:text-zinc-700 dark:hover:text-zinc-200 cursor-pointer transition-colors">Terms of Service</span>
+              <span className="hover:text-zinc-700 dark:hover:text-zinc-200 cursor-pointer transition-colors">Security &amp; Trust</span>
+            </div>
           </div>
         </div>
       </footer>

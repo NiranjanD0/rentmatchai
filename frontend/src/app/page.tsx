@@ -2,294 +2,551 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'motion/react';
 import {
-  Sparkles,
-  CheckCircle2,
+  Search,
   MapPin,
   Wallet,
+  Home as HomeIcon,
+  Building2,
+  Users,
+  GraduationCap,
+  Laptop,
+  PawPrint,
+  TrainTrack,
+  Sparkles,
+  ShieldCheck,
+  CheckCircle2,
   ArrowRight,
   ArrowUpRight,
-  Building2,
-  ShieldCheck,
-  Compass,
-  GraduationCap,
-  Briefcase,
-  Users,
+  Star,
+  Check,
+  X,
+  Plus,
+  Coins,
+  Clock,
+  MessageCircle,
 } from 'lucide-react';
 import PropertyCard from '../components/PropertyCard';
 import { useAuth } from '../context/AuthContext';
 import { useProperty } from '../context/PropertyContext';
 import { usePageCurtains } from '../components/ui/page-curtains';
+import { USER_ROLES } from '../constants/initialData';
 
 export default function HomePage() {
   const router = useRouter();
   const { navigateWithCurtains } = usePageCurtains();
-  const { user, isAuthenticated, isLister } = useAuth();
+  const { user, isAuthenticated, isLister, openAuthModal } = useAuth();
   const { activeProperties, saved, toggleSave, openAddProperty } = useProperty();
 
-  const [activeTab, setActiveTab] = useState<'all' | 'students' | 'pros' | 'families'>('all');
-  const [query, setQuery] = useState('Furnished 2BHK near PDEU with balcony under ₹22,000');
-  const [location, setLocation] = useState('Gandhinagar');
-  const [budget, setBudget] = useState('25000');
+  // Search Segment States
+  const [selectedLocality, setSelectedLocality] = useState('Gandhinagar');
+  const [selectedBhk, setSelectedBhk] = useState('Any');
+  const [selectedBudget, setSelectedBudget] = useState('25000');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'students' | 'pros' | 'families'>('all');
 
-  const samplePrompts = [
-    { label: 'Near PDEU (< ₹20k)', text: 'Furnished 2BHK near PDEU under ₹20,000' },
-    { label: 'Studio at Infocity', text: 'Studio apartment near Infocity with fast Wi-Fi' },
-    { label: 'Kudasan 3BHK Pet-friendly', text: 'Pet-friendly 3BHK in Kudasan with covered parking' },
-    { label: 'Budget 1BHK near Metro', text: 'Budget 1BHK near Metro under ₹14,000' },
+  // Savings Calculator State
+  const [calculatorRent, setCalculatorRent] = useState(22000);
+
+  // Quick Chips
+  const quickChips = [
+    { label: 'Near PDEU Campus', icon: GraduationCap, loc: 'Raysan / PDEU', bhk: '2', budget: '20000' },
+    { label: 'Infocity Tech Hub', icon: Laptop, loc: 'Infocity', bhk: '1', budget: '22000' },
+    { label: 'Pet-Friendly Flats', icon: PawPrint, loc: 'Kudasan', bhk: '3', budget: '35000' },
+    { label: 'Near Metro Station', icon: TrainTrack, loc: 'Gandhinagar', bhk: '1', budget: '15000' },
+    { label: 'Furnished Studios', icon: Sparkles, loc: 'Infocity', bhk: '1', budget: '18000' },
   ];
 
-  const handleTabSelect = (tab: 'all' | 'students' | 'pros' | 'families') => {
-    setActiveTab(tab);
-    if (tab === 'students') {
-      setQuery('Student friendly shared apartment walking distance to PDEU or PDPU with high-speed internet');
-      setLocation('Raysan / PDEU');
-      setBudget('18000');
-    } else if (tab === 'pros') {
-      setQuery('Fully furnished 1BHK or studio apartment near Infocity tech park with power backup');
-      setLocation('Infocity, Gandhinagar');
-      setBudget('22000');
-    } else if (tab === 'families') {
-      setQuery('Spacious 3BHK family flat in Kudasan with elevator, covered parking, and gated security');
-      setLocation('Kudasan');
-      setBudget('35000');
-    } else {
-      setQuery('Furnished 2BHK near PDEU with balcony under ₹22,000');
-      setLocation('Gandhinagar');
-      setBudget('25000');
-    }
-  };
-
-  const handleSearchSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
+  const handleChipClick = (chip: typeof quickChips[0]) => {
+    setSelectedLocality(chip.loc);
+    setSelectedBhk(chip.bhk);
+    setSelectedBudget(chip.budget);
     navigateWithCurtains(
-      `/explore?query=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}&budget=${encodeURIComponent(budget)}`,
+      `/explore?location=${encodeURIComponent(chip.loc)}&budget=${encodeURIComponent(chip.budget)}&bedrooms=${encodeURIComponent(chip.bhk)}`,
       'Explore Homes'
     );
   };
 
-  const featured = activeProperties.slice(0, 3);
+  const handleSearchSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const params = new URLSearchParams();
+    if (selectedLocality && selectedLocality !== 'Any Locality') params.set('location', selectedLocality);
+    if (selectedBudget) params.set('budget', selectedBudget);
+    if (selectedBhk && selectedBhk !== 'Any') params.set('bedrooms', selectedBhk);
+    navigateWithCurtains(`/explore?${params.toString()}`, 'Explore Homes');
+  };
+
+  // Filter properties based on featured category tab
+  const filteredFeatured = activeProperties.filter((p) => {
+    if (selectedCategory === 'students') {
+      return (
+        p.location.toLowerCase().includes('pdeu') ||
+        p.location.toLowerCase().includes('raysan') ||
+        p.rent <= 20000
+      );
+    }
+    if (selectedCategory === 'pros') {
+      return (
+        p.location.toLowerCase().includes('infocity') ||
+        p.furnishing === 'Fully Furnished' ||
+        p.bedrooms === 1
+      );
+    }
+    if (selectedCategory === 'families') {
+      return p.bedrooms >= 2 || p.location.toLowerCase().includes('kudasan');
+    }
+    return true;
+  }).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-24">
-        {/* Informative Minimal Hero Header */}
-        <section className="text-center pt-6 pb-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-3.5 py-1 text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-6">
-            <ShieldCheck className="h-3.5 w-3.5 text-zinc-900 dark:text-zinc-100" />
-            <span>Direct rental matching in Gandhinagar &amp; Ahmedabad</span>
-          </div>
+    <div className="min-h-screen bg-slate-50/50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
+      {/* Background Decorative Ambient Blobs */}
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[560px] overflow-hidden -z-10">
+        <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-emerald-400/15 to-teal-400/5 dark:from-emerald-500/10 dark:to-teal-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-gradient-to-bl from-teal-400/15 to-cyan-400/5 dark:from-teal-500/10 dark:to-cyan-500/5 rounded-full blur-3xl" />
+      </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-950 dark:text-white max-w-3xl mx-auto leading-tight mb-4">
-            A simpler way to rent your next home.
-          </h1>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
+        {/* ===================== HERO SECTION ===================== */}
+        <section className="text-center pt-6 pb-6">
+          {/* Live Market Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 rounded-full border border-emerald-300/60 bg-emerald-50/90 dark:bg-emerald-950/60 dark:border-emerald-800/80 px-4 py-1.5 text-xs font-bold text-emerald-800 dark:text-emerald-300 shadow-xs mb-5"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span>Live in Gandhinagar &amp; Ahmedabad • Zero Broker Commission</span>
+          </motion.div>
 
-          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-6">
-            Connect directly with verified property owners. Tell us what you need in plain words, and find apartments matched to your routine with zero brokerage fees.
-          </p>
+          {/* Hero Main Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-zinc-900 dark:text-white max-w-4xl mx-auto leading-[1.15] mb-5"
+          >
+            Rent Verified Homes Directly.{' '}
+            <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-500 dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-300 bg-clip-text text-transparent">
+              No Broker Calls.
+            </span>
+          </motion.h1>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-10">
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-4 w-4 text-zinc-900 dark:text-zinc-100" />
-              <span>100% Verified Landlords</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-4 w-4 text-zinc-900 dark:text-zinc-100" />
-              <span>Zero Broker Commission</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-4 w-4 text-zinc-900 dark:text-zinc-100" />
-              <span>Direct WhatsApp &amp; Chat</span>
-            </div>
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-8"
+          >
+            Connect directly with verified property owners near PDEU, Infocity, Kudasan, and SG Highway. Verified photographs, direct WhatsApp messaging, and zero broker fees.
+          </motion.p>
 
-          {/* Minimal Search Capsule Card */}
-          <div className="mx-auto max-w-3xl rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 sm:p-5 shadow-sm text-left">
-            {/* Filter Persona Tabs */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 mb-3.5">
-              <button
-                type="button"
-                onClick={() => handleTabSelect('all')}
-                className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
-                  activeTab === 'all'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white font-semibold shadow-2xs'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
-                }`}
-              >
-                <Compass className="h-3.5 w-3.5" /> All Rentals
-              </button>
-              <button
-                type="button"
-                onClick={() => handleTabSelect('students')}
-                className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
-                  activeTab === 'students'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white font-semibold shadow-2xs'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
-                }`}
-              >
-                <GraduationCap className="h-3.5 w-3.5" /> Students
-              </button>
-              <button
-                type="button"
-                onClick={() => handleTabSelect('pros')}
-                className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
-                  activeTab === 'pros'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white font-semibold shadow-2xs'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
-                }`}
-              >
-                <Briefcase className="h-3.5 w-3.5" /> Professionals
-              </button>
-              <button
-                type="button"
-                onClick={() => handleTabSelect('families')}
-                className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
-                  activeTab === 'families'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white font-semibold shadow-2xs'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
-                }`}
-              >
-                <Users className="h-3.5 w-3.5" /> Families
-              </button>
-            </div>
-
-            {/* Plain English Query Box */}
-            <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-3 focus-within:border-zinc-400 dark:focus-within:border-zinc-700 transition-colors mb-3.5">
-              <div className="flex items-start gap-2.5">
-                <Sparkles className="h-4 w-4 text-zinc-500 dark:text-zinc-400 shrink-0 mt-0.5" />
-                <textarea
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSearchSubmit();
-                    }
-                  }}
-                  rows={2}
-                  placeholder="Describe your desired home (e.g. Furnished 2BHK near PDEU with balcony under ₹22,000)..."
-                  className="w-full resize-none bg-transparent text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none leading-relaxed"
-                />
-              </div>
-            </div>
-
-            {/* Quick Prompt Pills (Clean, No Emojis) */}
-            <div className="flex flex-wrap items-center gap-1.5 mb-4">
-              <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 mr-1">
-                Try:
-              </span>
-              {samplePrompts.map((p, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setQuery(p.text)}
-                  className="text-xs font-medium px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-800 transition-colors cursor-pointer"
+          {/* ===================== MULTI-SEGMENT SEARCH HUB ===================== */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mx-auto max-w-4xl rounded-3xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 sm:p-6 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 text-left"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {/* Segment 1: Locality */}
+              <div className="flex flex-col p-3 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900/60 hover:border-emerald-500/50 transition-colors">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1">
+                  <MapPin className="h-3.5 w-3.5" />
+                  <span>Locality</span>
+                </div>
+                <select
+                  value={selectedLocality}
+                  onChange={(e) => setSelectedLocality(e.target.value)}
+                  className="bg-transparent text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 focus:outline-none cursor-pointer"
                 >
-                  {p.label}
+                  <option value="Gandhinagar" className="dark:bg-zinc-900">Gandhinagar (All)</option>
+                  <option value="Infocity" className="dark:bg-zinc-900">Infocity / TCS Hub</option>
+                  <option value="Kudasan" className="dark:bg-zinc-900">Kudasan (Family / Pro)</option>
+                  <option value="Raysan / PDEU" className="dark:bg-zinc-900">Raysan / PDEU Campus</option>
+                  <option value="Bhaijipura" className="dark:bg-zinc-900">Bhaijipura</option>
+                  <option value="Sargasan" className="dark:bg-zinc-900">Sargasan / SG Highway</option>
+                </select>
+              </div>
+
+              {/* Segment 2: BHK Configuration */}
+              <div className="flex flex-col p-3 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900/60 hover:border-emerald-500/50 transition-colors">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 mb-1">
+                  <HomeIcon className="h-3.5 w-3.5" />
+                  <span>Bedrooms</span>
+                </div>
+                <select
+                  value={selectedBhk}
+                  onChange={(e) => setSelectedBhk(e.target.value)}
+                  className="bg-transparent text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 focus:outline-none cursor-pointer"
+                >
+                  <option value="Any" className="dark:bg-zinc-900">Any Configuration</option>
+                  <option value="1" className="dark:bg-zinc-900">1 BHK / Studio</option>
+                  <option value="2" className="dark:bg-zinc-900">2 BHK Flat</option>
+                  <option value="3" className="dark:bg-zinc-900">3 BHK Flat / Penthouse</option>
+                  <option value="3+" className="dark:bg-zinc-900">4+ BHK Villa</option>
+                </select>
+              </div>
+
+              {/* Segment 3: Budget Limit */}
+              <div className="flex flex-col p-3 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900/60 hover:border-emerald-500/50 transition-colors">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-1">
+                  <Wallet className="h-3.5 w-3.5" />
+                  <span>Max Budget</span>
+                </div>
+                <select
+                  value={selectedBudget}
+                  onChange={(e) => setSelectedBudget(e.target.value)}
+                  className="bg-transparent text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 focus:outline-none cursor-pointer"
+                >
+                  <option value="15000" className="dark:bg-zinc-900">Up to ₹15,000 / mo</option>
+                  <option value="20000" className="dark:bg-zinc-900">Up to ₹20,000 / mo</option>
+                  <option value="25000" className="dark:bg-zinc-900">Up to ₹25,000 / mo</option>
+                  <option value="35000" className="dark:bg-zinc-900">Up to ₹35,000 / mo</option>
+                  <option value="50000" className="dark:bg-zinc-900">Up to ₹50,000 / mo</option>
+                </select>
+              </div>
+
+              {/* Segment 4: CTA Button */}
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  onClick={() => handleSearchSubmit()}
+                  className="w-full h-full min-h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3 px-5 shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/35 transition-all duration-200 active:scale-[0.98] cursor-pointer"
+                >
+                  <Search className="h-4 w-4" />
+                  <span className="text-sm">Find Homes</span>
                 </button>
-              ))}
+              </div>
             </div>
 
-            {/* Controls & Search CTA Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 border-t border-zinc-100 dark:border-zinc-900">
-              <div className="flex items-center gap-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-2">
-                <MapPin className="h-4 w-4 text-zinc-500 dark:text-zinc-400 shrink-0" />
-                <div className="flex flex-col min-w-0 flex-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Locality</span>
-                  <input
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    placeholder="Area or landmark"
-                    className="w-full bg-transparent text-xs font-medium text-zinc-900 dark:text-zinc-100 focus:outline-none truncate"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-2">
-                <Wallet className="h-4 w-4 text-zinc-500 dark:text-zinc-400 shrink-0" />
-                <div className="flex flex-col min-w-0 flex-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Max Budget</span>
-                  <select
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    className="w-full bg-transparent text-xs font-medium text-zinc-900 dark:text-zinc-100 focus:outline-none cursor-pointer"
+            {/* Quick Filter Tag Chips */}
+            <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/80">
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mr-1">
+                Popular:
+              </span>
+              {quickChips.map((chip, idx) => {
+                const Icon = chip.icon;
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => handleChipClick(chip)}
+                    className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-zinc-100/80 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-950/60 dark:hover:text-emerald-300 border border-zinc-200/70 dark:border-zinc-800 transition-all cursor-pointer shadow-2xs hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    <option value="15000" className="dark:bg-zinc-950">Up to ₹15,000 / mo</option>
-                    <option value="20000" className="dark:bg-zinc-950">Up to ₹20,000 / mo</option>
-                    <option value="25000" className="dark:bg-zinc-950">Up to ₹25,000 / mo</option>
-                    <option value="35000" className="dark:bg-zinc-950">Up to ₹35,000 / mo</option>
-                    <option value="50000" className="dark:bg-zinc-950">Up to ₹50,000 / mo</option>
-                  </select>
-                </div>
-              </div>
+                    <Icon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <span>{chip.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        </section>
 
-              <button
-                type="button"
-                onClick={() => handleSearchSubmit()}
-                className="flex items-center justify-center gap-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 font-semibold py-2.5 px-4 transition-colors cursor-pointer text-xs sm:text-sm shadow-xs"
-              >
-                <span>Search Homes</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
+        {/* ===================== PLATFORM TRUST PILLARS ===================== */}
+        <section className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-5 hover:border-emerald-500/40 transition-all shadow-xs">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mb-3">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <div className="text-2xl font-black text-zinc-900 dark:text-white">100%</div>
+            <div className="text-xs font-bold text-zinc-900 dark:text-zinc-200 mt-0.5">Verified Landlords</div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+              Every owner verified with identity &amp; ownership documents.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-5 hover:border-emerald-500/40 transition-all shadow-xs">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 mb-3">
+              <Coins className="h-5 w-5" />
+            </div>
+            <div className="text-2xl font-black text-zinc-900 dark:text-white">₹0 Brokerage</div>
+            <div className="text-xs font-bold text-zinc-900 dark:text-zinc-200 mt-0.5">Direct Dealings</div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+              Never pay 15-day or 1-month commissions to rental agents.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-5 hover:border-emerald-500/40 transition-all shadow-xs">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 mb-3">
+              <MessageCircle className="h-5 w-5" />
+            </div>
+            <div className="text-2xl font-black text-zinc-900 dark:text-white">Direct Chat</div>
+            <div className="text-xs font-bold text-zinc-900 dark:text-zinc-200 mt-0.5">WhatsApp &amp; Phone</div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+              Instant site visit bookings without intermediary delays.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-5 hover:border-emerald-500/40 transition-all shadow-xs">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600 dark:text-cyan-400 mb-3">
+              <Clock className="h-5 w-5" />
+            </div>
+            <div className="text-2xl font-black text-zinc-900 dark:text-white">&lt; 24 Hours</div>
+            <div className="text-xs font-bold text-zinc-900 dark:text-zinc-200 mt-0.5">Fast Move-In</div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+              Finalize agreements and receive digital keys in record time.
+            </p>
+          </div>
+        </section>
+
+        {/* ===================== TRADITIONAL BROKER VS RENTMATCH COMPARISON ===================== */}
+        <section className="mt-20 pt-10 border-t border-zinc-200/80 dark:border-zinc-800/80">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+              TRANSPARENCY REPORT
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white mt-1">
+              Why Smart Renters Skip Traditional Brokers
+            </h2>
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-2">
+              Compare the traditional rental broker experience against RentMatch AI direct matching.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Traditional Broker Box */}
+            <div className="rounded-3xl border border-red-200/80 dark:border-red-950/60 bg-red-50/40 dark:bg-red-950/20 p-6 sm:p-7 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400">Old Broker Way</span>
+                <span className="text-xs font-mono text-red-500 font-bold">Expensive &amp; Opaque</span>
+              </div>
+              <ul className="space-y-3.5 text-xs text-zinc-700 dark:text-zinc-300">
+                <li className="flex items-start gap-2.5">
+                  <X className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                  <span><strong>1-Month Brokerage Fee:</strong> Pay ₹15,000 to ₹35,000+ upfront just for showing addresses.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <X className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                  <span><strong>Fake Photos &amp; Bait Ads:</strong> Photos in ads rarely match actual property conditions.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <X className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                  <span><strong>Spam Broker Calls:</strong> Your number is shared across dozens of aggressive local agents.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <X className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                  <span><strong>No Direct Landlord Connect:</strong> Everything is filtered through a middleman who delays negotiations.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* RentMatch AI Box */}
+            <div className="rounded-3xl border border-emerald-300 dark:border-emerald-800/80 bg-emerald-50/50 dark:bg-emerald-950/30 p-6 sm:p-7 shadow-md ring-1 ring-emerald-500/20">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">RentMatch AI</span>
+                <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/80 px-2.5 py-0.5 rounded-full">Recommended</span>
+              </div>
+              <ul className="space-y-3.5 text-xs text-zinc-800 dark:text-zinc-200">
+                <li className="flex items-start gap-2.5">
+                  <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Zero Broker Commission:</strong> Save 100% of broker fees to spend on your new home setup.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>100% Inspected &amp; Real Photos:</strong> High-resolution photos, verified floor plans, and real amenities.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Privacy Protected:</strong> Your contact details remain confidential until you choose to connect.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Instant WhatsApp Direct:</strong> Chat with real verified landlords, schedule visits, and finalize agreements.</span>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Informative Platform Facts */}
-        <section className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3.5">
-          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 shadow-xs">
-            <div className="text-xl sm:text-2xl font-bold text-zinc-950 dark:text-white">2,500+</div>
-            <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 mt-1">Inspected Rentals</div>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
-              Active homes across Gandhinagar, PDEU, Kudasan &amp; Infocity
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 shadow-xs">
-            <div className="text-xl sm:text-2xl font-bold text-zinc-950 dark:text-white">Zero</div>
-            <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 mt-1">Broker Commissions</div>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
-              No mediator fee. Deal directly with genuine property owners
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 shadow-xs">
-            <div className="text-xl sm:text-2xl font-bold text-zinc-950 dark:text-white">&lt; 12 hrs</div>
-            <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 mt-1">Direct Response</div>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
-              Instant contact and site visits via verified WhatsApp connections
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 shadow-xs">
-            <div className="text-xl sm:text-2xl font-bold text-zinc-950 dark:text-white">100%</div>
-            <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 mt-1">Verified Listers</div>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
-              Identity &amp; ownership checks before listings go live
-            </p>
-          </div>
-        </section>
-
-        {/* Featured Listings Grid */}
-        <section className="mt-16">
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 mb-6">
+        {/* ===================== NEIGHBORHOOD RENTAL HUB ===================== */}
+        <section className="mt-20 pt-10 border-t border-zinc-200/80 dark:border-zinc-800/80">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 mb-8">
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">AVAILABLE PROPERTIES</span>
-              <h2 className="text-xl sm:text-2xl font-bold text-zinc-950 dark:text-white mt-0.5">Featured Verified Homes</h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Handpicked rentals available for immediate occupancy.</p>
+              <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                LOCALITY GUIDE
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white mt-1">
+                Explore Top Gandhinagar Neighborhoods
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+                Rental prices, student density, and commute hubs across prime micro-markets.
+              </p>
             </div>
             <button
               type="button"
               onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-zinc-900 dark:text-zinc-100 hover:underline cursor-pointer group"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:underline cursor-pointer group"
             >
-              <span>View all {activeProperties.length} homes</span>
+              <span>Explore All Localities</span>
               <ArrowUpRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {featured.map((p) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Raysan / PDEU */}
+            <div
+              onClick={() => navigateWithCurtains('/explore?location=Raysan', 'PDEU Rentals')}
+              className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 p-5 hover:border-emerald-500/50 hover:shadow-lg transition-all cursor-pointer group"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-800/50">
+                  Student Hub
+                </span>
+                <span className="text-xs font-bold text-zinc-900 dark:text-white">From ₹12k/mo</span>
+              </div>
+              <h3 className="text-base font-bold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                Raysan / PDEU Road
+              </h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+                Walkable to PDEU &amp; GNLU. Furnished 2BHKs, mess services, and high-speed fiber internet.
+              </p>
+              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                <span>View 45+ Rentals</span>
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Infocity */}
+            <div
+              onClick={() => navigateWithCurtains('/explore?location=Infocity', 'Infocity Rentals')}
+              className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 p-5 hover:border-teal-500/50 hover:shadow-lg transition-all cursor-pointer group"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200/50 dark:border-teal-800/50">
+                  Tech Corridor
+                </span>
+                <span className="text-xs font-bold text-zinc-900 dark:text-white">From ₹16k/mo</span>
+              </div>
+              <h3 className="text-base font-bold text-zinc-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+                Infocity / TCS Park
+              </h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+                Preferred by IT engineers and executives. 1BHKs &amp; modern studios with power backup.
+              </p>
+              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs font-semibold text-teal-600 dark:text-teal-400">
+                <span>View 60+ Rentals</span>
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Kudasan */}
+            <div
+              onClick={() => navigateWithCurtains('/explore?location=Kudasan', 'Kudasan Rentals')}
+              className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 p-5 hover:border-amber-500/50 hover:shadow-lg transition-all cursor-pointer group"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/50">
+                  Family Prime
+                </span>
+                <span className="text-xs font-bold text-zinc-900 dark:text-white">From ₹22k/mo</span>
+              </div>
+              <h3 className="text-base font-bold text-zinc-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                Kudasan Residential
+              </h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+                Gated communities with gardens, covered car parking, 24/7 security, and supermarket access.
+              </p>
+              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs font-semibold text-amber-600 dark:text-amber-400">
+                <span>View 50+ Rentals</span>
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Sargasan / SG Highway */}
+            <div
+              onClick={() => navigateWithCurtains('/explore?location=Sargasan', 'Sargasan Rentals')}
+              className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 p-5 hover:border-cyan-500/50 hover:shadow-lg transition-all cursor-pointer group"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-cyan-50 dark:bg-cyan-950/60 text-cyan-700 dark:text-cyan-300 border border-cyan-200/50 dark:border-cyan-800/50">
+                  Expressway
+                </span>
+                <span className="text-xs font-bold text-zinc-900 dark:text-white">From ₹25k/mo</span>
+              </div>
+              <h3 className="text-base font-bold text-zinc-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                Sargasan / SG Highway
+              </h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+                Fast expressway connectivity to Ahmedabad. High-rise towers with gyms and clubhouses.
+              </p>
+              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs font-semibold text-cyan-600 dark:text-cyan-400">
+                <span>View 35+ Rentals</span>
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== FEATURED RENTALS GRID WITH PERSONA TABS ===================== */}
+        <section className="mt-20 pt-10 border-t border-zinc-200/80 dark:border-zinc-800/80">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-6">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                ACTIVE PROPERTIES
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white mt-1">
+                Featured Verified Homes
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+                Inspected rentals available for direct lease with authentic owners.
+              </p>
+            </div>
+
+            {/* Persona Tabs */}
+            <div className="flex items-center gap-1 p-1 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/70 dark:border-zinc-800">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('all')}
+                className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  selectedCategory === 'all'
+                    ? 'bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-300 shadow-xs'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                }`}
+              >
+                All Homes
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('students')}
+                className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  selectedCategory === 'students'
+                    ? 'bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-300 shadow-xs'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                }`}
+              >
+                Students (PDEU)
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('pros')}
+                className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  selectedCategory === 'pros'
+                    ? 'bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-300 shadow-xs'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                }`}
+              >
+                IT Pros (Infocity)
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('families')}
+                className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  selectedCategory === 'families'
+                    ? 'bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-300 shadow-xs'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                }`}
+              >
+                Family Flats
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredFeatured.map((p) => (
               <PropertyCard
                 key={p.id}
                 property={p}
@@ -299,76 +556,195 @@ export default function HomePage() {
               />
             ))}
           </div>
+
+          <div className="mt-8 text-center">
+            <button
+              type="button"
+              onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}
+              className="inline-flex items-center gap-2 py-3 px-6 rounded-2xl bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
+            >
+              <span>Explore all {activeProperties.length} verified listings in Gandhinagar</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
         </section>
 
-        {/* How It Works - 3 Clear Informative Steps */}
-        <section className="mt-20 pt-10 border-t border-zinc-200 dark:border-zinc-800">
+        {/* ===================== ZERO BROKERAGE SAVINGS CALCULATOR ===================== */}
+        <section className="mt-20 rounded-3xl border border-emerald-300 dark:border-emerald-800/80 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-emerald-500/15 dark:from-emerald-950/40 dark:via-zinc-900/60 dark:to-teal-950/30 p-6 sm:p-10 shadow-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                SAVINGS CALCULATOR
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white mt-1">
+                How Much Do You Save With Zero Brokerage?
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
+                Traditional agents demand 1-month rent as mediator commission. With RentMatch AI, 100% of that money stays in your bank account.
+              </p>
+
+              {/* Preset buttons */}
+              <div className="flex flex-wrap gap-2 mt-5">
+                {[15000, 22000, 30000, 45000].map((amt) => (
+                  <button
+                    key={amt}
+                    type="button"
+                    onClick={() => setCalculatorRent(amt)}
+                    className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      calculatorRent === amt
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700'
+                    }`}
+                  >
+                    ₹{amt.toLocaleString('en-IN')}/mo
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Savings Display Card */}
+            <div className="rounded-2xl border border-emerald-300/80 dark:border-emerald-800 bg-white/90 dark:bg-zinc-900/90 p-6 sm:p-7 shadow-md text-center">
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                Your Direct Savings on Move-In
+              </span>
+              <div className="text-4xl sm:text-5xl font-black text-emerald-600 dark:text-emerald-400 my-2">
+                ₹{calculatorRent.toLocaleString('en-IN')}
+              </div>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-sm mx-auto">
+                That is enough to furnish your bedroom, set up high-speed Wi-Fi, or cover your moving and transport costs entirely.
+              </p>
+              <button
+                type="button"
+                onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}
+                className="mt-5 inline-flex items-center gap-2 py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition-all cursor-pointer"
+              >
+                <span>Find a Broker-Free Home</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== VERIFIED MOVE-IN STORIES ===================== */}
+        <section className="mt-20 pt-10 border-t border-zinc-200/80 dark:border-zinc-800/80">
           <div className="text-center max-w-xl mx-auto mb-10">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">HOW IT WORKS</span>
-            <h2 className="text-2xl font-bold text-zinc-950 dark:text-white mt-1">Simple, Transparent Renting</h2>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-              Find the right apartment directly from owners in three straightforward steps.
+            <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+              COMMUNITY VOICES
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white mt-1">
+              Verified Tenants &amp; Happy Owners
+            </h2>
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+              Real rental experiences across Gandhinagar &amp; Ahmedabad.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-xs">
-              <span className="text-2xl font-bold font-mono text-zinc-300 dark:text-zinc-700">01</span>
-              <h3 className="text-base font-bold text-zinc-950 dark:text-white mt-3 mb-1.5">Conversational Search</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Describe your requirements in plain language — budget limits, distance to university, parking, or furnishings.
-              </p>
+            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-6 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1 text-amber-500 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed italic">
+                  &ldquo;As a PDEU student, local brokers were asking for ₹18k brokerage on a ₹18k flat. Found our 2BHK in Raysan in 2 days directly with the owner on RentMatch.&rdquo;
+                </p>
+              </div>
+              <div className="mt-5 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs">
+                <div>
+                  <div className="font-bold text-zinc-900 dark:text-white">Rohan Shah</div>
+                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400">PDEU Student • Raysan</div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
+                  Verified
+                </span>
+              </div>
             </div>
 
-            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-xs">
-              <span className="text-2xl font-bold font-mono text-zinc-300 dark:text-zinc-700">02</span>
-              <h3 className="text-base font-bold text-zinc-950 dark:text-white mt-3 mb-1.5">Compatibility Scoring</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                RentMatch computes fit scores based on your commute, routine, and amenities to show you what actually matches.
-              </p>
+            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-6 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1 text-amber-500 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed italic">
+                  &ldquo;Moved from Bengaluru to TCS Infocity. Scheduled 3 site visits via direct WhatsApp chat on Saturday and finalized lease agreement by Sunday evening.&rdquo;
+                </p>
+              </div>
+              <div className="mt-5 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs">
+                <div>
+                  <div className="font-bold text-zinc-900 dark:text-white">Aarav Mehta</div>
+                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400">Software Engineer • Infocity</div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
+                  Verified
+                </span>
+              </div>
             </div>
 
-            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-xs">
-              <span className="text-2xl font-bold font-mono text-zinc-300 dark:text-zinc-700">03</span>
-              <h3 className="text-base font-bold text-zinc-950 dark:text-white mt-3 mb-1.5">Direct Owner Contact</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Connect directly with verified landlords via chat or phone, schedule visits, and finalize agreements without brokerage fees.
-              </p>
+            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-6 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1 text-amber-500 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed italic">
+                  &ldquo;Listed our 3BHK in Kudasan directly. Received 4 genuine inquiries from corporate families within 48 hours without annoying broker calls.&rdquo;
+                </p>
+              </div>
+              <div className="mt-5 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs">
+                <div>
+                  <div className="font-bold text-zinc-900 dark:text-white">Rajesh Patel</div>
+                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400">Property Owner • Kudasan</div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
+                  Verified Lister
+                </span>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Informative Landlord Banner */}
-        <section className="mt-16 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-              <Building2 className="h-5 w-5" />
+        {/* ===================== LANDLORD CALLOUT BANNER ===================== */}
+        <section className="mt-20 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/90 p-7 sm:p-10 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white shadow-md shadow-emerald-500/20">
+              <Building2 className="h-7 w-7" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-zinc-950 dark:text-white">
+              <h3 className="text-lg sm:text-xl font-black text-zinc-900 dark:text-white">
                 Are you a property owner in Gandhinagar or Ahmedabad?
               </h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-                List your apartment directly on RentMatch AI. Zero commission, verified tenants, and complete control over inquiries.
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-xl leading-relaxed">
+                List your apartment in under 2 minutes. Reach verified university students and IT professionals directly with zero listing fees and zero commission cuts.
               </p>
             </div>
           </div>
-          <div className="shrink-0 flex items-center gap-2.5">
+
+          <div className="shrink-0 flex items-center gap-3">
             {isAuthenticated && isLister ? (
               <button
                 type="button"
                 onClick={openAddProperty}
-                className="rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 font-semibold px-4 py-2.5 text-xs transition-colors cursor-pointer shadow-xs"
+                className="flex items-center gap-2 py-3 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition-all active:scale-95 cursor-pointer"
               >
-                + Add Property
+                <Plus className="h-4 w-4" />
+                <span>+ Add New Property</span>
               </button>
             ) : (
               <button
                 type="button"
-                onClick={() => navigateWithCurtains('/signup', 'Create Account')}
-                className="rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 font-semibold px-4 py-2.5 text-xs transition-colors cursor-pointer shadow-xs"
+                onClick={() => {
+                  openAuthModal('register', USER_ROLES.PROPERTY_LISTER);
+                  navigateWithCurtains('/signup', 'Create Landlord Account');
+                }}
+                className="flex items-center gap-2 py-3 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition-all active:scale-95 cursor-pointer"
               >
-                List Property Free
+                <Building2 className="h-4 w-4" />
+                <span>List Property Free</span>
               </button>
             )}
           </div>

@@ -3607,47 +3607,49 @@ footer > small {
 }
 
 .dark {
-  --navy: #fafafa;
+  --navy: #f8fafc;
   --navy-dark: #ffffff;
-  --line: #27272a;
-  --card-bg: #09090b;
-  --green-light: #162c20;
+  --line: #1e293b;
+  --card-bg: #0d131f;
+  --green: #10b981;
+  --green-hover: #059669;
+  --green-light: #064e3b;
 }
 
 .dark body {
-  background: #000000;
-  color: #fafafa;
+  background: #090d16;
+  color: #f1f5f9;
 }
 
 .dark .topbar {
-  background: rgba(0, 0, 0, 0.9);
-  border-bottom-color: #27272a;
+  background: rgba(9, 13, 22, 0.92);
+  border-bottom-color: #1e293b;
 }
 
 .dark .brand {
-  color: #fafafa;
+  color: #f8fafc;
 }
 
 .dark .nav button {
-  color: #a1a1aa;
+  color: #94a3b8;
 }
 
 .dark .nav button:hover,
 .dark .nav button.active {
-  color: #ffffff;
-  border-bottom-color: #ffffff;
+  color: #34d399;
+  border-bottom-color: #34d399;
 }
 
 .dark .theme-toggle-btn {
-  background: #09090b;
-  border-color: #27272a;
-  color: #fafafa;
+  background: #111827;
+  border-color: #1e293b;
+  color: #f8fafc;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .dark .theme-toggle-btn:hover {
-  background: #18181b;
-  border-color: #3f3f46;
+  background: #1f2937;
+  border-color: #374151;
 }
 
 .dark .search-panel,
@@ -3658,41 +3660,41 @@ footer > small {
 .dark .user-profile-trigger,
 .dark .detail-box,
 .dark .profile-banner-card {
-  background: #09090b;
-  border-color: #27272a;
-  color: #fafafa;
+  background: #0e1524;
+  border-color: #1e293b;
+  color: #f8fafc;
 }
 
 .dark .natural-input,
 .dark .quick-field {
-  background: #000000;
-  border-color: #27272a;
-  color: #f4f4f5;
+  background: #090d16;
+  border-color: #1e293b;
+  color: #f1f5f9;
 }
 
 .dark .natural-input textarea,
 .dark .quick-field input,
 .dark .quick-field select {
-  color: #fafafa;
+  color: #f8fafc;
 }
 
 .dark .role-callout-banner {
-  background: #09090b;
-  border-color: #27272a;
+  background: #0e1524;
+  border-color: #1e293b;
 }
 
 .dark .btn-text-signin {
-  color: #a1a1aa;
+  color: #94a3b8;
 }
 
 .dark .btn-text-signin:hover {
-  background: #18181b;
-  color: #fafafa;
+  background: #1f2937;
+  color: #34d399;
 }
 
 .dark footer {
-  border-top-color: #27272a;
-  color: #a1a1aa;
+  border-top-color: #1e293b;
+  color: #94a3b8;
 }
 
 /* Top Announcement Bar */

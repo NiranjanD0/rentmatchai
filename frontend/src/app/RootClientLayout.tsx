@@ -3,6 +3,7 @@
 import React from 'react';
 import { Home, Check } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import BrandLogo from '../components/BrandLogo';
 import AuthModal from '../components/AuthModal';
 import PropertyFormModal from '../components/PropertyFormModal';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
@@ -54,13 +55,8 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
             <div className="md:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-950 dark:bg-white text-white dark:text-zinc-950">
-                  <Home className="h-3.5 w-3.5" />
-                </div>
-                <span className="text-lg font-bold tracking-tight text-zinc-950 dark:text-white">
-                  rentmatch<span className="text-zinc-500 dark:text-zinc-400 font-medium">ai</span>
-                </span>
+              <div className="mb-4">
+                <BrandLogo size="lg" />
               </div>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed mb-5">
                 Intelligent rental matching that connects verified tenants directly with authentic landlords and property managers across Gandhinagar and Ahmedabad.

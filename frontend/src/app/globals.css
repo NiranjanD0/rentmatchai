@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@400;500;600;700;800&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin 'lightswind/plugin';
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
@@ -3607,46 +3608,47 @@ footer > small {
 }
 
 .dark {
-  --navy: #f1f5f9;
-  --navy-dark: #f8fafc;
-  --line: #334155;
+  --navy: #fafafa;
+  --navy-dark: #ffffff;
+  --line: #27272a;
+  --card-bg: #09090b;
   --green-light: #162c20;
 }
 
 .dark body {
-  background: #0b1120;
-  color: #f1f5f9;
+  background: #000000;
+  color: #fafafa;
 }
 
 .dark .topbar {
-  background: rgba(15, 23, 42, 0.92);
-  border-bottom-color: #1e293b;
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom-color: #27272a;
 }
 
 .dark .brand {
-  color: #f8fafc;
+  color: #fafafa;
 }
 
 .dark .nav button {
-  color: #94a3b8;
+  color: #a1a1aa;
 }
 
 .dark .nav button:hover,
 .dark .nav button.active {
-  color: #34d399;
-  border-bottom-color: #34d399;
+  color: #ffffff;
+  border-bottom-color: #ffffff;
 }
 
 .dark .theme-toggle-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f1f5f9;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  background: #09090b;
+  border-color: #27272a;
+  color: #fafafa;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .dark .theme-toggle-btn:hover {
-  background: #334155;
-  border-color: #475569;
+  background: #18181b;
+  border-color: #3f3f46;
 }
 
 .dark .search-panel,
@@ -3657,41 +3659,41 @@ footer > small {
 .dark .user-profile-trigger,
 .dark .detail-box,
 .dark .profile-banner-card {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f8fafc;
+  background: #09090b;
+  border-color: #27272a;
+  color: #fafafa;
 }
 
 .dark .natural-input,
 .dark .quick-field {
-  background: #0f172a;
-  border-color: #334155;
-  color: #e2e8f0;
+  background: #000000;
+  border-color: #27272a;
+  color: #f4f4f5;
 }
 
 .dark .natural-input textarea,
 .dark .quick-field input,
 .dark .quick-field select {
-  color: #f8fafc;
+  color: #fafafa;
 }
 
 .dark .role-callout-banner {
-  background: #1e293b;
-  border-color: #334155;
+  background: #09090b;
+  border-color: #27272a;
 }
 
 .dark .btn-text-signin {
-  color: #cbd5e1;
+  color: #a1a1aa;
 }
 
 .dark .btn-text-signin:hover {
-  background: #334155;
-  color: #f8fafc;
+  background: #18181b;
+  color: #fafafa;
 }
 
 .dark footer {
-  border-top-color: #1e293b;
-  color: #94a3b8;
+  border-top-color: #27272a;
+  color: #a1a1aa;
 }
 
 /* Top Announcement Bar */

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Home, Check } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import AuthModal from '../components/AuthModal';
 import PropertyFormModal from '../components/PropertyFormModal';
@@ -54,25 +55,25 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
           <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
             <div className="md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-600 text-white font-extrabold text-sm shadow-md shadow-emerald-600/30">
-                  ✦
-                </span>
-                <span className="text-xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
-                  rentmatch<span className="text-emerald-600 dark:text-emerald-400">ai</span>
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-950 dark:bg-white text-white dark:text-zinc-950">
+                  <Home className="h-3.5 w-3.5" />
+                </div>
+                <span className="text-lg font-bold tracking-tight text-zinc-950 dark:text-white">
+                  rentmatch<span className="text-zinc-500 dark:text-zinc-400 font-medium">ai</span>
                 </span>
               </div>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed mb-5">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed mb-5">
                 Intelligent rental matching that connects verified tenants directly with authentic landlords and property managers across Gandhinagar and Ahmedabad.
               </p>
-              <div className="flex flex-wrap gap-2 text-xs font-medium text-emerald-700 dark:text-emerald-300">
-                <span className="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/20">
-                  ✓ 100% Verified Listers
+              <div className="flex flex-wrap gap-2 text-xs font-medium text-zinc-600 dark:text-zinc-400">
+                <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                  <Check className="h-3 w-3 text-zinc-700 dark:text-zinc-300" /> 100% Verified Listers
                 </span>
-                <span className="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/20">
-                  ✓ Zero Brokerage
+                <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                  <Check className="h-3 w-3 text-zinc-700 dark:text-zinc-300" /> Zero Brokerage
                 </span>
-                <span className="px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/20">
-                  ✓ Direct Landlord Chat
+                <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                  <Check className="h-3 w-3 text-zinc-700 dark:text-zinc-300" /> Direct Landlord Chat
                 </span>
               </div>
             </div>

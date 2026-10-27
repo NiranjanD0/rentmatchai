@@ -13,24 +13,15 @@ import {
   UserPlus,
   ChevronDown,
   Compass,
-  Sparkles,
   LayoutDashboard,
+  Menu,
+  X,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useProperty } from '../context/PropertyContext';
 import { USER_ROLES, type UserRole } from '../constants/initialData';
-import AnimatedThemeToggler from './ui/animated-theme-toggler';
+import { ToggleTheme } from './lightswind/toggle-theme';
 import { usePageCurtains } from './ui/page-curtains';
-import {
-  Navbar as AceternityNavbar,
-  NavBody,
-  NavItems,
-  MobileNav,
-  MobileNavHeader,
-  MobileNavToggle,
-  MobileNavMenu,
-  type NavItemConfig,
-} from './ui/resizable-navbar';
 
 interface NavbarProps {
   page?: string;
@@ -115,84 +106,95 @@ export default function Navbar({
     ? `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase()
     : 'G';
 
-  // Build desktop nav items
-  const navItems: NavItemConfig[] = [
-    {
-      name: 'Discover',
-      link: 'home',
-      active: activePage === 'home',
-      icon: <Home className="h-3.5 w-3.5" />,
-    },
-    {
-      name: 'Explore Homes',
-      link: 'results',
-      active: activePage === 'results',
-      icon: <Compass className="h-3.5 w-3.5" />,
-    },
-    {
-      name: 'Shortlist',
-      link: 'shortlist',
-      active: activePage === 'shortlist',
-      badge: savedCount > 0 ? savedCount : undefined,
-      icon: <Heart className="h-3.5 w-3.5" />,
-    },
-  ];
-
-  if (isAuthenticated && isLister) {
-    navItems.push({
-      name: 'My Listings',
-      link: 'profile-listings',
-      active: activePage === 'profile',
-      icon: <Building2 className="h-3.5 w-3.5" />,
-    });
-  }
-
-  const handleNavItemClick = (link: string) => {
-    if (link === 'profile-listings') {
-      handleNav('profile', 'listings');
-    } else {
-      handleNav(link);
-    }
-  };
-
   return (
-    <AceternityNavbar>
-      {/* Desktop Floating Resizable Navbar */}
-      <NavBody>
+    <header className="sticky top-0 z-40 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-black/95 backdrop-blur-md transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <button
           type="button"
-          className="brand flex items-center gap-2.5 text-left border-0 bg-transparent p-0 cursor-pointer group"
+          className="flex items-center gap-2.5 text-left border-0 bg-transparent p-0 cursor-pointer group"
           onClick={() => handleNav('home')}
         >
-          <div className="brand-mark flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
-            <Home size={18} />
-            <b>✦</b>
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 font-bold transition-transform duration-200 group-hover:scale-105 shadow-2xs">
+            <Home className="h-4 w-4" />
           </div>
-          <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
-            rentmatch<span className="text-emerald-600 dark:text-emerald-400">ai</span>
+          <span className="font-bold text-lg tracking-tight text-zinc-950 dark:text-white">
+            rentmatch<span className="text-zinc-500 dark:text-zinc-400 font-semibold">ai</span>
           </span>
         </button>
 
-        {/* Center Pill NavItems with animated hover indicator */}
-        <NavItems items={navItems} onItemClick={handleNavItemClick} />
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => handleNav('home')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+              activePage === 'home'
+                ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-900/50'
+            }`}
+          >
+            Discover
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNav('results')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+              activePage === 'results'
+                ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-900/50'
+            }`}
+          >
+            Explore Homes
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNav('shortlist')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+              activePage === 'shortlist'
+                ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-900/50'
+            }`}
+          >
+            <span>Shortlist</span>
+            {savedCount > 0 && (
+              <span className="rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[11px] font-bold px-1.5 py-0.2">
+                {savedCount}
+              </span>
+            )}
+          </button>
 
-        {/* Right Header Section: Add Property, Theme Toggler, & Auth */}
-        <div className="flex items-center gap-2.5">
           {isAuthenticated && isLister && (
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800 transition-all shadow-sm"
+              onClick={() => handleNav('profile', 'listings')}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                activePage === 'profile'
+                  ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-900/50'
+              }`}
+            >
+              My Listings
+            </button>
+          )}
+        </nav>
+
+        {/* Right Section: Add Property, ToggleTheme, Auth */}
+        <div className="flex items-center gap-3">
+          {isAuthenticated && isLister && (
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-950 transition-colors shadow-2xs cursor-pointer"
               onClick={onOpenAddProperty}
             >
-              <Plus size={13} /> Add Property
+              <Plus className="h-3.5 w-3.5" /> Add Property
             </button>
           )}
 
           {(!isAuthenticated || !isLister) && (
             <button
               type="button"
-              className="hidden xl:inline-flex text-xs font-semibold text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 px-2 py-1 transition-colors"
+              className="hidden lg:inline-flex text-xs font-medium text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white px-2 py-1 transition-colors cursor-pointer"
               onClick={() => {
                 if (!isAuthenticated) {
                   onOpenAuth('register', USER_ROLES.PROPERTY_LISTER);
@@ -205,273 +207,262 @@ export default function Navbar({
             </button>
           )}
 
-          {/* Theme Toggler */}
-          <AnimatedThemeToggler />
+          {/* Lightswind Theme Toggle */}
+          <ToggleTheme />
 
-          {/* Authenticated User Menu vs Login Action Button */}
+          {/* Auth Button or User Menu */}
           {isAuthenticated ? (
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="text-xs font-bold px-4 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white text-white dark:text-zinc-900 shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                className="hidden sm:flex text-xs font-medium px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-800 dark:text-zinc-200 transition-colors cursor-pointer items-center gap-1.5"
                 onClick={() => handleNav('profile')}
               >
-                <LayoutDashboard size={13} />
+                <LayoutDashboard className="h-3.5 w-3.5" />
                 <span>Dashboard</span>
               </button>
 
               <div className="relative" ref={dropdownRef}>
                 <button
                   type="button"
-                  className="user-profile-trigger flex items-center gap-2 border border-line rounded-full bg-white dark:bg-slate-900 dark:border-slate-800 px-2.5 py-1 transition-all hover:shadow-sm"
+                  className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-full bg-white dark:bg-zinc-900 px-2 py-1 transition-colors hover:border-zinc-400 dark:hover:border-zinc-700 cursor-pointer"
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   aria-expanded={userDropdownOpen}
                 >
-                  <div className="user-avatar-circle w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-700 to-teal-500 text-white font-bold text-[10px] flex items-center justify-center overflow-hidden">
+                  <div className="w-6 h-6 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-bold text-[10px] flex items-center justify-center overflow-hidden">
                     {user!.avatar && !user!.avatar.includes('dicebear') ? (
                       <img src={user!.avatar} alt={user!.firstName} className="w-full h-full object-cover" />
                     ) : (
                       <span>{userInitials}</span>
                     )}
                   </div>
-                  <div className="hidden sm:flex flex-col items-start leading-tight">
-                    <span className="text-xs font-bold text-slate-900 dark:text-slate-100 max-w-[90px] truncate">
-                      {user!.firstName}
-                    </span>
-                    <span className="text-[9px] font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
-                      {isLister ? 'Lister' : 'Tenant'}
-                    </span>
-                  </div>
                   <ChevronDown
-                    size={13}
-                    className={`text-slate-400 transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`}
+                    className={`h-3 w-3 text-zinc-500 dark:text-zinc-400 transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`}
                   />
                 </button>
 
-                {/* User Dropdown */}
+                {/* User Dropdown Card */}
                 {userDropdownOpen && (
-                  <div className="user-dropdown-card">
-                    <div className="dropdown-user-header">
-                      <div className="dropdown-avatar-large">
-                        <span>{userInitials}</span>
+                  <div className="absolute right-0 mt-2 w-56 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2 shadow-xl z-50">
+                    <div className="px-3 py-2 border-b border-zinc-100 dark:border-zinc-800 mb-1">
+                      <div className="font-bold text-xs text-zinc-900 dark:text-zinc-100">
+                        {user!.firstName} {user!.lastName}
                       </div>
-                      <div className="dropdown-meta">
-                        <strong>{user!.firstName} {user!.lastName}</strong>
-                        <span className="dropdown-email">{user!.email}</span>
-                        <span className={`dropdown-role-chip ${isLister ? 'lister' : 'tenant'}`}>
-                          {isLister ? 'Property Lister' : 'Verified Tenant'}
-                        </span>
+                      <div className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
+                        {user!.email}
                       </div>
+                      <span className="inline-block mt-1 text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400">
+                        {isLister ? 'Property Lister' : 'Verified Tenant'}
+                      </span>
                     </div>
 
-                    <div className="dropdown-divider" />
-
                     <button
-                      className="dropdown-item"
+                      type="button"
+                      className="flex items-center gap-2 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg text-left transition-colors cursor-pointer"
                       onClick={() => handleNav('profile', 'personal')}
                     >
-                      <User size={15} /> My Profile &amp; Preferences
+                      <User className="h-3.5 w-3.5 text-zinc-500" />
+                      <span>Profile &amp; Preferences</span>
                     </button>
 
                     {isLister ? (
                       <>
                         <button
-                          className="dropdown-item"
+                          type="button"
+                          className="flex items-center gap-2 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg text-left transition-colors cursor-pointer"
                           onClick={() => handleNav('profile', 'listings')}
                         >
-                          <Building2 size={15} /> My Properties Dashboard
+                          <Building2 className="h-3.5 w-3.5 text-zinc-500" />
+                          <span>My Properties</span>
                         </button>
                         <button
-                          className="dropdown-item highlight"
+                          type="button"
+                          className="flex items-center gap-2 w-full px-3 py-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-lg text-left transition-colors cursor-pointer"
                           onClick={() => {
                             setUserDropdownOpen(false);
                             onOpenAddProperty();
                           }}
                         >
-                          <Plus size={15} /> + Add New Property
+                          <Plus className="h-3.5 w-3.5" />
+                          <span>+ Add Property</span>
                         </button>
                       </>
                     ) : (
                       <button
-                        className="dropdown-item"
+                        type="button"
+                        className="flex items-center gap-2 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg text-left transition-colors cursor-pointer"
                         onClick={() => handleNav('shortlist')}
                       >
-                        <Heart size={15} /> My Shortlisted Homes ({savedCount})
+                        <Heart className="h-3.5 w-3.5 text-zinc-500" />
+                        <span>Shortlisted ({savedCount})</span>
                       </button>
                     )}
 
-                    <div className="dropdown-divider" />
+                    <div className="h-px bg-zinc-100 dark:bg-zinc-800 my-1" />
 
-                    <button className="dropdown-item danger" onClick={handleLogout}>
-                      <LogOut size={15} /> Sign Out
+                    <button
+                      type="button"
+                      className="flex items-center gap-2 w-full px-3 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg text-left transition-colors cursor-pointer"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="h-3.5 w-3.5" />
+                      <span>Sign Out</span>
                     </button>
                   </div>
                 )}
               </div>
             </div>
           ) : (
-            <div className="auth-buttons-group flex items-center">
+            <button
+              type="button"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 transition-colors shadow-2xs cursor-pointer"
+              onClick={() => handleNav('login')}
+            >
+              <LogIn className="h-3.5 w-3.5" />
+              <span>Login</span>
+            </button>
+          )}
+
+          {/* Mobile Menu Hamburger */}
+          <button
+            type="button"
+            className="md:hidden p-2 rounded-lg text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black px-4 pt-3 pb-6 space-y-2">
+          <button
+            type="button"
+            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-left ${
+              activePage === 'home'
+                ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
+                : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+            }`}
+            onClick={() => handleNav('home')}
+          >
+            <span className="flex items-center gap-2">
+              <Home className="h-4 w-4" /> Discover
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-left ${
+              activePage === 'results'
+                ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
+                : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+            }`}
+            onClick={() => handleNav('results')}
+          >
+            <span className="flex items-center gap-2">
+              <Compass className="h-4 w-4" /> Explore Homes
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-left ${
+              activePage === 'shortlist'
+                ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
+                : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+            }`}
+            onClick={() => handleNav('shortlist')}
+          >
+            <span className="flex items-center gap-2">
+              <Heart className="h-4 w-4" /> My Shortlist
+            </span>
+            {savedCount > 0 && (
+              <span className="rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-bold px-2 py-0.5">
+                {savedCount}
+              </span>
+            )}
+          </button>
+
+          {isAuthenticated && isLister && (
+            <>
               <button
                 type="button"
-                className="btn-create-account text-xs font-bold px-4 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-left"
+                onClick={() => handleNav('profile', 'listings')}
+              >
+                <Building2 className="h-4 w-4" /> My Listings
+              </button>
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenAddProperty();
+                }}
+              >
+                <Plus className="h-4 w-4" /> Add New Property
+              </button>
+            </>
+          )}
+
+          {(!isAuthenticated || !isLister) && (
+            <button
+              type="button"
+              className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-left"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (!isAuthenticated) {
+                  onOpenAuth('register', USER_ROLES.PROPERTY_LISTER);
+                } else {
+                  handleNav('profile');
+                }
+              }}
+            >
+              <Building2 className="h-4 w-4" /> List Property as Landlord
+            </button>
+          )}
+
+          <div className="h-px bg-zinc-200 dark:border-zinc-800 my-2" />
+
+          {isAuthenticated ? (
+            <div className="space-y-1.5 pt-1">
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white"
+                onClick={() => handleNav('profile')}
+              >
+                <LayoutDashboard className="h-4 w-4" /> Dashboard
+              </button>
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40"
+                onClick={handleLogout}
+              >
+                <LogOut className="h-4 w-4" /> Sign Out
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-2 pt-1">
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold bg-zinc-950 dark:bg-white text-white dark:text-zinc-950"
                 onClick={() => handleNav('login')}
               >
-                <LogIn size={13} />
-                <span>Login</span>
+                <LogIn className="h-4 w-4" /> Login
+              </button>
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-semibold border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200"
+                onClick={() => handleNav('signup')}
+              >
+                <UserPlus className="h-4 w-4" /> Create Account
               </button>
             </div>
           )}
         </div>
-      </NavBody>
-
-      {/* Mobile Drawer Navigation */}
-      <MobileNav>
-        <MobileNavHeader>
-          <button
-            type="button"
-            className="brand flex items-center gap-2 border-0 bg-transparent p-0 cursor-pointer"
-            onClick={() => handleNav('home')}
-          >
-            <div className="brand-mark">
-              <Home size={17} />
-              <b>✦</b>
-            </div>
-            <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white">
-              rentmatch<span className="text-emerald-600 dark:text-emerald-400">ai</span>
-            </span>
-          </button>
-
-          <div className="flex items-center gap-2">
-            <AnimatedThemeToggler />
-            <MobileNavToggle
-              isOpen={mobileMenuOpen}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            />
-          </div>
-        </MobileNavHeader>
-
-        <MobileNavMenu
-          isOpen={mobileMenuOpen}
-          onClose={() => setMobileMenuOpen(false)}
-        >
-          <div className="flex flex-col gap-1 w-full">
-            <button
-              className={`flex items-center justify-between w-full p-2.5 rounded-xl text-sm font-semibold text-left transition-colors ${
-                activePage === 'home'
-                  ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
-                  : 'text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
-              }`}
-              onClick={() => handleNav('home')}
-            >
-              <span className="flex items-center gap-2.5">
-                <Home size={16} /> Discover
-              </span>
-            </button>
-
-            <button
-              className={`flex items-center justify-between w-full p-2.5 rounded-xl text-sm font-semibold text-left transition-colors ${
-                activePage === 'results'
-                  ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
-                  : 'text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
-              }`}
-              onClick={() => handleNav('results')}
-            >
-              <span className="flex items-center gap-2.5">
-                <Compass size={16} /> Explore Homes
-              </span>
-            </button>
-
-            <button
-              className={`flex items-center justify-between w-full p-2.5 rounded-xl text-sm font-semibold text-left transition-colors ${
-                activePage === 'shortlist'
-                  ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
-                  : 'text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
-              }`}
-              onClick={() => handleNav('shortlist')}
-            >
-              <span className="flex items-center gap-2.5">
-                <Heart size={16} /> My Shortlist
-              </span>
-              {savedCount > 0 && (
-                <span className="rounded-full bg-emerald-100 dark:bg-emerald-900/80 px-2 py-0.5 text-xs font-bold text-emerald-800 dark:text-emerald-200">
-                  {savedCount}
-                </span>
-              )}
-            </button>
-
-            {isAuthenticated && isLister && (
-              <>
-                <button
-                  className="flex items-center gap-2.5 w-full p-2.5 rounded-xl text-sm font-semibold text-left text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800"
-                  onClick={() => handleNav('profile', 'listings')}
-                >
-                  <Building2 size={16} /> My Listings
-                </button>
-                <button
-                  className="flex items-center justify-center gap-2 w-full p-2.5 mt-1 rounded-xl text-sm font-bold text-emerald-800 bg-emerald-100 dark:bg-emerald-900 dark:text-emerald-100"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenAddProperty();
-                  }}
-                >
-                  <Plus size={16} /> Add New Property
-                </button>
-              </>
-            )}
-
-            {(!isAuthenticated || !isLister) && (
-              <button
-                className="flex items-center gap-2.5 w-full p-2.5 rounded-xl text-sm font-semibold text-emerald-700 dark:text-emerald-400 text-left hover:bg-emerald-50/50"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  if (!isAuthenticated) {
-                    onOpenAuth('register', USER_ROLES.PROPERTY_LISTER);
-                  } else {
-                    handleNav('profile');
-                  }
-                }}
-              >
-                <Sparkles size={16} /> List a Property as Landlord
-              </button>
-            )}
-          </div>
-
-          <div className="h-px bg-slate-100 dark:bg-slate-800 my-1 w-full" />
-
-          {/* Mobile Auth Section */}
-          {isAuthenticated ? (
-            <div className="flex flex-col gap-2 w-full pt-1">
-              <button
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-white bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 shadow-sm cursor-pointer"
-                onClick={() => handleNav('profile')}
-              >
-                <LayoutDashboard size={15} /> Dashboard
-              </button>
-              <button
-                className="flex items-center gap-2 w-full p-2.5 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40"
-                onClick={handleLogout}
-              >
-                <LogOut size={15} /> Sign Out
-              </button>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-2 w-full pt-1">
-              <button
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-sm cursor-pointer"
-                onClick={() => handleNav('login')}
-              >
-                <LogIn size={15} /> Login
-              </button>
-              <button
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
-                onClick={() => handleNav('signup')}
-              >
-                <UserPlus size={15} /> Create Account
-              </button>
-            </div>
-          )}
-        </MobileNavMenu>
-      </MobileNav>
-    </AceternityNavbar>
+      )}
+    </header>
   );
 }

@@ -71,13 +71,37 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
     }
   }, [router]);
 
-  // When pathname changes while covered, wait a brief frame for DOM painting, then open curtains
+  // When covered, keep curtains closed until the destination route has actually changed and painted
   useEffect(() => {
     if (phase === 'covered') {
+      const pending = pendingUrlRef.current;
+      const targetPath = pending ? pending.split('?')[0].split('#')[0] : null;
+
+      // If navigation was to a different route, do not open until currentPathname has updated!
+      if (targetPath && targetPath !== currentPathname) {
+        // Safety fallback timer so it never stays stuck indefinitely if route was cancelled
+        const fallbackTimer = setTimeout(() => {
+          setPhase('opening');
+        }, 2000);
+        return () => clearTimeout(fallbackTimer);
+      }
+
+      // Route has mounted: give Next.js and browser a paint cycle to render the new page
+      let raf1: number;
+      let raf2: number;
       const timer = setTimeout(() => {
-        setPhase('opening');
-      }, 70);
-      return () => clearTimeout(timer);
+        raf1 = requestAnimationFrame(() => {
+          raf2 = requestAnimationFrame(() => {
+            setPhase('opening');
+          });
+        });
+      }, 160);
+
+      return () => {
+        clearTimeout(timer);
+        if (raf1) cancelAnimationFrame(raf1);
+        if (raf2) cancelAnimationFrame(raf2);
+      };
     }
   }, [phase, currentPathname]);
 

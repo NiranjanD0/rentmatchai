@@ -113,46 +113,12 @@ export default function Navbar({
           <BrandLogo size="md" />
         </button>
 
-        {/* Editorial Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-xs font-semibold tracking-tight text-zinc-600 dark:text-zinc-400">
-          <button
-            type="button"
-            onClick={() => handleNav('results')}
-            className={`transition-colors hover:text-zinc-950 dark:hover:text-white cursor-pointer ${
-              pathname === '/explore' ? 'text-zinc-950 dark:text-white font-bold' : ''
-            }`}
-          >
-            Residences
-          </button>
-          <button
-            type="button"
-            onClick={() => handleNav('results')}
-            className="transition-colors hover:text-zinc-950 dark:hover:text-white cursor-pointer"
-          >
-            Neighborhoods
-          </button>
-          <button
-            type="button"
-            onClick={() => handleNav('shortlist')}
-            className={`flex items-center gap-1.5 transition-colors hover:text-zinc-950 dark:hover:text-white cursor-pointer ${
-              pathname === '/shortlist' ? 'text-zinc-950 dark:text-white font-bold' : ''
-            }`}
-          >
-            <span>Shortlist</span>
-            {savedCount > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 text-[10px] font-bold">
-                {savedCount}
-              </span>
-            )}
-          </button>
-        </nav>
-
-        {/* Right Action Cluster */}
+        {/* Right Action Cluster: Two buttons only (Theme & Capsuled Login) */}
         <div className="flex items-center gap-3">
           {/* Black & White Theme Toggle */}
           <ToggleTheme />
 
-          {/* Authenticated Dashboard / User Profile vs Minimal Modern Login Button */}
+          {/* Authenticated Dashboard / User Profile vs Capsuled RainbowButton Login */}
           {isAuthenticated ? (
             <div className="relative" ref={dropdownRef}>
               <button
@@ -267,22 +233,14 @@ export default function Navbar({
               </AnimatePresence>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => handleNav('login')}
-                className="px-3.5 py-1.5 rounded-full text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all cursor-pointer"
-              >
-                Sign In
-              </button>
-              <button
-                type="button"
-                onClick={() => handleNav('signup')}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-zinc-950 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 text-xs font-bold tracking-tight shadow-xs transition-all active:scale-95 cursor-pointer"
-              >
-                <span>List Residence</span>
-              </button>
-            </div>
+            <RainbowButton
+              type="button"
+              className="rounded-full px-5 py-2 text-xs"
+              onClick={() => handleNav('login')}
+            >
+              <LogIn className="h-3.5 w-3.5" />
+              <span>Login</span>
+            </RainbowButton>
           )}
         </div>
       </div>

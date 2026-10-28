@@ -4,7 +4,7 @@ import React from 'react';
 import { ThemeProvider } from 'next-themes';
 import { AuthProvider } from '../context/AuthContext';
 import { PropertyProvider } from '../context/PropertyContext';
-import { ToastProvider } from '../components/ui/Notifications';
+import { ToastProvider } from '../components/ui/notifications';
 import { PageCurtains } from '../components/ui/page-curtains';
 import RootClientLayout from './RootClientLayout';
 

@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { PropertyService } from '../services/propertyService';
 import { PROPERTY_STATUS, USER_ROLES, type Property } from '../constants/initialData';
 import { useAuth } from './AuthContext';
+import { useToast } from '@/src/components/ui/notifications';
 
 export interface ToastState {
   message: string;
@@ -76,12 +77,21 @@ export function PropertyProvider({ children }: { children: React.ReactNode }) {
   const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
   const [enquiryProperty, setEnquiryProperty] = useState<Property | null>(null);
 
+  const { notify } = useToast();
+
   // Toast State
   const [toast, setToast] = useState<ToastState | null>(null);
 
   const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' = 'success', title: string = '') => {
     setToast({ message, type, title });
-  }, []);
+    if (type === 'error') {
+      notify.error(message, title || 'Notice');
+    } else if (type === 'info') {
+      notify.info(message, title || 'Information');
+    } else {
+      notify.success(message, title || 'Success');
+    }
+  }, [notify]);
 
   const clearToast = useCallback(() => {
     setToast(null);

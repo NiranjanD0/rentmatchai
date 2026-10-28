@@ -37,7 +37,9 @@ export function LoginForm({
     e.preventDefault();
     setError(null);
     if (!email || !password) {
-      setError('Please provide both email and password.');
+      const msg = 'Please provide both email and password.';
+      setError(msg);
+      showToast(msg, 'error', 'Validation Error');
       return;
     }
 
@@ -49,6 +51,7 @@ export function LoginForm({
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Invalid credentials. Please check your email and password.';
       setError(msg);
+      showToast(msg, 'error', 'Sign-In Failed');
     } finally {
       setLoading(false);
     }
@@ -63,6 +66,7 @@ export function LoginForm({
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google authentication failed.';
       setError(msg);
+      showToast(msg, 'error', 'Google Sign-In Error');
     } finally {
       setLoading(false);
     }

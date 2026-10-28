@@ -38,12 +38,16 @@ export function SignupForm({
     setError(null);
 
     if (!firstName || !lastName || !email || !password) {
-      setError('Please fill in all required fields.');
+      const msg = 'Please fill in all required fields.';
+      setError(msg);
+      showToast(msg, 'error', 'Missing Information');
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
+      const msg = 'Password must be at least 6 characters.';
+      setError(msg);
+      showToast(msg, 'error', 'Weak Password');
       return;
     }
 
@@ -62,6 +66,7 @@ export function SignupForm({
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Registration failed. Please try again.';
       setError(msg);
+      showToast(msg, 'error', 'Registration Error');
     } finally {
       setLoading(false);
     }
@@ -76,6 +81,7 @@ export function SignupForm({
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google authentication failed.';
       setError(msg);
+      showToast(msg, 'error', 'Google Sign-Up Error');
     } finally {
       setLoading(false);
     }

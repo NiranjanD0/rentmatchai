@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, MessageCircle, Send, User, Mail, Phone } from 'lucide-react';
 import { useAuth } from '@/src/context/AuthContext';
+import { useToast } from '@/src/components/ui/notifications';
 import { type Property } from '@/src/constants/initialData';
 
 interface EnquiryModalProps {
@@ -12,6 +13,7 @@ interface EnquiryModalProps {
 
 export default function EnquiryModal({ property, onClose }: EnquiryModalProps) {
   const { user } = useAuth();
+  const { notify } = useToast();
   const [name, setName] = useState(user ? `${user.firstName} ${user.lastName}`.trim() : '');
   const [email, setEmail] = useState(user?.email || '');
   const [phone, setPhone] = useState(user?.phone || '');
@@ -23,6 +25,10 @@ export default function EnquiryModal({ property, onClose }: EnquiryModalProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSent(true);
+    notify.success(
+      `Your visit inquiry for "${property.title}" has been sent to ${property.listerName || 'the owner'}.`,
+      'Enquiry Sent'
+    );
   };
 
   return (

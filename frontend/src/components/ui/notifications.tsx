@@ -37,8 +37,15 @@ interface ToastItem extends ToastOptions {
   leaving?: boolean;
 }
 
+export type NotifyFunction = ((options: ToastOptions) => number | string) & {
+  success: (message: string, title?: string, options?: Partial<ToastOptions>) => number | string;
+  error: (message: string, title?: string, options?: Partial<ToastOptions>) => number | string;
+  info: (message: string, title?: string, options?: Partial<ToastOptions>) => number | string;
+  alert: (message: string, title?: string, options?: Partial<ToastOptions>) => number | string;
+};
+
 export interface ToastContextValue {
-  notify: (options: ToastOptions) => number | string;
+  notify: NotifyFunction;
   dismiss: (id: number | string) => void;
 }
 
@@ -49,6 +56,8 @@ export function useToast() {
   if (!ctx) throw new Error("useToast must be used inside <ToastProvider>");
   return ctx;
 }
+
+export const useNotifications = useToast;
 
 let nextId = 1;
 
@@ -79,14 +88,27 @@ export function ToastProvider({
     }, EXIT_MS);
   }, []);
 
-  const notify = useCallback((options: ToastOptions) => {
+  const baseNotify = useCallback((options: ToastOptions) => {
     const id = options.id ?? nextId++;
     setToasts((list) => [
-      { icon: "info", duration: 4000, ...options, id },
+      { icon: "info", duration: 4500, ...options, id },
       ...list.filter((t) => t.id !== id),
     ]);
     return id;
   }, []);
+
+  const notify = useMemo(() => {
+    const fn = ((options: ToastOptions) => baseNotify(options)) as NotifyFunction;
+    fn.success = (message: string, title: string = "Success", options?: Partial<ToastOptions>) =>
+      baseNotify({ ...options, title, description: message, icon: "success" });
+    fn.error = (message: string, title: string = "Error", options?: Partial<ToastOptions>) =>
+      baseNotify({ ...options, title, description: message, icon: "alert", duration: 5500 });
+    fn.info = (message: string, title: string = "Notice", options?: Partial<ToastOptions>) =>
+      baseNotify({ ...options, title, description: message, icon: "info" });
+    fn.alert = (message: string, title: string = "Alert", options?: Partial<ToastOptions>) =>
+      baseNotify({ ...options, title, description: message, icon: "alert", duration: 5500 });
+    return fn;
+  }, [baseNotify]);
 
   const setHeight = useCallback((id: number | string, h: number) => {
     setHeights((prev) => (prev[id] === h ? prev : { ...prev, [id]: h }));
@@ -304,16 +326,24 @@ function renderIcon(icon: ToastOptions["icon"]) {
 
 const CSS = `
 .ntf-list {
-  --ntf-bg: #1e293b;
-  --ntf-ring: rgba(255,255,255,.09);
-  --ntf-text: #f8fafc;
-  --ntf-muted: #94a3b8;
+  --ntf-bg: #ffffff;
+  --ntf-ring: rgba(0,0,0,.08);
+  --ntf-text: #09090b;
+  --ntf-muted: #71717a;
   --ntf-red: #ef4444;
   position: fixed; bottom: 20px; z-index: 9999;
   width: min(400px, calc(100vw - 32px));
   margin: 0; padding: 0; list-style: none;
   transition: height .3s cubic-bezier(.22,1,.36,1);
   font-family: inherit;
+}
+.dark .ntf-list,
+:root.dark .ntf-list {
+  --ntf-bg: #09090b;
+  --ntf-ring: rgba(255,255,255,.12);
+  --ntf-text: #fafafa;
+  --ntf-muted: #a1a1aa;
+  --ntf-red: #f87171;
 }
 .ntf-list[data-position="bottom-right"]  { right: 20px; }
 .ntf-list[data-position="bottom-left"]   { left: 20px; }

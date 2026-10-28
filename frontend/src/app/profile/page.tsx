@@ -123,7 +123,9 @@ function ProfileContent() {
       showToast('Profile updated successfully!', 'success');
       setTimeout(() => setUpdateSuccess(false), 3000);
     } catch (err: unknown) {
-      setUpdateError((err as Error).message || 'Failed to update profile details.');
+      const msg = (err as Error).message || 'Failed to update profile details.';
+      setUpdateError(msg);
+      showToast(msg, 'error', 'Profile Update Error');
     } finally {
       setIsUpdating(false);
     }
@@ -136,12 +138,16 @@ function ProfileContent() {
     setPasswordSuccess(false);
 
     if (newPassword.length < 6) {
-      setPasswordError('New password must be at least 6 characters.');
+      const msg = 'New password must be at least 6 characters.';
+      setPasswordError(msg);
+      showToast(msg, 'error', 'Password Too Short');
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setPasswordError('New passwords do not match.');
+      const msg = 'New passwords do not match.';
+      setPasswordError(msg);
+      showToast(msg, 'error', 'Password Mismatch');
       return;
     }
 
@@ -155,7 +161,9 @@ function ProfileContent() {
       showToast('Password changed successfully!', 'success');
       setTimeout(() => setPasswordSuccess(false), 3000);
     } catch (err: unknown) {
-      setPasswordError((err as Error).message || 'Failed to update password.');
+      const msg = (err as Error).message || 'Failed to update password.';
+      setPasswordError(msg);
+      showToast(msg, 'error', 'Password Change Failed');
     } finally {
       setPasswordUpdating(false);
     }

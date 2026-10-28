@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/src/context/AuthContext';
+import { useToast } from '@/src/components/ui/notifications';
 import { PropertyService, PropertyValidator, type PropertyFormData } from '@/src/services/propertyService';
 import { AVAILABLE_AMENITIES, CURATED_PHOTO_PRESETS, PROPERTY_STATUS, type Property, type PropertyStatus } from '@/src/constants/initialData';
 import { X, Building2, MapPin, IndianRupee, Maximize2, Image as ImageIcon, Sparkles, Check, AlertCircle } from 'lucide-react';
@@ -20,6 +21,7 @@ export default function PropertyFormModal({
   onSuccess
 }: PropertyFormModalProps) {
   const { user } = useAuth();
+  const { notify } = useToast();
   const isEditing = Boolean(initialProperty);
 
   // Form Fields
@@ -125,6 +127,8 @@ export default function PropertyFormModal({
 
     if (!isValid) {
       // Sprint 2 State Diagram: "[invalid] / show errors" -> back to draft with errors displayed
+      const firstError = Object.values(errors)[0] || 'Please review required fields before publishing.';
+      notify.error(firstError, 'Validation Error');
       setValidationErrors(errors);
       setFormState('draft');
       return;
@@ -148,8 +152,10 @@ export default function PropertyFormModal({
         setTimeout(onClose, 350);
       }
     } catch (err: unknown) {
+      const msg = (err as Error).message || 'Operation failed. Please try again.';
+      notify.error(msg, 'Listing Error');
       setFormState('error');
-      setServerError((err as Error).message || 'Operation failed. Please try again.');
+      setServerError(msg);
     }
   };
 

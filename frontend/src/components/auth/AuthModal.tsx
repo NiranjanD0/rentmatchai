@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/src/context/AuthContext';
 import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
+import { useToast } from '@/src/components/ui/notifications';
 import { X, Mail, Lock, Eye, EyeOff, User, Phone, CheckCircle2, AlertCircle, Sparkles, Building2, KeyRound } from 'lucide-react';
 
 interface AuthModalProps {
@@ -15,6 +16,7 @@ interface AuthModalProps {
 
 export default function AuthModal({ isOpen, onClose, initialTab = 'login', initialRole = USER_ROLES.TENANT, onAuthSuccess }: AuthModalProps) {
   const { login, register, loginWithGoogle } = useAuth();
+  const { notify } = useToast();
 
   const [tab, setTab] = useState(initialTab); // 'login' | 'register'
   const [role, setRole] = useState<UserRole>(initialRole);
@@ -63,7 +65,9 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password) {
-      setErrorMessage('Please provide both email and password.');
+      const msg = 'Please provide both email and password.';
+      notify.error(msg, 'Validation Error');
+      setErrorMessage(msg);
       setAuthStatus('failed');
       return;
     }
@@ -80,8 +84,10 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
         onClose();
       }, 400);
     } catch (err: unknown) {
+      const msg = (err as Error).message || 'Invalid credentials. Please verify your email and password.';
+      notify.error(msg, 'Login Failed');
       setAuthStatus('failed'); // Sprint 1: Login Failed state
-      setErrorMessage((err as Error).message || 'Invalid credentials. Please verify your email and password.');
+      setErrorMessage(msg);
     }
   };
 
@@ -90,25 +96,33 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
 
     // Client-side validations
     if (!firstName.trim()) {
-      setErrorMessage('Please enter your first name.');
+      const msg = 'Please enter your first name.';
+      notify.error(msg, 'Validation Error');
+      setErrorMessage(msg);
       setAuthStatus('failed');
       return;
     }
 
     if (!email.trim() || !email.includes('@')) {
-      setErrorMessage('Please enter a valid email address.');
+      const msg = 'Please enter a valid email address.';
+      notify.error(msg, 'Validation Error');
+      setErrorMessage(msg);
       setAuthStatus('failed');
       return;
     }
 
     if (!password || password.length < 6) {
-      setErrorMessage('Password must contain at least 6 characters.');
+      const msg = 'Password must contain at least 6 characters.';
+      notify.error(msg, 'Validation Error');
+      setErrorMessage(msg);
       setAuthStatus('failed');
       return;
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match. Please re-enter.');
+      const msg = 'Passwords do not match. Please re-enter.';
+      notify.error(msg, 'Validation Error');
+      setErrorMessage(msg);
       setAuthStatus('failed');
       return;
     }
@@ -134,8 +148,10 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
         onClose();
       }, 400);
     } catch (err: unknown) {
+      const msg = (err as Error).message || 'Registration failed. Please try again.';
+      notify.error(msg, 'Registration Failed');
       setAuthStatus('failed'); // Sprint 1: Registration Failed state
-      setErrorMessage((err as Error).message || 'Registration failed. Please try again.');
+      setErrorMessage(msg);
     }
   };
 
@@ -151,8 +167,10 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
         onClose();
       }, 400);
     } catch {
+      const msg = 'Google Authentication was cancelled or failed.';
+      notify.error(msg, 'Google Sign-In Error');
       setAuthStatus('failed');
-      setErrorMessage('Google Authentication was cancelled or failed.');
+      setErrorMessage(msg);
     }
   };
 

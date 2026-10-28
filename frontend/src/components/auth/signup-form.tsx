@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
-import { AlertCircle, ArrowRight, GraduationCap, Building2, User, Mail, Lock, Phone } from 'lucide-react';
+import { ArrowRight, GraduationCap, Building2, User, Mail, Lock, Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/src/components/ui/button';
 import { Card, CardContent } from '@/src/components/ui/card';
@@ -175,14 +175,6 @@ export function SignupForm({
               or enter details
             </span>
           </div>
-
-          {/* Error Alert */}
-          {error && (
-            <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 flex items-start gap-2.5 text-xs text-red-700 dark:text-red-300">
-              <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-red-600 dark:text-red-400" />
-              <span>{error}</span>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="space-y-3.5">
             <div className="grid grid-cols-2 gap-3">

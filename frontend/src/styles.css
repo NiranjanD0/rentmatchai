@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -6,7 +6,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: #09090b;
   background: #ffffff;
   font-synthesis: none;
@@ -153,7 +153,7 @@ main {
   background: transparent;
   padding: 0;
   color: var(--navy);
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 21px;
   font-weight: 800;
   letter-spacing: -0.8px;
@@ -525,7 +525,7 @@ main {
 }
 
 .hero h1, .results-title h1, .shortlist-title h1 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: clamp(36px, 4.1vw, 54px);
   letter-spacing: -2.4px;
   line-height: 1.12;
@@ -739,7 +739,7 @@ main {
 }
 
 .search-panel h2, .section-head h2, .detail-section h2 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 23px;
   letter-spacing: -0.7px;
   color: var(--navy);
@@ -1095,7 +1095,7 @@ main {
   padding: 0;
   margin: 8px 0 6px;
   color: var(--navy);
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 15px;
   font-weight: 800;
   line-height: 1.4;
@@ -1113,7 +1113,7 @@ main {
 }
 
 .price {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.5px;
@@ -1121,7 +1121,7 @@ main {
 }
 
 .price small {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 10px;
   font-weight: 500;
   color: #89958e;
@@ -1312,13 +1312,8 @@ main {
 
 /* FOOTER */
 footer {
-  min-height: 76px;
-  padding: 24px max(calc((100vw - 1200px) / 2), 5.3%);
   border-top: 1px solid #e8ece8;
-  background: white;
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  background: transparent;
   color: #87938b;
   font-size: 11px;
 }
@@ -1337,7 +1332,7 @@ footer .footer-brand {
 }
 
 footer .footer-brand b {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 15px;
   letter-spacing: -0.5px;
 }
@@ -1454,7 +1449,7 @@ footer > small {
   align-items: center;
   gap: 7px;
   margin: 0;
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
 }
 
@@ -1514,13 +1509,13 @@ footer > small {
 }
 
 .range-value {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   color: #234634;
   font-size: 15px;
 }
 
 .range-value small {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 10px;
   font-weight: 400;
   color: #8b9991;
@@ -1662,7 +1657,7 @@ footer > small {
 }
 
 .empty h3, .empty-shortlist h2, .empty-lister-state h3 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   color: var(--navy);
   font-size: 21px;
   margin: 12px 0 8px;
@@ -1772,7 +1767,7 @@ footer > small {
 }
 
 .detail-title h1 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 32px;
   letter-spacing: -1.1px;
   margin: 7px 0;
@@ -2080,7 +2075,7 @@ footer > small {
 }
 
 .rent-price {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 28px;
   letter-spacing: -1px;
   color: #173b2a;
@@ -2089,7 +2084,7 @@ footer > small {
 }
 
 .rent-price span {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 11px;
   letter-spacing: 0;
   font-weight: 500;
@@ -2205,7 +2200,7 @@ footer > small {
 }
 
 .saved-count b {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 24px;
   color: #20452f;
 }
@@ -2277,7 +2272,7 @@ footer > small {
 }
 
 .profile-name-row h1 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 26px;
   color: var(--navy);
   margin: 0;
@@ -2383,7 +2378,7 @@ footer > small {
 }
 
 .card-heading h2 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 20px;
   margin: 0 0 5px;
   color: var(--navy);
@@ -2421,7 +2416,7 @@ footer > small {
 }
 
 .stat-number {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 32px;
   font-weight: 800;
   color: var(--navy);
@@ -2690,7 +2685,7 @@ footer > small {
 }
 
 .auth-header h2 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 24px;
   letter-spacing: -0.6px;
   color: var(--navy);
@@ -2993,7 +2988,7 @@ footer > small {
 }
 
 .property-modal-header h2 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 22px;
   color: var(--navy);
   margin: 0 0 5px;
@@ -3222,7 +3217,7 @@ footer > small {
 }
 
 .delete-modal-content h3 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 20px;
   color: var(--navy);
   margin: 0 0 8px;
@@ -3377,7 +3372,7 @@ footer > small {
 }
 
 .modal h2 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   color: var(--navy);
   font-size: 22px;
   margin: 0 0 6px;
@@ -3693,8 +3688,9 @@ footer > small {
 }
 
 .dark footer {
-  border-top-color: #1e293b;
-  color: #94a3b8;
+  border-top-color: #27272a !important;
+  background: #09090b !important;
+  color: #a1a1aa !important;
 }
 
 /* Top Announcement Bar */
@@ -3812,7 +3808,7 @@ footer > small {
 }
 
 .stat-num {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 28px;
   font-weight: 800;
   color: #183244;
@@ -3881,7 +3877,7 @@ footer > small {
   position: absolute;
   top: 18px;
   right: 20px;
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 24px;
   font-weight: 800;
   color: #e2ede5;
@@ -3908,7 +3904,7 @@ footer > small {
 }
 
 .step-card h3 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #183244;
@@ -3960,7 +3956,7 @@ footer > small {
 }
 
 .footer-col-brand .footer-brand b {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 20px;
   font-weight: 800;
   color: #ffffff;
@@ -4109,7 +4105,7 @@ footer > small {
 }
 
 .hero-headline {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: clamp(32px, 5.2vw, 56px);
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -4511,7 +4507,7 @@ footer > small {
 }
 
 .bento-content h3 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 15px;
   font-weight: 800;
   color: #065f46;
@@ -4615,7 +4611,7 @@ footer > small {
 }
 
 .metric-value {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 30px;
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -4672,7 +4668,7 @@ footer > small {
 }
 
 .section-title {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 26px;
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -4760,7 +4756,7 @@ footer > small {
   position: absolute;
   top: 20px;
   right: 22px;
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 26px;
   font-weight: 800;
   color: #f4f4f5;
@@ -4787,7 +4783,7 @@ footer > small {
 }
 
 .step-card-modern h4 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 17px;
   font-weight: 800;
   color: #09090b;
@@ -4925,7 +4921,7 @@ footer > small {
 }
 
 .card-title {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #09090b;
@@ -4947,7 +4943,7 @@ footer > small {
 }
 
 .price {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 20px;
   font-weight: 800;
   color: #09090b;
@@ -5297,4 +5293,306 @@ footer > small {
 
 .dark .empty-profile h2 {
   color: #fafafa !important;
+}
+
+/* DARK MODE COMPREHENSIVE OVERRIDES */
+.dark .modal,
+.dark .delete-modal-box,
+.dark .property-modal-box,
+.dark .auth-modal {
+  background: #09090b !important;
+  border: 1px solid #27272a !important;
+  color: #fafafa !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8) !important;
+}
+
+.dark .delete-modal-content h3,
+.dark .property-modal-header h2,
+.dark .modal h2 {
+  color: #fafafa !important;
+}
+
+.dark .delete-modal-content p,
+.dark .property-modal-header p,
+.dark .enquiry-subtitle {
+  color: #a1a1aa !important;
+}
+
+.dark .delete-warning-note {
+  background: #1c1917 !important;
+  border-color: #44403c !important;
+  color: #fbbf24 !important;
+}
+
+.dark .delete-icon-wrapper {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+}
+
+.dark .btn-cancel {
+  background: #18181b !important;
+  border-color: #27272a !important;
+  color: #a1a1aa !important;
+}
+
+.dark .btn-cancel:hover {
+  background: #27272a !important;
+  color: #ffffff !important;
+}
+
+.dark .modal-actions-footer {
+  background: #09090b !important;
+  border-top-color: #27272a !important;
+}
+
+.dark .property-modal-header {
+  border-bottom-color: #27272a !important;
+}
+
+.dark .property-form-step {
+  border-bottom-color: #27272a !important;
+}
+
+.dark .form-section-title {
+  color: #f4f4f5 !important;
+  border-bottom-color: #27272a !important;
+}
+
+.dark .form-group input,
+.dark .form-group select,
+.dark .form-group textarea,
+.dark .input-with-icon,
+.dark .input-with-icon input {
+  background: #18181b !important;
+  border-color: #27272a !important;
+  color: #fafafa !important;
+}
+
+.dark .form-group label {
+  color: #d4d4d8 !important;
+}
+
+.dark .form-group input:focus,
+.dark .form-group select:focus,
+.dark .form-group textarea:focus,
+.dark .input-with-icon:focus-within {
+  background: #18181b !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
+}
+
+.dark .enquiry-modal-kicker {
+  background: #18181b !important;
+  color: #34d399 !important;
+  border-color: #27272a !important;
+}
+
+.dark .rent-box {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .rent-box > small {
+  color: #a1a1aa !important;
+}
+
+.dark .rent-price {
+  color: #f4f4f5 !important;
+}
+
+.dark .rent-price span {
+  color: #a1a1aa !important;
+}
+
+.dark .rent-row {
+  border-top-color: #27272a !important;
+  color: #a1a1aa !important;
+}
+
+.dark .facts > div {
+  background: #09090b !important;
+  border-color: #27272a !important;
+}
+
+.dark .facts b {
+  color: #f4f4f5 !important;
+}
+
+.dark .facts small {
+  color: #a1a1aa !important;
+}
+
+.dark .amenities span {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  color: #d4d4d8 !important;
+}
+
+.dark .why {
+  background: #18181b !important;
+  border-color: #27272a !important;
+}
+
+.dark .why p {
+  color: #a1a1aa !important;
+}
+
+.dark .reason-tags span {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  color: #34d399 !important;
+}
+
+.dark .outline {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  color: #fafafa !important;
+}
+
+.dark .outline:hover, .dark .outline.saved-active {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: #f87171 !important;
+}
+
+.dark .detail-title h1 {
+  color: #fafafa !important;
+}
+
+.dark .detail-title p {
+  color: #a1a1aa !important;
+}
+
+.dark .detail-actions .match {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+}
+
+.dark .btn-owner-banner.status {
+  background: #18181b !important;
+  border-color: #27272a !important;
+  color: #fafafa !important;
+}
+
+.dark .btn-owner-banner.delete {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #f87171 !important;
+}
+
+.dark .results-search {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .results-search input {
+  color: #fafafa !important;
+}
+
+.dark .filters {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .chips button {
+  background: #18181b !important;
+  border-color: #27272a !important;
+  color: #a1a1aa !important;
+}
+
+.dark .chips button:hover {
+  background: #27272a !important;
+  color: #fafafa !important;
+}
+
+.dark .chips button.chosen {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: #10b981 !important;
+  color: #34d399 !important;
+}
+
+.dark .control {
+  background: #18181b !important;
+  border-color: #27272a !important;
+  color: #fafafa !important;
+}
+
+.dark .toolbar select {
+  background: #18181b !important;
+  border-color: #27272a !important;
+  color: #fafafa !important;
+}
+
+.dark .mobile-filter {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  color: #34d399 !important;
+}
+
+.dark .sample-note {
+  background: #18181b !important;
+  border-color: #27272a !important;
+  color: #a1a1aa !important;
+}
+
+.dark .sample-note b {
+  color: #34d399 !important;
+}
+
+.dark .empty,
+.dark .empty-shortlist,
+.dark .empty-lister-state {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  color: #a1a1aa !important;
+}
+
+.dark .filter-btn {
+  background: #18181b !important;
+  border-color: #27272a !important;
+  color: #a1a1aa !important;
+}
+
+.dark .filter-btn.active {
+  background: #10b981 !important;
+  border-color: #10b981 !important;
+  color: #ffffff !important;
+}
+
+.dark .tenant-pref-box {
+  background: #18181b !important;
+  border-color: #27272a !important;
+}
+
+.dark .tenant-pref-box h3 {
+  color: #34d399 !important;
+}
+
+.dark .tenant-pref-box p {
+  color: #a1a1aa !important;
+}
+
+.dark .float-card,
+.dark .float-tag {
+  background: #09090b !important;
+  border-color: #27272a !important;
+  color: #fafafa !important;
+}
+
+.dark .float-card small,
+.dark .float-tag small {
+  color: #a1a1aa !important;
+}
+
+.dark .site-footer {
+  background: #09090b !important;
+  border-top-color: #27272a !important;
+  color: #a1a1aa !important;
+}
+
+.dark .footer-top {
+  border-bottom-color: #27272a !important;
 }

@@ -5,7 +5,7 @@ import { useAuth } from '@/src/context/AuthContext';
 import { useToast } from '@/src/components/ui/notifications';
 import { PropertyService, PropertyValidator, type PropertyFormData } from '@/src/services/propertyService';
 import { AVAILABLE_AMENITIES, CURATED_PHOTO_PRESETS, PROPERTY_STATUS, type Property, type PropertyStatus } from '@/src/constants/initialData';
-import { X, Building2, MapPin, IndianRupee, Maximize2, Image as ImageIcon, Sparkles, Check, AlertCircle } from 'lucide-react';
+import { X, Building2, MapPin, IndianRupee, Maximize2, Image as ImageIcon, Sparkles, Check } from 'lucide-react';
 
 interface PropertyFormModalProps {
   isOpen: boolean;
@@ -178,16 +178,6 @@ export default function PropertyFormModal({
             <X size={20} />
           </button>
         </div>
-
-        {/* Server/Ownership Error Alert */}
-        {serverError && (
-          <div className="form-alert error">
-            <AlertCircle size={16} />
-            <div>
-              <strong>Error:</strong> {serverError}
-            </div>
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="property-form">
           {/* Section 1: Basic Information */}

@@ -7,7 +7,7 @@ import { useProperty } from '../../context/PropertyContext';
 import { PropertyService } from '../../services/propertyService';
 import { PROPERTY_STATUS, type Property } from '../../constants/initialData';
 import { PropertyCard } from '@/src/components/property';
-import { User, Mail, Phone, Building2, ShieldCheck, Plus, CheckCircle2, AlertCircle, Lock, Sparkles } from 'lucide-react';
+import { User, Mail, Phone, Building2, ShieldCheck, Plus, Lock, Sparkles } from 'lucide-react';
 import { usePageCurtains } from '../../components/ui/page-curtains';
 
 function ProfileContent() {
@@ -272,18 +272,6 @@ function ProfileContent() {
               </div>
             </div>
 
-            {updateSuccess && (
-              <div className="form-alert success">
-                <CheckCircle2 size={16} /> Profile details saved successfully.
-              </div>
-            )}
-
-            {updateError && (
-              <div className="form-alert error">
-                <AlertCircle size={16} /> {updateError}
-              </div>
-            )}
-
             <form onSubmit={handleProfileSubmit} className="profile-form">
               <div className="form-grid-2">
                 <div className="form-group">
@@ -498,18 +486,6 @@ function ProfileContent() {
                 <p>Update your account password using secure hashing algorithms.</p>
               </div>
             </div>
-
-            {passwordSuccess && (
-              <div className="form-alert success">
-                <CheckCircle2 size={16} /> Your password has been updated successfully.
-              </div>
-            )}
-
-            {passwordError && (
-              <div className="form-alert error">
-                <AlertCircle size={16} /> {passwordError}
-              </div>
-            )}
 
             <form onSubmit={handlePasswordSubmit} className="profile-form">
               <div className="form-group">

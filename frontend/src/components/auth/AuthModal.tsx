@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/src/context/AuthContext';
 import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { useToast } from '@/src/components/ui/notifications';
-import { X, Mail, Lock, Eye, EyeOff, User, Phone, CheckCircle2, AlertCircle, Sparkles, Building2, KeyRound } from 'lucide-react';
+import { X, Mail, Lock, Eye, EyeOff, User, Phone, Sparkles, Building2, KeyRound } from 'lucide-react';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -245,24 +245,6 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
             Create Account
           </button>
         </div>
-
-        {/* Error Alert (Sprint 1: Login Failed / Registration Failed State) */}
-        {authStatus === 'failed' && errorMessage && (
-          <div className="auth-alert error">
-            <AlertCircle size={16} />
-            <div>
-              <strong>Action Failed:</strong> {errorMessage}
-            </div>
-          </div>
-        )}
-
-        {/* Success Alert */}
-        {authStatus === 'success' && (
-          <div className="auth-alert success">
-            <CheckCircle2 size={16} />
-            <div>Authentication successful! Redirecting...</div>
-          </div>
-        )}
 
         {/* LOGIN FORM */}
         {tab === 'login' && (

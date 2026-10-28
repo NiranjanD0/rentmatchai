@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, CheckCircle2, MessageCircle, Send, User, Mail, Phone } from 'lucide-react';
+import { X, MessageCircle, Send, User, Mail, Phone } from 'lucide-react';
 import { useAuth } from '@/src/context/AuthContext';
 import { useToast } from '@/src/components/ui/notifications';
 import { type Property } from '@/src/constants/initialData';
@@ -20,15 +20,13 @@ export default function EnquiryModal({ property, onClose }: EnquiryModalProps) {
   const [message, setMessage] = useState(
     `Hi ${property.listerName || 'there'}, I found this property on RentMatch AI and I'm interested in scheduling a visit. Is it still available?`
   );
-  const [sent, setSent] = useState(false);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
     notify.success(
       `Your visit inquiry for "${property.title}" has been sent to ${property.listerName || 'the owner'}.`,
       'Enquiry Sent'
     );
+    onClose();
   };
 
   return (
@@ -38,26 +36,13 @@ export default function EnquiryModal({ property, onClose }: EnquiryModalProps) {
           <X size={19} />
         </button>
 
-        {sent ? (
-          <div className="success">
-            <CheckCircle2 size={42} />
-            <h2>Enquiry Sent to Owner!</h2>
-            <p>
-              Your visit request for <strong>{property.title}</strong> has been logged. The lister ({property.listerName}) has been notified.
-            </p>
-            <button className="primary" onClick={onClose}>
-              Done
-            </button>
-          </div>
-        ) : (
-          <>
-            <div className="enquiry-modal-kicker">
-              <MessageCircle size={14} /> DIRECT LISTER ENQUIRY
-            </div>
-            <h2>Ask About This Property</h2>
-            <p className="enquiry-subtitle">
-              Reach out to <strong>{property.listerName || 'Owner'}</strong> regarding availability, rent details or move-in schedule.
-            </p>
+        <div className="enquiry-modal-kicker">
+          <MessageCircle size={14} /> DIRECT LISTER ENQUIRY
+        </div>
+        <h2>Ask About This Property</h2>
+        <p className="enquiry-subtitle">
+          Reach out to <strong>{property.listerName || 'Owner'}</strong> regarding availability, rent details or move-in schedule.
+        </p>
 
             <form onSubmit={handleSubmit} className="enquiry-form">
               <div className="form-group">
@@ -117,8 +102,6 @@ export default function EnquiryModal({ property, onClose }: EnquiryModalProps) {
                 <Send size={15} /> Send Enquiry
               </button>
             </form>
-          </>
-        )}
       </div>
     </div>
   );

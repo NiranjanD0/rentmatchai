@@ -102,8 +102,8 @@ export default function Navbar({
     : 'U';
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/70 dark:border-zinc-800/70 bg-white/80 dark:bg-black/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/70 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-black/90 backdrop-blur-xl supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-black/80 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-6">
         {/* Brand Logo */}
         <button
           type="button"
@@ -112,6 +112,40 @@ export default function Navbar({
         >
           <BrandLogo size="md" />
         </button>
+
+        {/* Editorial Navigation Links */}
+        <nav className="hidden md:flex items-center gap-8 text-xs font-semibold tracking-tight text-zinc-600 dark:text-zinc-400">
+          <button
+            type="button"
+            onClick={() => handleNav('results')}
+            className={`transition-colors hover:text-zinc-950 dark:hover:text-white cursor-pointer ${
+              pathname === '/explore' ? 'text-zinc-950 dark:text-white font-bold' : ''
+            }`}
+          >
+            Residences
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNav('results')}
+            className="transition-colors hover:text-zinc-950 dark:hover:text-white cursor-pointer"
+          >
+            Neighborhoods
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNav('shortlist')}
+            className={`flex items-center gap-1.5 transition-colors hover:text-zinc-950 dark:hover:text-white cursor-pointer ${
+              pathname === '/shortlist' ? 'text-zinc-950 dark:text-white font-bold' : ''
+            }`}
+          >
+            <span>Shortlist</span>
+            {savedCount > 0 && (
+              <span className="px-1.5 py-0.2 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 text-[10px] font-bold">
+                {savedCount}
+              </span>
+            )}
+          </button>
+        </nav>
 
         {/* Right Action Cluster */}
         <div className="flex items-center gap-3">
@@ -123,18 +157,18 @@ export default function Navbar({
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
-                className="flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 pl-1.5 pr-2.5 py-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all cursor-pointer shadow-xs active:scale-95"
+                className="flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 pl-1.5 pr-2.5 py-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all cursor-pointer shadow-xs active:scale-95"
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                 aria-expanded={userDropdownOpen}
               >
-                <div className="w-7 h-7 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-bold text-[10px] flex items-center justify-center overflow-hidden shrink-0">
+                <div className="w-7 h-7 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 font-bold text-[10px] flex items-center justify-center overflow-hidden shrink-0">
                   {user!.avatar && !user!.avatar.includes('dicebear') ? (
                     <img src={user!.avatar} alt={user!.firstName} className="w-full h-full object-cover" />
                   ) : (
                     <span>{userInitials}</span>
                   )}
                 </div>
-                <span className="hidden sm:inline-block max-w-[100px] truncate">
+                <span className="hidden sm:inline-block max-w-[100px] truncate text-xs font-semibold">
                   {user!.firstName}
                 </span>
                 <ChevronDown
@@ -155,13 +189,13 @@ export default function Navbar({
                     className="absolute right-0 mt-2 w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl p-2 shadow-xl shadow-zinc-950/10 dark:shadow-black/50 z-50"
                   >
                     <div className="px-3 py-2.5 border-b border-zinc-100 dark:border-zinc-800/80 mb-1">
-                      <div className="font-bold text-xs text-zinc-900 dark:text-zinc-100">
+                      <div className="font-bold text-xs text-zinc-950 dark:text-zinc-100">
                         {user!.firstName} {user!.lastName}
                       </div>
                       <div className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">
                         {user!.email}
                       </div>
-                      <div className="mt-1.5 flex items-center gap-1.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400">
+                      <div className="mt-1.5 flex items-center gap-1.5 text-[10px] font-semibold text-zinc-700 dark:text-zinc-300">
                         <ShieldCheck className="h-3 w-3" />
                         <span>{isLister ? 'Verified Landlord' : 'Verified Renter'}</span>
                       </div>
@@ -197,7 +231,7 @@ export default function Navbar({
                         </button>
                         <button
                           type="button"
-                          className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-xl text-left transition-colors cursor-pointer"
+                          className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-zinc-950 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
                           onClick={() => {
                             setUserDropdownOpen(false);
                             onOpenAddProperty();
@@ -218,7 +252,7 @@ export default function Navbar({
                       </button>
                     )}
 
-                    <div className="h-px bg-zinc-100 dark:bg-zinc-800/80 my-1" />
+                    <div className="h-px bg-zinc-100 dark:border-zinc-800/80 my-1" />
 
                     <button
                       type="button"
@@ -233,13 +267,22 @@ export default function Navbar({
               </AnimatePresence>
             </div>
           ) : (
-            <RainbowButton
-              type="button"
-              onClick={() => handleNav('login')}
-            >
-              <LogIn className="h-3.5 w-3.5" />
-              <span>Login</span>
-            </RainbowButton>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => handleNav('login')}
+                className="px-3.5 py-1.5 rounded-full text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all cursor-pointer"
+              >
+                Sign In
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNav('signup')}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-zinc-950 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 text-xs font-bold tracking-tight shadow-xs transition-all active:scale-95 cursor-pointer"
+              >
+                <span>List Residence</span>
+              </button>
+            </div>
           )}
         </div>
       </div>

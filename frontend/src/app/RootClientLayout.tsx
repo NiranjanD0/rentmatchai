@@ -22,104 +22,126 @@ function FooterSlot() {
   const isAuthPage = pathname === '/login' || pathname === '/signup' || pathname === '/register';
   if (isAuthPage) return null;
   return (
-    <footer className="border-t border-zinc-200 dark:border-zinc-900 bg-white dark:bg-black text-zinc-600 dark:text-zinc-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
-          <div className="md:col-span-2">
-            <div className="mb-4">
-              <BrandLogo size="lg" />
-            </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed mb-5">
-              Intelligent rental matching that connects verified tenants directly with authentic landlords and property managers across Gandhinagar and Ahmedabad.
+    <footer className="border-t border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-black text-zinc-600 dark:text-zinc-400">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
+          {/* Brand Manifesto Column */}
+          <div className="md:col-span-5 space-y-4">
+            <BrandLogo size="lg" />
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed">
+              RentMatch AI is the editorial standard for residential leasing in Gandhinagar and Ahmedabad. Connecting discerning residents directly with authenticated property owners — eliminating mediator commissions, phantom listings, and rental friction through precision matching.
             </p>
-            <div className="flex flex-wrap gap-2 text-xs font-medium text-zinc-600 dark:text-zinc-400">
-              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-                <Check className="h-3 w-3 text-zinc-700 dark:text-zinc-300" /> 100% Verified Listers
+            <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-semibold text-zinc-800 dark:text-zinc-200">
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                <Check className="h-3 w-3 text-zinc-950 dark:text-white" /> 100% Direct Owners
               </span>
-              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-                <Check className="h-3 w-3 text-zinc-700 dark:text-zinc-300" /> Zero Brokerage
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                <Check className="h-3 w-3 text-zinc-950 dark:text-white" /> ₹0 Brokerage Fees
               </span>
-              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-                <Check className="h-3 w-3 text-zinc-700 dark:text-zinc-300" /> Direct Landlord Chat
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                <Check className="h-3 w-3 text-zinc-950 dark:text-white" /> Instant WhatsApp
               </span>
             </div>
           </div>
 
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 mb-4">
-              Explore
+          {/* Curated Collections */}
+          <div className="md:col-span-2">
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-950 dark:text-zinc-100 mb-4">
+              Collections
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="/explore" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                  All Available Homes
+                <a href="/explore" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  All Residences
                 </a>
               </li>
               <li>
-                <a href="/explore?query=furnished" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <a href="/explore?query=furnished" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                   Furnished 2BHKs
                 </a>
               </li>
               <li>
-                <a href="/explore?query=student" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                  Student Housing near PDEU
+                <a href="/explore?query=student" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Student Enclave (PDEU)
                 </a>
               </li>
               <li>
-                <a href="/explore?query=pet-friendly" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                  Pet-Friendly Rentals
+                <a href="/explore?query=balcony" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Skyline &amp; Balcony Homes
                 </a>
               </li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 mb-4">
-              For Landlords
+          {/* Neighborhood Dossier */}
+          <div className="md:col-span-3">
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-950 dark:text-zinc-100 mb-4">
+              Localities
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="/profile?tab=listings" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                  List Your Property
+                <a href="/explore?location=Raysan" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Raysan &amp; PDEU Road
                 </a>
               </li>
               <li>
-                <a href="/profile" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                  Listing Dashboard
+                <a href="/explore?location=Infocity" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Infocity Tech Corridor
                 </a>
               </li>
               <li>
-                <a href="/explore" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                  Rental Pricing Guide
+                <a href="/explore?location=Kudasan" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Kudasan Residential
                 </a>
               </li>
               <li>
-                <a href="/explore" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                  Tenant Verification
+                <a href="/explore?location=Sargasan" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Sargasan / SG Highway
                 </a>
               </li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 mb-4">
-              Locations
+          {/* Landlords & Access */}
+          <div className="md:col-span-2">
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-950 dark:text-zinc-100 mb-4">
+              Landlords
             </h4>
-            <ul className="space-y-2.5 text-sm text-zinc-500 dark:text-zinc-400">
-              <li>Gandhinagar Core</li>
-              <li>Infocity &amp; Kudasan</li>
-              <li>Raysan &amp; PDEU Road</li>
-              <li>Ahmedabad SG Highway</li>
+            <ul className="space-y-2.5 text-xs">
+              <li>
+                <a href="/profile?tab=listings" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  List a Residence
+                </a>
+              </li>
+              <li>
+                <a href="/profile" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Owner Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="/explore" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Pricing Index
+                </a>
+              </li>
+              <li>
+                <a href="/login" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                  Sign In
+                </a>
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
-          <span>&copy; 2026 RentMatch AI. All rights reserved.</span>
-          <div className="flex gap-6">
-            <span className="hover:text-zinc-700 dark:hover:text-zinc-200 cursor-pointer transition-colors">Privacy Policy</span>
-            <span className="hover:text-zinc-700 dark:hover:text-zinc-200 cursor-pointer transition-colors">Terms of Service</span>
-            <span className="hover:text-zinc-700 dark:hover:text-zinc-200 cursor-pointer transition-colors">Security &amp; Trust</span>
+        <div className="mt-16 pt-8 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-zinc-500 dark:text-zinc-400">
+          <div className="flex items-center gap-2">
+            <span>&copy; 2026 RentMatch AI · Editorial Rental Platform</span>
+            <span className="hidden sm:inline-block">·</span>
+            <span className="hidden sm:inline-block font-mono text-[10px]">Gandhinagar 23.2156° N, 72.6369° E</span>
+          </div>
+          <div className="flex gap-6 font-medium">
+            <span className="hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">Privacy Protocol</span>
+            <span className="hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">Terms of Lease</span>
+            <span className="hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">Zero Brokerage Standard</span>
           </div>
         </div>
       </div>

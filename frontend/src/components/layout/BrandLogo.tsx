@@ -41,11 +41,11 @@ export default function BrandLogo({
 
       {!hideText && (
         <div className="flex flex-col leading-none">
-          <span className={`font-extrabold tracking-tight text-zinc-900 dark:text-white ${text}`}>
-            RentMatch<span className="text-emerald-500">.ai</span>
+          <span className={`font-black tracking-tight text-zinc-950 dark:text-white ${text}`}>
+            RentMatch<span className="text-zinc-400 dark:text-zinc-500 font-light text-[0.85em]">.ai</span>
           </span>
-          <span className={`font-semibold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 mt-0.5 ${sub}`}>
-            Direct Rentals
+          <span className={`font-bold uppercase tracking-[0.2em] text-[9px] text-zinc-400 dark:text-zinc-500 mt-0.5 ${sub}`}>
+            Editorial Rentals
           </span>
         </div>
       )}

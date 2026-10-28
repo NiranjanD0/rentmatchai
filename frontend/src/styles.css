@@ -5672,3 +5672,16 @@ footer > small {
 .dark .footer-top {
   border-bottom-color: #27272a !important;
 }
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.animate-rainbow {
+  animation: rainbow var(--speed, 3s) infinite linear;
+}

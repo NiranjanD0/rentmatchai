@@ -12,12 +12,12 @@ const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
   onRender: () => {},
-  devicePixelRatio: 2,
+  devicePixelRatio: 1.5,
   phi: 0,
   theta: 0.3,
   dark: 0,
   diffuse: 0.4,
-  mapSamples: 16000,
+  mapSamples: 14000,
   mapBrightness: 1.2,
   baseColor: [1, 1, 1],
   markerColor: [251 / 255, 100 / 255, 21 / 255],
@@ -48,6 +48,7 @@ export function Globe({
   const widthRef = useRef(0)
   const pointerInteracting = useRef<number | null>(null)
   const pointerInteractionMovement = useRef(0)
+  const isVisibleRef = useRef(true)
 
   const r = useMotionValue(0)
   const rs = useSpring(r, {
@@ -72,6 +73,20 @@ export function Globe({
   }
 
   useEffect(() => {
+    // Only render when globe canvas is in view to eliminate scroll lag
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting
+      },
+      { threshold: 0.05 }
+    )
+
+    if (canvasRef.current) {
+      observer.observe(canvasRef.current)
+    }
+
+    const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 1.5) : 1
+
     const onResize = () => {
       if (canvasRef.current) {
         widthRef.current = canvasRef.current.offsetWidth
@@ -83,19 +98,27 @@ export function Globe({
 
     const globe = createGlobe(canvasRef.current!, {
       ...config,
-      width: widthRef.current * 2,
-      height: widthRef.current * 2,
+      devicePixelRatio: dpr,
+      width: (widthRef.current || 600) * dpr,
+      height: (widthRef.current || 600) * dpr,
       onRender: (state) => {
-        if (!pointerInteracting.current) phiRef.current += 0.005
+        if (!isVisibleRef.current) return
+        if (!pointerInteracting.current) phiRef.current += 0.003
         state.phi = phiRef.current + rs.get()
-        state.width = widthRef.current * 2
-        state.height = widthRef.current * 2
+        state.width = (widthRef.current || 600) * dpr
+        state.height = (widthRef.current || 600) * dpr
       },
     })
 
-    setTimeout(() => (canvasRef.current!.style.opacity = "1"), 0)
+    setTimeout(() => {
+      if (canvasRef.current) {
+        canvasRef.current.style.opacity = "1"
+      }
+    }, 50)
+
     return () => {
       globe.destroy()
+      observer.disconnect()
       window.removeEventListener("resize", onResize)
     }
   }, [rs, config])
@@ -103,7 +126,7 @@ export function Globe({
   return (
     <div
       className={cn(
-        "absolute inset-0 mx-auto aspect-square w-full max-w-150",
+        "relative mx-auto aspect-square w-full will-change-transform",
         className
       )}
     >

@@ -23,7 +23,6 @@ import { USER_ROLES } from '../constants/initialData';
 import { ShimmerButton } from '../components/ui/shimmer-button';
 import { Globe } from '../components/ui/globe';
 import { AuroraText } from '../components/ui/aurora-text';
-import { ScrollProgress } from '../components/ui/scroll-progress';
 
 export default function HomePage() {
   const router = useRouter();
@@ -61,131 +60,133 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
-      {/* Scroll Progress indicator (exclusive to Lander page) */}
-      <ScrollProgress className="top-0 z-50 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400" />
-
       {/* Background Decorative Ambient Blobs */}
       <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[560px] overflow-hidden -z-10">
         <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-emerald-400/15 to-teal-400/5 dark:from-emerald-500/10 dark:to-teal-500/5 rounded-full blur-3xl" />
         <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-gradient-to-bl from-teal-400/15 to-cyan-400/5 dark:from-teal-500/10 dark:to-cyan-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
-        {/* ===================== HERO SECTION ===================== */}
-        <section className="text-center pt-6 pb-6">
-          {/* Live Market Badge */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-24">
+        {/* ===================== IMMERSIVE 100% VIEWPORT HERO WITH CENTERPIECE GLOBE ===================== */}
+        <section className="relative w-full h-[calc(100svh-5rem)] min-h-[600px] flex flex-col items-center justify-center overflow-hidden text-center select-none">
+          {/* Subtle Green/Cyan Atmospheric Horizon Glow */}
+          <div className="pointer-events-none absolute bottom-[-160px] sm:bottom-[-210px] md:bottom-[-260px] lg:bottom-[-290px] left-1/2 -translate-x-1/2 w-[640px] sm:w-[820px] md:w-[990px] lg:w-[1120px] aspect-square rounded-full bg-[radial-gradient(circle_at_50%_18%,rgba(16,185,129,0.28)_0%,rgba(6,182,212,0.18)_25%,rgba(16,185,129,0.04)_50%,transparent_70%)] blur-2xl -z-10" />
+
+          {/* Top Ambient Subtle Glow */}
+          <div className="pointer-events-none absolute top-4 left-1/2 -translate-x-1/2 w-[450px] sm:w-[650px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.08),transparent_70%)] blur-2xl -z-10" />
+
+          {/* Centerpiece Globe: Upper Hemisphere Emerging from the Bottom */}
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 rounded-full border border-emerald-300/60 bg-emerald-50/90 dark:bg-emerald-950/60 dark:border-emerald-800/80 px-4 py-1.5 text-xs font-bold text-emerald-800 dark:text-emerald-300 shadow-xs mb-5"
+            initial={{ opacity: 0, scale: 0.94, y: 25 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-auto absolute bottom-[-220px] sm:bottom-[-290px] md:bottom-[-360px] lg:bottom-[-400px] left-1/2 -translate-x-1/2 w-[620px] sm:w-[800px] md:w-[960px] lg:w-[1080px] aspect-square z-0"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span>Live in Gandhinagar &amp; Ahmedabad • Zero Broker Commission</span>
-          </motion.div>
-
-          {/* Hero Main Headline with AuroraText */}
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-zinc-900 dark:text-white max-w-4xl mx-auto leading-[1.15] mb-5"
-          >
-            Rent Verified Homes Directly.{' '}
-            <AuroraText
-              colors={['#10b981', '#06b6d4', '#3b82f6', '#10b981']}
-              className="font-black"
-            >
-              No Broker Calls.
-            </AuroraText>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-8"
-          >
-            Connect directly with verified property owners near PDEU, Infocity, Kudasan, and SG Highway. Verified photographs, direct WhatsApp messaging, and zero broker fees.
-          </motion.p>
-
-          {/* Hero CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-wrap items-center justify-center gap-4"
-          >
-            <button
-              type="button"
-              onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}
-              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3.5 px-7 shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/35 transition-all duration-200 active:scale-[0.98] cursor-pointer text-sm"
-            >
-              <span>Explore Verified Rentals</span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
-
-            {/* ShimmerButton for List Property - opens signup page */}
-            <ShimmerButton
-              shimmerColor="#10b981"
-              background="rgba(16, 185, 129, 0.12)"
-              className="border border-emerald-500/40 text-zinc-900 dark:text-white font-bold py-3 px-6 shadow-md hover:shadow-emerald-500/20 text-sm active:scale-[0.98] cursor-pointer"
-              onClick={() => navigateWithCurtains('/signup', 'Create Landlord Account')}
-            >
-              <div className="flex items-center gap-2">
-                <Plus className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                <span>List Property</span>
-              </div>
-            </ShimmerButton>
-          </motion.div>
-
-          {/* Hero 3D Interactive Territory Globe Showcase */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.25, duration: 0.5 }}
-            className="relative flex size-full max-w-2xl mx-auto items-center justify-center overflow-hidden rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-gradient-to-b from-zinc-50/70 to-white dark:from-zinc-900/40 dark:to-black px-6 pt-8 pb-48 sm:pb-64 shadow-xl shadow-zinc-900/5 dark:shadow-black/60 mt-10"
-          >
-            <div className="absolute top-5 inset-x-6 z-10 flex items-center justify-between text-xs text-zinc-600 dark:text-zinc-400 font-medium">
-              <span className="inline-flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-bold text-zinc-800 dark:text-zinc-200">Gujarat Technology Corridor</span>
-              </span>
-              <span className="hidden sm:inline text-[11px] text-zinc-400 dark:text-zinc-500">
-                Gandhinagar • Ahmedabad • Infocity • PDEU
-              </span>
-            </div>
             <Globe
-              className="top-12"
+              className="w-full h-full max-w-none opacity-90 transition-opacity duration-700"
               config={{
-                width: 800,
-                height: 800,
+                width: 1080,
+                height: 1080,
                 onRender: () => {},
-                devicePixelRatio: 2,
+                devicePixelRatio: 1.5,
                 phi: 0,
-                theta: 0.3,
-                dark: 0,
-                diffuse: 0.4,
-                mapSamples: 16000,
-                mapBrightness: 1.2,
-                baseColor: [0.9, 0.9, 0.9],
+                theta: 0.28,
+                dark: 1,
+                diffuse: 1.2,
+                mapSamples: 14000,
+                mapBrightness: 2.2,
+                baseColor: [0.12, 0.22, 0.18],
                 markerColor: [16 / 255, 185 / 255, 129 / 255],
                 glowColor: [16 / 255, 185 / 255, 129 / 255],
                 markers: [
-                  { location: [23.2156, 72.6369], size: 0.12 },
-                  { location: [23.1557, 72.6669], size: 0.08 },
-                  { location: [23.195, 72.63], size: 0.08 },
-                  { location: [19.076, 72.8777], size: 0.06 },
-                  { location: [28.6139, 77.209], size: 0.06 },
-                  { location: [12.9716, 77.5946], size: 0.06 },
+                  { location: [23.2156, 72.6369], size: 0.13 }, // Gandhinagar & Ahmedabad
+                  { location: [23.1557, 72.6669], size: 0.09 }, // PDEU / Raysan
+                  { location: [23.195, 72.63], size: 0.09 }, // Infocity
+                  { location: [19.076, 72.8777], size: 0.06 }, // Mumbai
+                  { location: [28.6139, 77.209], size: 0.06 }, // Delhi
+                  { location: [12.9716, 77.5946], size: 0.06 }, // Bengaluru
                 ],
               }}
             />
-            <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_120%,rgba(16,185,129,0.12),transparent_70%)]" />
-            <div className="pointer-events-none absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-white dark:from-black to-transparent" />
           </motion.div>
+
+          {/* Bottom Seamless Gradient Blend into Page Content */}
+          <div className="pointer-events-none absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-white dark:from-black via-white/85 dark:via-black/85 to-transparent z-10" />
+
+          {/* Top Radial Vignette for Optimal Text Contrast */}
+          <div className="pointer-events-none absolute top-0 inset-x-0 h-[420px] bg-[radial-gradient(ellipse_at_50%_35%,rgba(255,255,255,0.7),transparent_70%)] dark:bg-[radial-gradient(ellipse_at_50%_35%,rgba(0,0,0,0.65),transparent_70%)] z-10" />
+
+          {/* Layered Foreground Content (Moved up to give prominent breathing room above the rising globe) */}
+          <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center px-4 -mt-10 sm:-mt-16 md:-mt-20">
+
+            {/* Location & Zero Brokerage Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/15 backdrop-blur-md text-[11px] sm:text-xs font-semibold text-emerald-700 dark:text-emerald-300 mb-5 shadow-xs"
+            >
+              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Live in Gandhinagar &amp; Ahmedabad &bull; Zero Broker Commission</span>
+            </motion.div>
+
+            {/* Hero Main Headline with AuroraText */}
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08, duration: 0.5 }}
+              className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-zinc-950 dark:text-white max-w-4xl mx-auto leading-[1.14] mb-5 drop-shadow-xs"
+            >
+              Rent Verified Homes Directly.{' '}
+              <AuroraText
+                colors={['#10b981', '#06b6d4', '#3b82f6', '#10b981']}
+                className="font-black"
+              >
+                No Broker Calls.
+              </AuroraText>
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.14, duration: 0.5 }}
+              className="text-sm sm:text-base md:text-lg text-zinc-700 dark:text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-8 drop-shadow-xs"
+            >
+              Connect directly with verified property owners near PDEU, Infocity, Kudasan, and SG Highway. Verified photographs, direct WhatsApp messaging, and zero broker fees.
+            </motion.p>
+
+            {/* Hero CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="flex flex-wrap items-center justify-center gap-4"
+            >
+              <button
+                type="button"
+                onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}
+                className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3.5 px-7 shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/40 transition-all duration-200 active:scale-[0.98] cursor-pointer text-sm"
+              >
+                <span>Explore Verified Rentals</span>
+                <ArrowRight className="h-4 w-4" />
+              </button>
+
+              {/* ShimmerButton for List Property - opens signup page */}
+              <ShimmerButton
+                shimmerColor="#10b981"
+                background="rgba(16, 185, 129, 0.15)"
+                className="border border-emerald-500/40 text-zinc-950 dark:text-white font-bold py-3 px-6 shadow-md hover:shadow-emerald-500/20 text-sm active:scale-[0.98] cursor-pointer"
+                onClick={() => navigateWithCurtains('/signup', 'Create Landlord Account')}
+              >
+                <div className="flex items-center gap-2">
+                  <Plus className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>List Property</span>
+                </div>
+              </ShimmerButton>
+            </motion.div>
+
+          </div>
         </section>
 
         {/* ===================== PLATFORM TRUST PILLARS ===================== */}

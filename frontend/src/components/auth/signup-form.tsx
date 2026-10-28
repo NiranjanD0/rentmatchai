@@ -121,12 +121,6 @@ export function SignupForm({
       >
         <Card className="border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 rounded-3xl p-7 sm:p-9">
           <CardContent className="p-0">
-            {/* Header Badge */}
-            <div className="flex items-center justify-end mb-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-full">
-                Verified Direct
-              </span>
-            </div>
 
             <div className="mb-6">
               <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
@@ -320,7 +314,7 @@ export function SignupForm({
                 onClick={() => navigateWithCurtains('/login', 'Login')}
                 className="font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
               >
-                Sign In
+                Login
               </button>
             </div>
           </CardContent>

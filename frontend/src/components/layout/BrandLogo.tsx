@@ -1,10 +1,11 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 interface BrandLogoProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   hideText?: boolean;
 }
 
@@ -14,35 +15,28 @@ export default function BrandLogo({
   hideText = false,
 }: BrandLogoProps) {
   const sizeMap = {
-    sm: { icon: 'h-7 w-7', text: 'text-base', sub: 'text-[9px]' },
-    md: { icon: 'h-8 w-8', text: 'text-lg', sub: 'text-[10px]' },
-    lg: { icon: 'h-10 w-10', text: 'text-2xl', sub: 'text-xs' },
+    sm: { icon: 'h-8 w-8', text: 'text-base', sub: 'text-[9px]' },
+    md: { icon: 'h-10 w-10', text: 'text-lg', sub: 'text-[10px]' },
+    lg: { icon: 'h-12 w-12', text: 'text-2xl', sub: 'text-xs' },
+    xl: { icon: 'h-16 w-16', text: 'text-3xl', sub: 'text-sm' },
   };
 
-  const { icon, text, sub } = sizeMap[size];
+  const { icon, text, sub } = sizeMap[size] || sizeMap.md;
 
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
-      {/* Geometric Smart Match Roof Icon */}
+      {/* Brand Pixel Art Logo Emblem */}
       <div
-        className={`${icon} relative flex items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 via-teal-500 to-emerald-700 text-white shadow-md shadow-emerald-500/20 ring-1 ring-white/20 transition-transform duration-200 group-hover:scale-105 shrink-0`}
+        className={`${icon} relative flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105`}
       >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-4/6 w-4/6 text-white drop-shadow-xs"
-        >
-          {/* Stylized Roof */}
-          <path d="M3 10.5L12 3l9 7.5" />
-          {/* Modern Building Pillars with Intersecting Match Node */}
-          <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10" />
-          {/* Central AI Match Spark */}
-          <circle cx="12" cy="14" r="2.5" fill="currentColor" stroke="none" />
-        </svg>
+        <Image
+          src="/rentmatch-logo.webp"
+          alt="RentMatch AI"
+          width={64}
+          height={64}
+          className="w-full h-full object-contain drop-shadow-sm select-none"
+          priority
+        />
       </div>
 
       {!hideText && (

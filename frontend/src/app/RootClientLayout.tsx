@@ -37,7 +37,7 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
   } = useAuth();
 
   return (
-    <div className="app">
+    <div className="app min-h-screen bg-white dark:bg-black text-zinc-900 dark:text-zinc-100 transition-colors">
 
       {/* Shared Navigation Bar */}
       <React.Suspense fallback={<div className="h-16 w-full" />}>
@@ -48,7 +48,7 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
       <main>{children}</main>
 
       {/* Shared Global Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md text-zinc-600 dark:text-zinc-400">
+      <footer className="border-t border-zinc-200 dark:border-zinc-900 bg-white dark:bg-black text-zinc-600 dark:text-zinc-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
             <div className="md:col-span-2">

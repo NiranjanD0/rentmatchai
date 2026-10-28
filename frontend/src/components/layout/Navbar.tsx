@@ -23,6 +23,7 @@ import { useProperty } from '@/src/context/PropertyContext';
 import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { ToggleTheme } from '../lightswind/toggle-theme';
 import { usePageCurtains } from '../ui/page-curtains';
+import { useToast } from '../ui/notifications';
 import BrandLogo from './BrandLogo';
 
 interface NavbarProps {
@@ -43,6 +44,7 @@ export default function Navbar({
   const router = useRouter();
   const pathname = usePathname();
   const { navigateWithCurtains } = usePageCurtains();
+  const { notify } = useToast();
 
   const { user, isAuthenticated, isLister, logout, openAuthModal } = useAuth();
   const propertyContext = useProperty();
@@ -111,9 +113,16 @@ export default function Navbar({
   };
 
   const handleLogout = () => {
+    const firstName = user?.firstName;
     logout();
     setUserDropdownOpen(false);
     setMobileMenuOpen(false);
+    notify.info(
+      firstName
+        ? `You have been signed out. See you soon, ${firstName}!`
+        : 'You have been signed out successfully.',
+      'Signed Out'
+    );
     handleNav('home');
   };
 
@@ -121,7 +130,7 @@ export default function Navbar({
     ? `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase()
     : 'U';
 
-  // Unified central navigation items (Discover, Explore Homes, Shortlist + List Property moved together!)
+  // Unified central navigation items (Discover, Explore Homes, Shortlist)
   const navItems = [
     { id: 'home', label: 'Discover', icon: Compass, onClick: () => handleNav('home') },
     { id: 'results', label: 'Explore Homes', icon: Building2, onClick: () => handleNav('results') },
@@ -132,17 +141,10 @@ export default function Navbar({
       badge: savedCount > 0 ? savedCount : null,
       onClick: () => handleNav('shortlist'),
     },
-    {
-      id: 'list-property',
-      label: 'List Property',
-      icon: Plus,
-      isSpecial: true,
-      onClick: handleListPropertyClick,
-    },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/70 dark:border-zinc-800/70 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-zinc-950/70 transition-colors">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/70 dark:border-zinc-800/70 bg-white/80 dark:bg-black/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/70 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <button
@@ -166,8 +168,6 @@ export default function Navbar({
                 className={`relative flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs transition-all duration-150 cursor-pointer ${
                   isActive
                     ? 'text-zinc-950 dark:text-white font-semibold'
-                    : item.isSpecial
-                    ? 'text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-semibold'
                     : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 font-medium'
                 }`}
               >
@@ -182,8 +182,6 @@ export default function Navbar({
                   className={`h-3.5 w-3.5 ${
                     isActive
                       ? 'text-zinc-950 dark:text-white'
-                      : item.isSpecial
-                      ? 'text-emerald-600 dark:text-emerald-400'
                       : 'text-zinc-500 dark:text-zinc-400'
                   }`}
                 />
@@ -348,7 +346,7 @@ export default function Navbar({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 px-4 pt-3 pb-6 space-y-1.5 backdrop-blur-xl overflow-hidden"
+            className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-black/95 px-4 pt-3 pb-6 space-y-1.5 backdrop-blur-xl overflow-hidden"
           >
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -360,24 +358,17 @@ export default function Navbar({
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-left transition-colors ${
                     isActive
                       ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-950 dark:text-white font-semibold'
-                      : item.isSpecial
-                      ? 'text-emerald-700 dark:text-emerald-400 font-semibold hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
                       : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900'
                   }`}
                   onClick={item.onClick}
                 >
                   <span className="flex items-center gap-2.5">
-                    <Icon className={`h-4 w-4 ${item.isSpecial ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'}`} />
+                    <Icon className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
                     <span>{item.label}</span>
                   </span>
                   {item.badge !== null && item.badge !== undefined && (
                     <span className="rounded-full bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5">
                       {item.badge}
-                    </span>
-                  )}
-                  {item.isSpecial && (
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200/50 dark:border-emerald-800/50">
-                      Free
                     </span>
                   )}
                 </button>

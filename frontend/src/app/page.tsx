@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   ArrowRight,
   ArrowUpRight,
-  Star,
   Check,
   X,
   Plus,
@@ -57,7 +56,7 @@ export default function HomePage() {
   }).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-slate-50/50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
+    <div className="min-h-screen bg-white dark:bg-black text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
       {/* Background Decorative Ambient Blobs */}
       <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[560px] overflow-hidden -z-10">
         <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-emerald-400/15 to-teal-400/5 dark:from-emerald-500/10 dark:to-teal-500/5 rounded-full blur-3xl" />
@@ -509,89 +508,6 @@ export default function HomePage() {
                 <span>Find a Broker-Free Home</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </button>
-            </div>
-          </div>
-        </section>
-
-        {/* ===================== VERIFIED MOVE-IN STORIES ===================== */}
-        <section className="mt-20 pt-10 border-t border-zinc-200/80 dark:border-zinc-800/80">
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-              COMMUNITY VOICES
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white mt-1">
-              Verified Tenants &amp; Happy Owners
-            </h2>
-            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1">
-              Real rental experiences across Gandhinagar &amp; Ahmedabad.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-6 shadow-xs flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-1 text-amber-500 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed italic">
-                  &ldquo;As a PDEU student, local brokers were asking for ₹18k brokerage on a ₹18k flat. Found our 2BHK in Raysan in 2 days directly with the owner on RentMatch.&rdquo;
-                </p>
-              </div>
-              <div className="mt-5 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs">
-                <div>
-                  <div className="font-bold text-zinc-900 dark:text-white">Rohan Shah</div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400">PDEU Student • Raysan</div>
-                </div>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
-                  Verified
-                </span>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-6 shadow-xs flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-1 text-amber-500 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed italic">
-                  &ldquo;Moved from Bengaluru to TCS Infocity. Scheduled 3 site visits via direct WhatsApp chat on Saturday and finalized lease agreement by Sunday evening.&rdquo;
-                </p>
-              </div>
-              <div className="mt-5 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs">
-                <div>
-                  <div className="font-bold text-zinc-900 dark:text-white">Aarav Mehta</div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400">Software Engineer • Infocity</div>
-                </div>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
-                  Verified
-                </span>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-6 shadow-xs flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-1 text-amber-500 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed italic">
-                  &ldquo;Listed our 3BHK in Kudasan directly. Received 4 genuine inquiries from corporate families within 48 hours without annoying broker calls.&rdquo;
-                </p>
-              </div>
-              <div className="mt-5 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs">
-                <div>
-                  <div className="font-bold text-zinc-900 dark:text-white">Rajesh Patel</div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400">Property Owner • Kudasan</div>
-                </div>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
-                  Verified Lister
-                </span>
-              </div>
             </div>
           </div>
         </section>

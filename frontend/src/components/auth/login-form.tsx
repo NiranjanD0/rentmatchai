@@ -3,9 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
-import { ArrowRight, Lock, Mail } from 'lucide-react';
+import { Lock, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/src/components/ui/button';
 import { Card, CardContent } from '@/src/components/ui/card';
 import {
   Field,
@@ -15,8 +14,9 @@ import {
 } from '@/src/components/ui/field';
 import { Input } from '@/src/components/ui/input';
 import { useAuth } from '@/src/context/AuthContext';
-import { useProperty } from '@/src/context/PropertyContext';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
+import { useToast } from '@/src/components/ui/notifications';
+import { InteractiveHoverButton } from '@/src/components/ui/interactive-hover-button';
 
 export function LoginForm({
   className,
@@ -24,33 +24,47 @@ export function LoginForm({
 }: React.ComponentProps<'div'>) {
   const router = useRouter();
   const { login, loginWithGoogle } = useAuth();
-  const { showToast } = useProperty();
+  const { notify } = useToast();
   const { navigateWithCurtains } = usePageCurtains();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isInvalid, setIsInvalid] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    if (!email || !password) {
-      const msg = 'Please provide both email and password.';
-      setError(msg);
-      showToast(msg, 'error', 'Validation Error');
+    setIsInvalid(false);
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      notify.error('Please enter your email address.', 'Missing Email');
+      setIsInvalid(true);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      notify.error('Please enter a valid email address (e.g. name@domain.com).', 'Invalid Email');
+      setIsInvalid(true);
+      return;
+    }
+
+    if (!password) {
+      notify.error('Please enter your password.', 'Missing Password');
+      setIsInvalid(true);
       return;
     }
 
     setLoading(true);
     try {
-      const res = await login(email, password);
-      showToast(`Welcome back, ${res.user.firstName}!`, 'success');
+      const res = await login(trimmedEmail, password);
+      notify.success(`Welcome back, ${res.user.firstName}!`, 'Signed In');
       navigateWithCurtains('/', 'Lander');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Invalid credentials. Please check your email and password.';
-      setError(msg);
-      showToast(msg, 'error', 'Sign-In Failed');
+      setIsInvalid(true);
+      notify.error(msg, 'Sign-In Failed');
     } finally {
       setLoading(false);
     }
@@ -60,12 +74,11 @@ export function LoginForm({
     setLoading(true);
     try {
       const res = await loginWithGoogle();
-      showToast(`Welcome back, ${res.user.firstName}!`, 'success');
+      notify.success(`Welcome back, ${res.user.firstName}!`, 'Signed In');
       navigateWithCurtains('/', 'Lander');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google authentication failed.';
-      setError(msg);
-      showToast(msg, 'error', 'Google Sign-In Error');
+      notify.error(msg, 'Google Sign-In Error');
     } finally {
       setLoading(false);
     }
@@ -79,143 +92,138 @@ export function LoginForm({
         transition={{ duration: 0.3 }}
       >
         <Card className="border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 rounded-3xl p-7 sm:p-9">
-        <CardContent className="p-0">
-          {/* Header Badge */}
-          <div className="flex items-center justify-end mb-4">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-full">
-              Zero Brokerage
-            </span>
-          </div>
-
-          <div className="mb-6">
-            <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
-              Welcome back
-            </h1>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-              Sign in to manage your saved properties, chats, and tenancy inquiries
-            </p>
-          </div>
-
-          {/* Social Google Login Button */}
-          <button
-            type="button"
-            onClick={handleGoogleLogin}
-            disabled={loading}
-            className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 text-xs font-semibold text-zinc-700 dark:text-zinc-200 transition-all shadow-xs mb-5 cursor-pointer"
-          >
-            <svg className="h-4 w-4" viewBox="0 0 24 24">
-              <path
-                fill="#4285F4"
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-              />
-              <path
-                fill="#34A853"
-                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-              />
-              <path
-                fill="#EA4335"
-                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-              />
-            </svg>
-            <span>Continue with Google</span>
-          </button>
-
-          {/* Centered Horizontal Separator */}
-          <div className="relative my-5">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-zinc-200 dark:border-zinc-800" />
-            </div>
-            <div className="relative flex justify-center text-[11px] uppercase tracking-wider font-semibold">
-              <span className="bg-white dark:bg-zinc-950 px-3 text-zinc-400">
-                or email
+          <CardContent className="p-0">
+            {/* Header Badge */}
+            <div className="flex items-center justify-end mb-4">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-full">
+                Zero Brokerage
               </span>
             </div>
-          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="email" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
-                  Email Address
-                </FieldLabel>
-                <div className="relative mt-1">
-                  <Mail className="h-4 w-4 text-zinc-400 absolute left-3 top-3 pointer-events-none" />
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@domain.com"
-                    className="rounded-xl border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-xs sm:text-sm h-10 pl-9.5 focus:border-emerald-500 focus:ring-emerald-500/20"
-                    required
-                  />
-                </div>
-              </Field>
+            <div className="mb-6">
+              <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
+                Welcome back
+              </h1>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+                Sign in to manage your saved properties, chats, and tenancy inquiries
+              </p>
+            </div>
 
-              <Field>
-                <div className="flex items-center justify-between">
-                  <FieldLabel htmlFor="password" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
-                    Password
-                  </FieldLabel>
-                  <button
-                    type="button"
-                    onClick={() => showToast('Password reset instructions sent to your email.', 'info')}
-                    className="text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 font-semibold cursor-pointer"
-                  >
-                    Forgot password?
-                  </button>
-                </div>
-                <div className="relative mt-1">
-                  <Lock className="h-4 w-4 text-zinc-400 absolute left-3 top-3 pointer-events-none" />
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="rounded-xl border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-xs sm:text-sm h-10 pl-9.5 focus:border-emerald-500 focus:ring-emerald-500/20"
-                    required
-                  />
-                </div>
-              </Field>
-
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full mt-3 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold transition-all cursor-pointer h-10 text-xs shadow-md shadow-emerald-600/25 active:scale-[0.98]"
-              >
-                {loading ? (
-                  <span className="flex items-center gap-2">
-                    <span className="h-3.5 w-3.5 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                    Signing in...
-                  </span>
-                ) : (
-                  <span className="flex items-center justify-center gap-2">
-                    <span>Sign In</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </span>
-                )}
-              </Button>
-            </FieldGroup>
-          </form>
-
-          {/* Footer switcher */}
-          <div className="pt-5 mt-5 border-t border-zinc-100 dark:border-zinc-800 text-center text-xs text-zinc-500 dark:text-zinc-400">
-            Don&apos;t have an account?{' '}
+            {/* Social Google Login Button */}
             <button
               type="button"
-              onClick={() => navigateWithCurtains('/signup', 'Create Account')}
-              className="font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+              onClick={handleGoogleLogin}
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 text-xs font-semibold text-zinc-700 dark:text-zinc-200 transition-all shadow-xs mb-5 cursor-pointer"
             >
-              Create Account
+              <svg className="h-4 w-4" viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                />
+              </svg>
+              <span>Continue with Google</span>
             </button>
-          </div>
-        </CardContent>
-      </Card>
+
+            {/* Centered Horizontal Separator */}
+            <div className="relative my-5">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-zinc-200 dark:border-zinc-800" />
+              </div>
+              <div className="relative flex justify-center text-[11px] uppercase tracking-wider font-semibold">
+                <span className="bg-white dark:bg-zinc-950 px-3 text-zinc-400">
+                  or email
+                </span>
+              </div>
+            </div>
+
+            <form noValidate onSubmit={handleSubmit} className="space-y-4">
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="email" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                    Email Address
+                  </FieldLabel>
+                  <div className="relative mt-1">
+                    <Mail className="h-4 w-4 text-zinc-400 absolute left-3 top-3 pointer-events-none" />
+                    <Input
+                      id="email"
+                      type="text"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (isInvalid) setIsInvalid(false);
+                      }}
+                      placeholder="you@domain.com"
+                      className="rounded-xl border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-xs sm:text-sm h-10 pl-9.5 focus:border-emerald-500 focus:ring-emerald-500/20"
+                    />
+                  </div>
+                </Field>
+
+                <Field>
+                  <div className="flex items-center justify-between">
+                    <FieldLabel htmlFor="password" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                      Password
+                    </FieldLabel>
+                    <button
+                      type="button"
+                      onClick={() => notify.info('Password reset instructions sent to your email.', 'Password Reset')}
+                      className="text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 font-semibold cursor-pointer"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+                  <div className="relative mt-1">
+                    <Lock className="h-4 w-4 text-zinc-400 absolute left-3 top-3 pointer-events-none" />
+                    <Input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        if (isInvalid) setIsInvalid(false);
+                      }}
+                      placeholder="••••••••"
+                      className="rounded-xl border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-xs sm:text-sm h-10 pl-9.5 focus:border-emerald-500 focus:ring-emerald-500/20"
+                    />
+                  </div>
+                </Field>
+
+                <InteractiveHoverButton
+                  type="submit"
+                  disabled={loading}
+                  isInvalid={isInvalid}
+                  className="mt-3"
+                >
+                  {loading ? 'Signing in...' : 'Sign In to Account'}
+                </InteractiveHoverButton>
+              </FieldGroup>
+            </form>
+
+            {/* Footer switcher */}
+            <div className="pt-5 mt-5 border-t border-zinc-100 dark:border-zinc-800 text-center text-xs text-zinc-500 dark:text-zinc-400">
+              Don&apos;t have an account?{' '}
+              <button
+                type="button"
+                onClick={() => navigateWithCurtains('/signup', 'Create Account')}
+                className="font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+              >
+                Create Account
+              </button>
+            </div>
+          </CardContent>
+        </Card>
       </motion.div>
 
       <FieldDescription className="text-center text-[11px] text-zinc-500 dark:text-zinc-400">

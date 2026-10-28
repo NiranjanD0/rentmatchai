@@ -20,6 +20,10 @@ import { useAuth } from '../context/AuthContext';
 import { useProperty } from '../context/PropertyContext';
 import { usePageCurtains } from '../components/ui/page-curtains';
 import { USER_ROLES } from '../constants/initialData';
+import { ShimmerButton } from '../components/ui/shimmer-button';
+import { Globe } from '../components/ui/globe';
+import { AuroraText } from '../components/ui/aurora-text';
+import { ScrollProgress } from '../components/ui/scroll-progress';
 
 export default function HomePage() {
   const router = useRouter();
@@ -57,6 +61,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
+      {/* Scroll Progress indicator (exclusive to Lander page) */}
+      <ScrollProgress className="top-0 z-50 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400" />
+
       {/* Background Decorative Ambient Blobs */}
       <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[560px] overflow-hidden -z-10">
         <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-emerald-400/15 to-teal-400/5 dark:from-emerald-500/10 dark:to-teal-500/5 rounded-full blur-3xl" />
@@ -79,7 +86,7 @@ export default function HomePage() {
             <span>Live in Gandhinagar &amp; Ahmedabad • Zero Broker Commission</span>
           </motion.div>
 
-          {/* Hero Main Headline */}
+          {/* Hero Main Headline with AuroraText */}
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,9 +94,12 @@ export default function HomePage() {
             className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-zinc-900 dark:text-white max-w-4xl mx-auto leading-[1.15] mb-5"
           >
             Rent Verified Homes Directly.{' '}
-            <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-500 dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-300 bg-clip-text text-transparent">
+            <AuroraText
+              colors={['#10b981', '#06b6d4', '#3b82f6', '#10b981']}
+              className="font-black"
+            >
               No Broker Calls.
-            </span>
+            </AuroraText>
           </motion.h1>
 
           <motion.p
@@ -116,20 +126,65 @@ export default function HomePage() {
               <span>Explore Verified Rentals</span>
               <ArrowRight className="h-4 w-4" />
             </button>
-            <button
-              type="button"
-              onClick={() => {
-                if (!isAuthenticated) {
-                  openAuthModal(USER_ROLES.PROPERTY_LISTER);
-                } else {
-                  openAddProperty();
-                }
-              }}
-              className="inline-flex items-center gap-2 rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold py-3.5 px-6 shadow-xs hover:border-emerald-500/50 transition-all duration-200 active:scale-[0.98] cursor-pointer text-sm"
+
+            {/* ShimmerButton for List Property - opens signup page */}
+            <ShimmerButton
+              shimmerColor="#10b981"
+              background="rgba(16, 185, 129, 0.12)"
+              className="border border-emerald-500/40 text-zinc-900 dark:text-white font-bold py-3 px-6 shadow-md hover:shadow-emerald-500/20 text-sm active:scale-[0.98] cursor-pointer"
+              onClick={() => navigateWithCurtains('/signup', 'Create Landlord Account')}
             >
-              <Plus className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-              <span>List Property Free</span>
-            </button>
+              <div className="flex items-center gap-2">
+                <Plus className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                <span>List Property</span>
+              </div>
+            </ShimmerButton>
+          </motion.div>
+
+          {/* Hero 3D Interactive Territory Globe Showcase */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.25, duration: 0.5 }}
+            className="relative flex size-full max-w-2xl mx-auto items-center justify-center overflow-hidden rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-gradient-to-b from-zinc-50/70 to-white dark:from-zinc-900/40 dark:to-black px-6 pt-8 pb-48 sm:pb-64 shadow-xl shadow-zinc-900/5 dark:shadow-black/60 mt-10"
+          >
+            <div className="absolute top-5 inset-x-6 z-10 flex items-center justify-between text-xs text-zinc-600 dark:text-zinc-400 font-medium">
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="font-bold text-zinc-800 dark:text-zinc-200">Gujarat Technology Corridor</span>
+              </span>
+              <span className="hidden sm:inline text-[11px] text-zinc-400 dark:text-zinc-500">
+                Gandhinagar • Ahmedabad • Infocity • PDEU
+              </span>
+            </div>
+            <Globe
+              className="top-12"
+              config={{
+                width: 800,
+                height: 800,
+                onRender: () => {},
+                devicePixelRatio: 2,
+                phi: 0,
+                theta: 0.3,
+                dark: 0,
+                diffuse: 0.4,
+                mapSamples: 16000,
+                mapBrightness: 1.2,
+                baseColor: [0.9, 0.9, 0.9],
+                markerColor: [16 / 255, 185 / 255, 129 / 255],
+                glowColor: [16 / 255, 185 / 255, 129 / 255],
+                markers: [
+                  { location: [23.2156, 72.6369], size: 0.12 },
+                  { location: [23.1557, 72.6669], size: 0.08 },
+                  { location: [23.195, 72.63], size: 0.08 },
+                  { location: [19.076, 72.8777], size: 0.06 },
+                  { location: [28.6139, 77.209], size: 0.06 },
+                  { location: [12.9716, 77.5946], size: 0.06 },
+                ],
+              }}
+            />
+            <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_120%,rgba(16,185,129,0.12),transparent_70%)]" />
+            <div className="pointer-events-none absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-white dark:from-black to-transparent" />
           </motion.div>
         </section>
 
@@ -539,17 +594,20 @@ export default function HomePage() {
                 <span>+ Add New Property</span>
               </button>
             ) : (
-              <button
-                type="button"
+              <ShimmerButton
+                shimmerColor="#10b981"
+                background="rgba(16, 185, 129, 0.15)"
+                className="border border-emerald-500/40 text-zinc-900 dark:text-white font-bold py-3 px-6 shadow-md text-xs active:scale-95 cursor-pointer"
                 onClick={() => {
                   openAuthModal('register', USER_ROLES.PROPERTY_LISTER);
                   navigateWithCurtains('/signup', 'Create Landlord Account');
                 }}
-                className="flex items-center gap-2 py-3 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition-all active:scale-95 cursor-pointer"
               >
-                <Building2 className="h-4 w-4" />
-                <span>List Property Free</span>
-              </button>
+                <div className="flex items-center gap-2">
+                  <Building2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>List Property Free</span>
+                </div>
+              </ShimmerButton>
             )}
           </div>
         </section>

@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTheme } from 'next-themes';
 import {
   Building2,
   ShieldCheck,
@@ -29,6 +30,14 @@ export default function HomePage() {
   const { navigateWithCurtains } = usePageCurtains();
   const { user, isAuthenticated, isLister, openAuthModal } = useAuth();
   const { activeProperties, saved, toggleSave, openAddProperty } = useProperty();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted ? resolvedTheme === 'dark' : true;
 
   // Category tab state
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'students' | 'pros' | 'families'>('all');
@@ -68,12 +77,12 @@ export default function HomePage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-24">
         {/* ===================== IMMERSIVE 100% VIEWPORT HERO WITH CENTERPIECE GLOBE ===================== */}
-        <section className="relative w-full h-[calc(100svh-5rem)] min-h-[600px] flex flex-col items-center justify-center overflow-hidden text-center select-none">
-          {/* Subtle Green/Cyan Atmospheric Horizon Glow */}
-          <div className="pointer-events-none absolute bottom-[-160px] sm:bottom-[-210px] md:bottom-[-260px] lg:bottom-[-290px] left-1/2 -translate-x-1/2 w-[640px] sm:w-[820px] md:w-[990px] lg:w-[1120px] aspect-square rounded-full bg-[radial-gradient(circle_at_50%_18%,rgba(16,185,129,0.28)_0%,rgba(6,182,212,0.18)_25%,rgba(16,185,129,0.04)_50%,transparent_70%)] blur-2xl -z-10" />
+        <section className="relative w-full h-[calc(100svh-5rem)] min-h-[600px] flex flex-col items-center justify-start pt-12 sm:pt-16 md:pt-20 lg:pt-24 overflow-hidden text-center select-none">
+          {/* Subtle Green/Cyan Atmospheric Horizon Glow (Light & Dark theme tailored) */}
+          <div className="pointer-events-none absolute bottom-[-160px] sm:bottom-[-210px] md:bottom-[-260px] lg:bottom-[-290px] left-1/2 -translate-x-1/2 w-[640px] sm:w-[820px] md:w-[990px] lg:w-[1120px] aspect-square rounded-full bg-[radial-gradient(circle_at_50%_18%,rgba(16,185,129,0.16)_0%,rgba(6,182,212,0.10)_25%,rgba(16,185,129,0.02)_50%,transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_18%,rgba(16,185,129,0.28)_0%,rgba(6,182,212,0.18)_25%,rgba(16,185,129,0.04)_50%,transparent_70%)] blur-2xl -z-10" />
 
           {/* Top Ambient Subtle Glow */}
-          <div className="pointer-events-none absolute top-4 left-1/2 -translate-x-1/2 w-[450px] sm:w-[650px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.08),transparent_70%)] blur-2xl -z-10" />
+          <div className="pointer-events-none absolute top-2 left-1/2 -translate-x-1/2 w-[450px] sm:w-[650px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.06),transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.08),transparent_70%)] blur-2xl -z-10" />
 
           {/* Centerpiece Globe: Upper Hemisphere Emerging from the Bottom */}
           <motion.div
@@ -83,6 +92,7 @@ export default function HomePage() {
             className="pointer-events-auto absolute bottom-[-220px] sm:bottom-[-290px] md:bottom-[-360px] lg:bottom-[-400px] left-1/2 -translate-x-1/2 w-[620px] sm:w-[800px] md:w-[960px] lg:w-[1080px] aspect-square z-0"
           >
             <Globe
+              key={isDark ? 'dark' : 'light'}
               className="w-full h-full max-w-none opacity-90 transition-opacity duration-700"
               config={{
                 width: 1080,
@@ -91,13 +101,13 @@ export default function HomePage() {
                 devicePixelRatio: 1.5,
                 phi: 0,
                 theta: 0.28,
-                dark: 1,
+                dark: isDark ? 1 : 0,
                 diffuse: 1.2,
                 mapSamples: 14000,
-                mapBrightness: 2.2,
-                baseColor: [0.12, 0.22, 0.18],
+                mapBrightness: isDark ? 2.2 : 1.4,
+                baseColor: isDark ? [0.12, 0.22, 0.18] : [0.98, 0.99, 1.0],
                 markerColor: [16 / 255, 185 / 255, 129 / 255],
-                glowColor: [16 / 255, 185 / 255, 129 / 255],
+                glowColor: isDark ? [16 / 255, 185 / 255, 129 / 255] : [0.9, 0.95, 0.92],
                 markers: [
                   { location: [23.2156, 72.6369], size: 0.13 }, // Gandhinagar & Ahmedabad
                   { location: [23.1557, 72.6669], size: 0.09 }, // PDEU / Raysan
@@ -114,21 +124,10 @@ export default function HomePage() {
           <div className="pointer-events-none absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-white dark:from-black via-white/85 dark:via-black/85 to-transparent z-10" />
 
           {/* Top Radial Vignette for Optimal Text Contrast */}
-          <div className="pointer-events-none absolute top-0 inset-x-0 h-[420px] bg-[radial-gradient(ellipse_at_50%_35%,rgba(255,255,255,0.7),transparent_70%)] dark:bg-[radial-gradient(ellipse_at_50%_35%,rgba(0,0,0,0.65),transparent_70%)] z-10" />
+          <div className="pointer-events-none absolute top-0 inset-x-0 h-[360px] bg-[radial-gradient(ellipse_at_50%_35%,rgba(255,255,255,0.7),transparent_70%)] dark:bg-[radial-gradient(ellipse_at_50%_35%,rgba(0,0,0,0.65),transparent_70%)] z-10" />
 
-          {/* Layered Foreground Content (Moved up to give prominent breathing room above the rising globe) */}
-          <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center px-4 -mt-10 sm:-mt-16 md:-mt-20">
-
-            {/* Location & Zero Brokerage Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/15 backdrop-blur-md text-[11px] sm:text-xs font-semibold text-emerald-700 dark:text-emerald-300 mb-5 shadow-xs"
-            >
-              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Live in Gandhinagar &amp; Ahmedabad &bull; Zero Broker Commission</span>
-            </motion.div>
+          {/* Layered Foreground Content (Elevated upward for prominent hero presence) */}
+          <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center px-4">
 
             {/* Hero Main Headline with AuroraText */}
             <motion.h1

@@ -22,9 +22,6 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { usePageCurtains } from '../components/ui/page-curtains';
 import { LineShadowText } from '../components/ui/line-shadow-text';
-import { Globe } from '../components/ui/globe';
-
-const money = (n: number) => '₹' + Number(n).toLocaleString('en-IN');
 
 export default function HomePage() {
   const router = useRouter();
@@ -38,9 +35,6 @@ export default function HomePage() {
   }, []);
 
   const isDark = mounted ? resolvedTheme === 'dark' : true;
-
-  // Savings Calculator State
-  const [calculatorRent, setCalculatorRent] = useState(22000);
 
   // FAQ Accordion State: Default is closed (null) as requested
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -75,11 +69,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-zinc-950 dark:text-zinc-50 transition-colors duration-200">
       {/* ===================== HERO SECTION: EDITORIAL & IMMERSIVE ===================== */}
-      <section className="relative w-full pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-20 sm:pb-28 overflow-hidden border-b border-zinc-200/80 dark:border-zinc-800/80">
+      <section className="relative w-full min-h-[calc(100svh-4.5rem)] sm:min-h-[calc(100svh-5rem)] flex flex-col justify-center items-center py-12 sm:py-16 overflow-hidden border-b border-zinc-200/80 dark:border-zinc-800/80">
         {/* Subtle Ambient Monochrome Vignette */}
         <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.03),transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03),transparent_70%)] blur-3xl -z-10" />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center my-auto">
           {/* Eyebrow Kicker */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -98,13 +92,13 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.95] text-zinc-950 dark:text-white uppercase select-none mb-6"
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.98] text-zinc-950 dark:text-white uppercase select-none mb-6 max-w-4xl mx-auto"
           >
-            Rent Direct.{' '}
-            <br className="hidden sm:inline" />
+            <span>Rent Direct.</span>{' '}
+            <br />
             <LineShadowText
-              shadowColor={isDark ? '#52525b' : '#a1a1aa'}
-              className="italic font-black text-zinc-950 dark:text-white"
+              shadowColor={isDark ? '#ffffff' : '#000000'}
+              className="italic -skew-x-12 inline-block font-black text-zinc-700 dark:text-zinc-300 pr-4 sm:pr-6"
             >
               Zero Brokerage.
             </LineShadowText>
@@ -120,12 +114,12 @@ export default function HomePage() {
             RentMatch AI connects verified tenants directly with authentic property owners across PDEU, Infocity, Kudasan, and SG Highway. No mediator calls, no 1-month broker commissions, and 100% direct WhatsApp communication.
           </motion.p>
 
-          {/* Hero CTAs */}
+          {/* Hero CTA */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.16, duration: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-4"
+            className="flex items-center justify-center"
           >
             <button
               type="button"
@@ -135,47 +129,7 @@ export default function HomePage() {
               <span>Get Started Free</span>
               <ArrowRight size={14} />
             </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                const el = document.getElementById('how-it-works');
-                el?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 hover:border-zinc-950 dark:hover:border-white bg-transparent text-zinc-900 dark:text-white font-bold py-3.5 px-7 text-xs tracking-tight transition-all active:scale-95 cursor-pointer"
-            >
-              <span>How It Works</span>
-            </button>
           </motion.div>
-
-          {/* Centerpiece 3D Interactive Globe */}
-          <div className="relative w-full max-w-md mx-auto aspect-square mt-14 mb-4 select-none pointer-events-auto">
-            <Globe
-              key={isDark ? 'dark' : 'light'}
-              className="w-full h-full opacity-90 transition-opacity duration-700"
-              config={{
-                width: 700,
-                height: 700,
-                onRender: () => {},
-                devicePixelRatio: 1.5,
-                phi: 0,
-                theta: 0.28,
-                dark: isDark ? 1 : 0,
-                diffuse: 1.2,
-                mapSamples: 14000,
-                mapBrightness: isDark ? 2.2 : 1.4,
-                baseColor: isDark ? [0.12, 0.12, 0.14] : [0.95, 0.95, 0.96],
-                markerColor: isDark ? [1, 1, 1] : [0.1, 0.1, 0.1],
-                glowColor: isDark ? [0.2, 0.2, 0.2] : [0.9, 0.9, 0.9],
-                markers: [
-                  { location: [23.2156, 72.6369], size: 0.12 }, // Gandhinagar
-                  { location: [23.1557, 72.6669], size: 0.08 }, // PDEU / Raysan
-                  { location: [23.195, 72.63], size: 0.08 }, // Infocity
-                  { location: [23.0225, 72.5714], size: 0.06 }, // Ahmedabad
-                ],
-              }}
-            />
-          </div>
         </div>
       </section>
 
@@ -516,58 +470,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===================== SECTION 5: ZERO BROKERAGE SAVINGS CALCULATOR ===================== */}
-      <section className="py-20 sm:py-28 border-b border-zinc-200/80 dark:border-zinc-800/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/60 dark:bg-zinc-950/60 p-8 sm:p-12">
-            <div className="lg:col-span-7">
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500">
-                Direct Savings
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-zinc-950 dark:text-white tracking-tight mt-1">
-                How Much Do You Save With Zero Brokerage?
-              </h2>
-              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed max-w-xl">
-                Traditional agents demand 1 full month of rent as a mediator commission. With RentMatch AI, 100% of that capital stays in your bank account.
-              </p>
-
-              {/* Preset Selector */}
-              <div className="flex flex-wrap gap-2 mt-6">
-                {[15000, 22000, 30000, 45000].map((amt) => (
-                  <button
-                    key={amt}
-                    type="button"
-                    onClick={() => setCalculatorRent(amt)}
-                    className={`py-2 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      calculatorRent === amt
-                        ? 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-xs'
-                        : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800'
-                    }`}
-                  >
-                    {money(amt)}/mo
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Savings Display Card */}
-            <div className="lg:col-span-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8 text-center shadow-md">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
-                Your Direct Move-In Savings
-              </span>
-              <div className="text-5xl sm:text-6xl font-black text-zinc-950 dark:text-white my-3 tracking-tight">
-                {money(calculatorRent)}
-              </div>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-sm mx-auto">
-                That is enough to furnish your bedroom, set up high-speed Wi-Fi, or cover your moving and transport costs entirely.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===================== SECTION 6: FREQUENTLY ASKED QUESTIONS (DEFAULT CLOSED) ===================== */}
-      <section className="py-20 sm:py-28 border-b border-zinc-200/80 dark:border-zinc-800/80">
+      {/* ===================== SECTION 5: FREQUENTLY ASKED QUESTIONS (DEFAULT CLOSED) ===================== */}
+      <section className="py-20 sm:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500">
@@ -613,39 +517,6 @@ export default function HomePage() {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* ===================== FINAL CALL TO ACTION ===================== */}
-      <section className="py-20 sm:py-28">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="rounded-3xl border border-zinc-950 dark:border-white bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 p-10 sm:p-16">
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] opacity-70">
-              Start Direct Living
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mt-2 mb-4">
-              Ready to Experience Broker-Free Renting?
-            </h2>
-            <p className="text-xs sm:text-sm max-w-xl mx-auto leading-relaxed opacity-80 mb-8">
-              Join students, tech professionals, and property owners across Gandhinagar and Ahmedabad today.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <button
-                type="button"
-                onClick={() => navigateWithCurtains('/signup', 'Create Account')}
-                className="py-3.5 px-8 rounded-full bg-white text-zinc-950 dark:bg-zinc-950 dark:text-white font-bold text-xs tracking-tight shadow-md hover:opacity-90 transition-opacity cursor-pointer"
-              >
-                Create Free Account
-              </button>
-              <button
-                type="button"
-                onClick={() => navigateWithCurtains('/login', 'Sign In')}
-                className="py-3.5 px-8 rounded-full border border-white/30 dark:border-zinc-300 text-white dark:text-zinc-950 font-bold text-xs tracking-tight hover:bg-white/10 dark:hover:bg-zinc-100 transition-colors cursor-pointer"
-              >
-                Sign In
-              </button>
-            </div>
           </div>
         </div>
       </section>

@@ -3610,6 +3610,34 @@ footer > small {
     }
   }}
 
+.line-shadow-text {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+.line-shadow-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0.06em;
+  left: 0.06em;
+  background-image: linear-gradient(
+    45deg,
+    transparent 25%,
+    var(--shadow-color, currentColor) 25%,
+    var(--shadow-color, currentColor) 75%,
+    transparent 0
+  );
+  background-size: 0.06em 0.06em;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  z-index: -1;
+  animation: line-shadow 15s linear infinite;
+  pointer-events: none;
+}
+
 .dark {
   --background: #000000;
   --foreground: oklch(0.985 0 0);

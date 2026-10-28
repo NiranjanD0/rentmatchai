@@ -12,7 +12,7 @@ const fontSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "RentMatch AI | Intelligent Rental Matching",
+  title: "RentMatchAI",
   description: "Find verified apartments, flats, and student rentals directly from trusted landlords in Gandhinagar & Ahmedabad with zero brokerage.",
 };
 

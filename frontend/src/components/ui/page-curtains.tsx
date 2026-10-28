@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'motion/react';
 export function getRouteTitle(url: string): string {
   try {
     const path = url.split('?')[0].split('#')[0];
-    if (path === '/' || path === '') return 'Discover';
+    if (path === '/' || path === '') return 'Lander';
     if (path === '/explore') return 'Explore Homes';
     if (path === '/shortlist') return 'My Shortlist';
     if (path === '/login') return 'Login';
@@ -44,7 +44,7 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
 
   // 'idle' | 'closing' | 'covered' | 'opening'
   const [phase, setPhase] = useState<'idle' | 'closing' | 'covered' | 'opening'>('idle');
-  const [destinationTitle, setDestinationTitle] = useState('Discover');
+  const [destinationTitle, setDestinationTitle] = useState('Lander');
   const pendingUrlRef = useRef<string | null>(null);
   const isNavigatingRef = useRef(false);
 
@@ -216,11 +216,7 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
                 if (variant === 'closing') handleClosingComplete();
                 if (variant === 'opening') handleOpeningComplete();
               }}
-              className="absolute top-0 left-0 bottom-0 w-1/2 bg-zinc-950 border-r border-emerald-500/30 shadow-2xl"
-              style={{
-                backgroundImage:
-                  'radial-gradient(circle at 100% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 60%)',
-              }}
+              className="absolute top-0 left-0 bottom-0 w-1/2 bg-black border-r border-zinc-800 shadow-2xl"
             />
 
             {/* Right Curtain Panel */}
@@ -228,46 +224,21 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
               variants={rightCurtainVariants}
               initial="initial"
               animate={isClosing ? 'closing' : isCovered ? 'covered' : 'opening'}
-              className="absolute top-0 right-0 bottom-0 w-1/2 bg-zinc-950 border-l border-emerald-500/30 shadow-2xl"
-              style={{
-                backgroundImage:
-                  'radial-gradient(circle at 0% 50%, rgba(13, 148, 136, 0.08) 0%, transparent 60%)',
-              }}
+              className="absolute top-0 right-0 bottom-0 w-1/2 bg-black border-l border-zinc-800 shadow-2xl"
             />
 
-            {/* Center Destination Title & Brand Badge */}
+            {/* Center Destination Title ONLY */}
             <motion.div
               variants={centerContentVariants}
               initial="initial"
               animate={isClosing ? 'closing' : isCovered ? 'covered' : 'opening'}
               className="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-lg"
             >
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/60 px-4 py-1.5 backdrop-blur-md shadow-lg shadow-emerald-950/50">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-xs font-bold tracking-widest uppercase text-emerald-300">
-                  Navigating to
-                </span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-3">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
                 <span className="bg-gradient-to-r from-white via-zinc-100 to-zinc-300 bg-clip-text text-transparent">
                   {destinationTitle}
                 </span>
               </h2>
-
-              <p className="text-xs sm:text-sm text-zinc-400 max-w-xs font-medium">
-                RentMatch AI Verified Rental Intelligence
-              </p>
-
-              {/* Progress bar line */}
-              <div className="mt-6 w-32 h-1 bg-zinc-800 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-400"
-                  initial={{ x: '-100%' }}
-                  animate={{ x: '100%' }}
-                  transition={{ repeat: Infinity, duration: 0.8, ease: 'easeInOut' }}
-                />
-              </div>
             </motion.div>
           </div>
         )}

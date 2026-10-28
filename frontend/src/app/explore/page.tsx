@@ -84,10 +84,10 @@ function ExploreContent() {
       <div className="crumb text-xs text-zinc-500 dark:text-zinc-400 mb-4 flex items-center gap-1.5">
         <button
           type="button"
-          onClick={() => navigateWithCurtains('/', 'Discover')}
+          onClick={() => navigateWithCurtains('/', 'Lander')}
           className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold cursor-pointer"
         >
-          Discover
+          Lander
         </button>
         <span>/</span>
         <span>Explore Homes</span>

@@ -13,7 +13,6 @@ import { useAuth } from '@/src/context/AuthContext';
 import { useProperty } from '@/src/context/PropertyContext';
 import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
-import BrandLogo from '../layout/BrandLogo';
 
 export function SignupForm({
   className,
@@ -62,7 +61,7 @@ export function SignupForm({
         phone: phone || undefined,
       });
       showToast(`Welcome to RentMatch AI, ${res.user.firstName}!`, 'success');
-      navigateWithCurtains('/', 'Discover');
+      navigateWithCurtains('/', 'Lander');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Registration failed. Please try again.';
       setError(msg);
@@ -77,7 +76,7 @@ export function SignupForm({
     try {
       const res = await loginWithGoogle(role);
       showToast(`Welcome to RentMatch AI, ${res.user.firstName}!`, 'success');
-      navigateWithCurtains('/', 'Discover');
+      navigateWithCurtains('/', 'Lander');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google authentication failed.';
       setError(msg);
@@ -96,9 +95,8 @@ export function SignupForm({
       >
         <Card className="border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 rounded-3xl p-7 sm:p-9">
         <CardContent className="p-0">
-          {/* Brand Header */}
-          <div className="flex items-center justify-between mb-5">
-            <BrandLogo size="md" />
+          {/* Header Badge */}
+          <div className="flex items-center justify-end mb-4">
             <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-full">
               Verified Direct
             </span>
@@ -169,11 +167,16 @@ export function SignupForm({
             <span>Sign up with Google</span>
           </button>
 
-          <div className="relative flex items-center justify-center mb-4">
-            <div className="border-t border-zinc-200 dark:border-zinc-800 w-full" />
-            <span className="bg-white dark:bg-zinc-950 px-3 text-[11px] uppercase tracking-wider font-semibold text-zinc-400">
-              or enter details
-            </span>
+          {/* Centered Horizontal Separator */}
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-zinc-200 dark:border-zinc-800" />
+            </div>
+            <div className="relative flex justify-center text-[11px] uppercase tracking-wider font-semibold">
+              <span className="bg-white dark:bg-zinc-950 px-3 text-zinc-400">
+                or enter details
+              </span>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3.5">

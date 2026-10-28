@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'motion/react';
 import { Lock, Mail, User, Phone, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/src/components/ui/card';
@@ -114,12 +113,7 @@ export function SignupForm({
 
   return (
     <div className={cn('flex flex-col gap-5', className)} {...props}>
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <Card className="border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 rounded-3xl p-7 sm:p-9">
+      <Card className="border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 rounded-3xl p-7 sm:p-9">
           <CardContent className="p-0">
 
             <div className="mb-6">
@@ -319,7 +313,6 @@ export function SignupForm({
             </div>
           </CardContent>
         </Card>
-      </motion.div>
 
       <FieldDescription className="text-center text-[11px] text-zinc-500 dark:text-zinc-400">
         By signing up, you agree to RentMatch AI&apos;s Terms of Service and Privacy Policy.

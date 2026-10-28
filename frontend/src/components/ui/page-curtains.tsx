@@ -216,7 +216,7 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
                 if (variant === 'closing') handleClosingComplete();
                 if (variant === 'opening') handleOpeningComplete();
               }}
-              className="absolute top-0 left-0 bottom-0 w-1/2 bg-black border-r border-zinc-800 shadow-2xl"
+              className="absolute top-0 left-0 bottom-0 w-1/2 bg-white dark:bg-black border-r border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-zinc-400/20 dark:shadow-black"
             />
 
             {/* Right Curtain Panel */}
@@ -224,7 +224,7 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
               variants={rightCurtainVariants}
               initial="initial"
               animate={isClosing ? 'closing' : isCovered ? 'covered' : 'opening'}
-              className="absolute top-0 right-0 bottom-0 w-1/2 bg-black border-l border-zinc-800 shadow-2xl"
+              className="absolute top-0 right-0 bottom-0 w-1/2 bg-white dark:bg-black border-l border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-zinc-400/20 dark:shadow-black"
             />
 
             {/* Center Destination Title ONLY */}
@@ -234,8 +234,8 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
               animate={isClosing ? 'closing' : isCovered ? 'covered' : 'opening'}
               className="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-lg"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
-                <span className="bg-gradient-to-r from-white via-zinc-100 to-zinc-300 bg-clip-text text-transparent">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-950 dark:text-white drop-shadow-xs">
+                <span className="bg-gradient-to-r from-zinc-950 via-zinc-800 to-zinc-600 dark:from-white dark:via-zinc-100 dark:to-zinc-300 bg-clip-text text-transparent">
                   {destinationTitle}
                 </span>
               </h2>

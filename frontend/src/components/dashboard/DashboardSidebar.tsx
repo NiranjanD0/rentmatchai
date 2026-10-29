@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   Sparkles,
+  Inbox,
   Compass,
   Heart,
   ArrowLeftRight,
@@ -137,6 +138,25 @@ export function DashboardSidebar({
                 </span>
               </button>
 
+              {/* Inbox */}
+              <button
+                type="button"
+                onClick={() => handleNavClick('/dashboard/inbox', 'Inbox')}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
+                  pathname === '/dashboard/inbox'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
+                }`}
+              >
+                <div className="flex items-center gap-3 truncate">
+                  <Inbox size={16} strokeWidth={1.8} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+                  <span className="truncate">Inbox</span>
+                </div>
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
+                  3
+                </span>
+              </button>
+
               {/* Find Properties */}
               <button
                 type="button"
@@ -221,6 +241,25 @@ export function DashboardSidebar({
                 </div>
                 <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
                   AI
+                </span>
+              </button>
+
+              {/* Inbox */}
+              <button
+                type="button"
+                onClick={() => handleNavClick('/dashboard/inbox', 'Inbox')}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
+                  pathname === '/dashboard/inbox'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
+                }`}
+              >
+                <div className="flex items-center gap-3 truncate">
+                  <Inbox size={16} strokeWidth={1.8} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+                  <span className="truncate">Inbox</span>
+                </div>
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
+                  3
                 </span>
               </button>
 

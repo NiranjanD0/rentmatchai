@@ -6,6 +6,43 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme inline {
+  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1 var(--delay, 0ms);
+
+  @keyframes cell-ripple {
+    0% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.4;
+    }
+  }
+}
+
+.animate-cell-ripple {
+  animation: cell-ripple var(--duration, 200ms) ease-out none 1 var(--delay, 0ms);
+}
+
+@keyframes cell-ripple {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.mask-radial-at-top {
+  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 25%, black 25%, transparent 100%);
+  mask-image: radial-gradient(ellipse 85% 85% at 50% 25%, black 25%, transparent 100%);
+}
+
 :root {
   font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: #09090b;

@@ -22,7 +22,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { usePageCurtains } from '../components/ui/page-curtains';
 import { LineShadowText } from '../components/ui/line-shadow-text';
-import WebThreads from '../components/WebThreads';
+import { BackgroundRippleEffect } from '../components/ui/background-ripple-effect';
 
 export default function HomePage() {
   const router = useRouter();
@@ -71,33 +71,10 @@ export default function HomePage() {
     <div className="min-h-screen bg-white dark:bg-black text-zinc-950 dark:text-zinc-50 transition-colors duration-200">
       {/* ===================== HERO SECTION: EDITORIAL & IMMERSIVE ===================== */}
       <section className="relative w-full -mt-18 sm:-mt-20 min-h-screen flex flex-col justify-center items-center pt-0 pb-36 sm:pt-2 sm:pb-44 overflow-hidden border-b border-zinc-200/80 dark:border-zinc-800/80">
-        {/* Interactive WebThreads background (Hero Only - Flows Behind Navbar) */}
-        <div className="hidden md:block absolute inset-0 z-0 pointer-events-none opacity-60 dark:opacity-80">
-          <WebThreads
-            colors={isDark ? ['#5227FF', '#FF9FFC'] : ['#4338ca', '#be185d']}
-            coreColor={isDark ? '#FFFFFF' : '#09090b'}
-            backgroundColor="transparent"
-            lightMode={!isDark}
-            threadCount={8}
-            speed={0.25}
-            frequency={4.5}
-            spread={0.22}
-            taper={1.2}
-            position={0.46}
-            pinch={0.5}
-            nodes={1}
-            glow={0.03}
-            falloff={0.55}
-            thickness={1.2}
-            brightness={isDark ? 0.75 : 0.9}
-            opacity={0.8}
-            mouseInteraction={true}
-            pulseOnClick={true}
-          />
+        {/* Interactive Aceternity Background Ripple Effect */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <BackgroundRippleEffect rows={14} cols={32} cellSize={56} />
         </div>
-
-        {/* Subtle Ambient Monochrome Vignette */}
-        <div className="hidden md:block pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.03),transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03),transparent_70%)] blur-3xl z-0" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center my-auto -translate-y-6 sm:-translate-y-12 lg:-translate-y-14">
           {/* Eyebrow Kicker */}

@@ -116,14 +116,14 @@ export const Avatar = ({
         }
 
         if (initials) {
-            return <span className={cx("text-quaternary", styles[size].initials)}>{initials}</span>;
+            return <span className={cx("text-zinc-600 dark:text-zinc-300 font-semibold", styles[size].initials)}>{initials}</span>;
         }
 
         if (PlaceholderIcon) {
-            return <PlaceholderIcon className={cx("text-fg-quaternary", styles[size].icon)} />;
+            return <PlaceholderIcon className={cx("text-zinc-400 dark:text-zinc-500", styles[size].icon)} />;
         }
 
-        return placeholder || <User01 className={cx("text-fg-quaternary", styles[size].icon)} />;
+        return placeholder || <User01 className={cx("text-zinc-400 dark:text-zinc-500", styles[size].icon)} />;
     };
 
     const renderBadgeContent = () => {
@@ -158,7 +158,7 @@ export const Avatar = ({
         >
             <div
                 className={cx(
-                    "relative inline-flex size-full shrink-0 items-center justify-center overflow-hidden rounded-md bg-tertiary outline-[0.5px] -outline-offset-[0.5px] outline-black/16 before:inset-[0.5px]",
+                    "relative inline-flex size-full shrink-0 items-center justify-center overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 before:inset-[0.5px]",
                     rounded && "rounded-full",
                     canShowImage &&
                         size !== "xs" &&

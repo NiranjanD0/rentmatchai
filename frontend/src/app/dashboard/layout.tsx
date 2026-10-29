@@ -2,7 +2,7 @@ import React from 'react';
 import { DashboardLayout } from '@/src/components/dashboard';
 
 export const metadata = {
-  title: 'Dashboard | RentMatch AI',
+  title: 'Dashboard',
   description: 'RentMatch AI management dashboard',
 };
 

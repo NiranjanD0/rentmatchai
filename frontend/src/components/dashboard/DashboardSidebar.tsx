@@ -283,14 +283,15 @@ export function DashboardSidebar({
 
       {/* Bottom Block: Help, Settings, and User Profile Dropdown */}
       <div className="space-y-2 pt-4 border-t border-zinc-800/70" ref={dropdownRef}>
-        {/* Help & Support */}
-        <a
-          href="mailto:support@rentmatch.ai"
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium transition-colors cursor-pointer"
+        {/* Support */}
+        <button
+          type="button"
+          onClick={() => window.open('mailto:support@rentmatch.ai', '_blank')}
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium transition-colors cursor-pointer text-left"
         >
           <HelpCircle size={16} strokeWidth={1.8} className="shrink-0" />
-          <span className="truncate">Help &amp; Support</span>
-        </a>
+          <span className="truncate">Support</span>
+        </button>
 
         {/* Settings */}
         <button

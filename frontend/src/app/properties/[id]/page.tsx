@@ -38,8 +38,8 @@ function PropertyDetailsContent() {
       <div className="wrap detail-page empty-profile">
         <h2>Property Not Found</h2>
         <p>The listing you are looking for does not exist or may have been deleted.</p>
-        <button className="primary" onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}>
-          <ArrowLeft size={16} /> Return to Explore Homes
+        <button className="primary" onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}>
+          <ArrowLeft size={16} /> Return to Find Properties
         </button>
       </div>
     );
@@ -68,7 +68,7 @@ function PropertyDetailsContent() {
           if (window.history.length > 1) {
             router.back();
           } else {
-            navigateWithCurtains(user ? '/dashboard/explore' : '/explore', 'Find Properties');
+            navigateWithCurtains('/dashboard/explore', 'Find Properties');
           }
         }}
       >

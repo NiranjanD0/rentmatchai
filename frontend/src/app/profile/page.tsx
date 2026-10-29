@@ -90,7 +90,7 @@ function ProfileContent() {
         <p>Please log in or register to access your personal profile and manage listings.</p>
         <button
           type="button"
-          className="btn-create-account text-xs font-bold px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-all cursor-pointer inline-flex items-center gap-1.5 mt-4"
+          className="btn-create-account text-xs font-bold px-5 py-2.5 rounded-full bg-violet-600 hover:bg-violet-500 text-white shadow-md transition-all cursor-pointer inline-flex items-center gap-1.5 mt-4"
           onClick={() => navigateWithCurtains('/login', 'Login')}
         >
           Login to Continue

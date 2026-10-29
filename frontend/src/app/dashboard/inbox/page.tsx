@@ -330,7 +330,7 @@ export default function DashboardInboxPage() {
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800/80 space-y-3 shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="size-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              <div className="size-8 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 flex items-center justify-center">
                 <Inbox size={16} />
               </div>
               <div>
@@ -340,7 +340,7 @@ export default function DashboardInboxPage() {
                 </p>
               </div>
             </div>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-600 dark:text-violet-400 border border-violet-500/25">
               3 Active
             </span>
           </div>
@@ -399,7 +399,7 @@ export default function DashboardInboxPage() {
                           {conv.participantAvatar}
                         </div>
                         {conv.isOnline && (
-                          <span className="absolute bottom-0 right-0 size-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-zinc-900" />
+                          <span className="absolute bottom-0 right-0 size-2.5 rounded-full bg-violet-500 ring-2 ring-white dark:ring-zinc-900" />
                         )}
                       </div>
 
@@ -412,7 +412,7 @@ export default function DashboardInboxPage() {
                             {conv.participantRole}
                           </span>
                         </div>
-                        <p className="text-[11px] text-emerald-600 dark:text-emerald-400 truncate mt-0.5 font-medium">
+                        <p className="text-[11px] text-violet-600 dark:text-violet-400 truncate mt-0.5 font-medium">
                           {conv.propertyTitle}
                         </p>
                       </div>
@@ -424,7 +424,7 @@ export default function DashboardInboxPage() {
                       </span>
                       {conv.unreadCount > 0 && (
                         <div className="mt-1 flex justify-end">
-                          <span className="size-4 rounded-full bg-emerald-600 text-white font-bold text-[9px] flex items-center justify-center">
+                          <span className="size-4 rounded-full bg-violet-600 text-white font-bold text-[9px] flex items-center justify-center">
                             {conv.unreadCount}
                           </span>
                         </div>
@@ -474,7 +474,7 @@ export default function DashboardInboxPage() {
                   {activeConversation.participantAvatar}
                 </div>
                 {activeConversation.isOnline && (
-                  <span className="absolute bottom-0 right-0 size-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-zinc-900" />
+                  <span className="absolute bottom-0 right-0 size-2.5 rounded-full bg-violet-500 ring-2 ring-white dark:ring-zinc-900" />
                 )}
               </div>
 
@@ -483,7 +483,7 @@ export default function DashboardInboxPage() {
                   <h3 className="font-bold text-sm text-zinc-900 dark:text-white truncate">
                     {activeConversation.participantName}
                   </h3>
-                  <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                  <span className="text-[10px] font-medium text-violet-600 dark:text-violet-400 flex items-center gap-1">
                     <ShieldCheck size={12} /> Verified
                   </span>
                 </div>
@@ -522,8 +522,8 @@ export default function DashboardInboxPage() {
           <ScrollArea className="flex-1 p-4 sm:p-6 lg:p-8">
             <div className="max-w-3xl mx-auto space-y-6">
               {/* System Security Notice Banner */}
-              <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2.5">
-                <ShieldCheck size={18} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+              <div className="p-3 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-violet-700 dark:text-violet-300 text-xs flex items-center gap-2.5">
+                <ShieldCheck size={18} className="shrink-0 text-violet-600 dark:text-violet-400" />
                 <span className="leading-relaxed">
                   RentMatch Verified Channel: You are connected directly with the verified owner/tenant. No middleman brokerage fees apply.
                 </span>
@@ -547,7 +547,7 @@ export default function DashboardInboxPage() {
                     <MessageAvatar
                       className={`size-8 text-xs font-bold ${
                         isMe
-                          ? 'bg-emerald-600/15 text-emerald-700 dark:bg-emerald-600/30 dark:text-emerald-300 border border-emerald-500/30'
+                          ? 'bg-violet-600/15 text-violet-700 dark:bg-violet-600/30 dark:text-violet-300 border border-violet-500/30'
                           : 'bg-white text-zinc-800 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700 shadow-2xs'
                       }`}
                     >
@@ -572,7 +572,7 @@ export default function DashboardInboxPage() {
                         <BubbleContent
                           className={`p-3.5 text-xs sm:text-sm leading-relaxed rounded-2xl ${
                             isMe
-                              ? 'bg-emerald-600 text-white shadow-sm'
+                              ? 'bg-violet-600 text-white shadow-sm'
                               : 'bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-xs'
                           }`}
                         >
@@ -582,11 +582,11 @@ export default function DashboardInboxPage() {
                           {msg.tourCard && (
                             <div className="mt-3.5 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200/90 dark:border-zinc-800/90 text-zinc-900 dark:text-zinc-100 shadow-2xs space-y-2">
                               <div className="flex items-center justify-between">
-                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-violet-600 dark:text-violet-400">
                                   <Calendar size={13} />
                                   Property Walkthrough Tour
                                 </span>
-                                <span className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
+                                <span className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-600 dark:text-violet-400 border border-violet-500/25">
                                   {msg.tourCard.status}
                                 </span>
                               </div>
@@ -615,7 +615,7 @@ export default function DashboardInboxPage() {
               <ScrollArea className="w-full whitespace-nowrap py-1">
                 <div className="flex items-center gap-1.5 pb-1">
                   <span className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
-                    <Sparkles size={12} className="text-emerald-600 dark:text-emerald-400" />
+                    <Sparkles size={12} className="text-violet-600 dark:text-violet-400" />
                     Quick replies:
                   </span>
                   {QUICK_REPLIES.map((reply, idx) => (
@@ -667,7 +667,7 @@ export default function DashboardInboxPage() {
                       variant="default"
                       onClick={() => handleSendMessage()}
                       disabled={!inputText.trim()}
-                      className="size-7 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:bg-zinc-100 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-600 text-white flex items-center justify-center transition-all cursor-pointer shadow-xs"
+                      className="size-7 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:bg-zinc-100 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-600 text-white flex items-center justify-center transition-all cursor-pointer shadow-xs"
                       aria-label="Send message"
                     >
                       <Send size={13} strokeWidth={2.2} />
@@ -706,7 +706,7 @@ export default function DashboardInboxPage() {
                       {activeConversation.propertyTitle}
                     </h5>
                     <div className="text-[11px] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
-                      <MapPin size={12} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+                      <MapPin size={12} className="shrink-0 text-violet-600 dark:text-violet-400" />
                       <span className="truncate">{activeConversation.propertyLocation}</span>
                     </div>
                     <div className="pt-2 border-t border-zinc-200/80 dark:border-zinc-800 flex items-center justify-between text-[11px]">
@@ -715,7 +715,7 @@ export default function DashboardInboxPage() {
                       </span>
                       <a
                         href={`/properties/${activeConversation.propertyId}`}
-                        className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold inline-flex items-center gap-1"
+                        className="text-violet-600 dark:text-violet-400 hover:underline font-semibold inline-flex items-center gap-1"
                       >
                         Listing Details <ExternalLink size={11} />
                       </a>
@@ -738,7 +738,7 @@ export default function DashboardInboxPage() {
                       <p className="font-bold text-xs text-zinc-900 dark:text-white">
                         {activeConversation.participantName}
                       </p>
-                      <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                      <p className="text-[11px] text-violet-600 dark:text-violet-400 font-medium">
                         Verified {activeConversation.participantRole}
                       </p>
                     </div>
@@ -751,7 +751,7 @@ export default function DashboardInboxPage() {
                     </div>
                     <div className="flex items-center justify-between text-zinc-600 dark:text-zinc-400">
                       <span>Identity Verification</span>
-                      <span className="font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                      <span className="font-semibold text-violet-600 dark:text-violet-400 flex items-center gap-1">
                         <CheckCircle2 size={12} /> Aadhaar Verified
                       </span>
                     </div>
@@ -770,7 +770,7 @@ export default function DashboardInboxPage() {
                     className="w-full justify-start text-xs h-9 border-zinc-200 hover:bg-zinc-100 text-zinc-800 dark:border-zinc-800 dark:hover:bg-zinc-800/80 dark:text-zinc-200 cursor-pointer"
                     onClick={() => alert('Tour scheduling flow initiated.')}
                   >
-                    <Calendar size={14} className="mr-2 text-emerald-600 dark:text-emerald-400" />
+                    <Calendar size={14} className="mr-2 text-violet-600 dark:text-violet-400" />
                     Schedule Walkthrough Tour
                   </Button>
                   <Button
@@ -778,7 +778,7 @@ export default function DashboardInboxPage() {
                     className="w-full justify-start text-xs h-9 border-zinc-200 hover:bg-zinc-100 text-zinc-800 dark:border-zinc-800 dark:hover:bg-zinc-800/80 dark:text-zinc-200 cursor-pointer"
                     onClick={() => alert('Digital Lease Agreement generation flow.')}
                   >
-                    <Building2 size={14} className="mr-2 text-emerald-600 dark:text-emerald-400" />
+                    <Building2 size={14} className="mr-2 text-violet-600 dark:text-violet-400" />
                     Review Rental Agreement
                   </Button>
                 </div>
@@ -787,7 +787,7 @@ export default function DashboardInboxPage() {
               {/* Zero-Brokerage Safety Note */}
               <div className="p-3.5 rounded-2xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 text-xs space-y-1.5">
                 <p className="font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
-                  <ShieldCheck size={14} className="text-emerald-600 dark:text-emerald-400" />
+                  <ShieldCheck size={14} className="text-violet-600 dark:text-violet-400" />
                   RentMatch AI Guarantee
                 </p>
                 <p className="text-[11px] leading-relaxed">

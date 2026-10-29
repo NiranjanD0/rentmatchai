@@ -303,8 +303,8 @@ export default function AISearchPage() {
         {/* Sub-header inside Chat Pane */}
         <div className="h-12 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/80 dark:bg-zinc-900/40 backdrop-blur-xs shrink-0 transition-colors duration-200">
           <div className="flex items-center gap-2 text-xs">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium">
-              <Sparkles size={13} className="text-emerald-600 dark:text-emerald-400" />
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20 font-medium">
+              <Sparkles size={13} className="text-violet-600 dark:text-violet-400" />
               <span>RentMatch AI Agent</span>
             </span>
             <span className="text-zinc-400 dark:text-zinc-500 hidden sm:inline">•</span>
@@ -351,14 +351,14 @@ export default function AISearchPage() {
                         <MessageAvatar
                           className={`size-8 text-xs font-semibold ${
                             msg.role === 'user'
-                              ? 'bg-emerald-600/15 text-emerald-700 dark:bg-emerald-600/30 dark:text-emerald-300 border border-emerald-500/30'
+                              ? 'bg-violet-600/15 text-violet-700 dark:bg-violet-600/30 dark:text-violet-300 border border-violet-500/30'
                               : 'bg-white text-zinc-800 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700/80 shadow-xs'
                           }`}
                         >
                           {msg.role === 'user' ? (
                             <span>{user?.firstName?.[0] || 'U'}</span>
                           ) : (
-                            <Bot size={15} className="text-emerald-600 dark:text-emerald-400" />
+                            <Bot size={15} className="text-violet-600 dark:text-violet-400" />
                           )}
                         </MessageAvatar>
 
@@ -381,7 +381,7 @@ export default function AISearchPage() {
                             <BubbleContent
                               className={`p-3.5 text-xs sm:text-sm leading-relaxed rounded-2xl ${
                                 msg.role === 'user'
-                                  ? 'bg-emerald-600 text-white shadow-sm'
+                                  ? 'bg-violet-600 text-white shadow-sm'
                                   : 'bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-xs'
                               }`}
                             >
@@ -401,7 +401,7 @@ export default function AISearchPage() {
                                             {prop.title}
                                           </span>
                                           {prop.badge && (
-                                            <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
+                                            <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-violet-500/15 text-violet-600 dark:text-violet-400 border border-violet-500/25">
                                               {prop.badge}
                                             </span>
                                           )}
@@ -415,11 +415,11 @@ export default function AISearchPage() {
                                       </div>
 
                                       <div className="text-right shrink-0">
-                                        <div className="text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                                        <div className="text-xs sm:text-sm font-bold text-violet-600 dark:text-violet-400">
                                           {prop.price}
                                         </div>
                                         <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">
-                                          Match: <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{prop.matchScore}%</span>
+                                          Match: <span className="text-violet-600 dark:text-violet-400 font-semibold">{prop.matchScore}%</span>
                                         </div>
                                       </div>
                                     </div>
@@ -437,15 +437,15 @@ export default function AISearchPage() {
                   {isTyping && (
                     <Message align="start">
                       <MessageAvatar className="size-8 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 shadow-xs">
-                        <Bot size={15} className="text-emerald-600 dark:text-emerald-400 animate-pulse" />
+                        <Bot size={15} className="text-violet-600 dark:text-violet-400 animate-pulse" />
                       </MessageAvatar>
                       <MessageContent>
                         <Bubble variant="muted">
                           <BubbleContent className="p-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xs">
                             <div className="flex items-center gap-1.5 py-1 px-1">
-                              <span className="size-1.5 rounded-full bg-emerald-500 animate-bounce [animation-delay:-0.3s]" />
-                              <span className="size-1.5 rounded-full bg-emerald-500 animate-bounce [animation-delay:-0.15s]" />
-                              <span className="size-1.5 rounded-full bg-emerald-500 animate-bounce" />
+                              <span className="size-1.5 rounded-full bg-violet-500 animate-bounce [animation-delay:-0.3s]" />
+                              <span className="size-1.5 rounded-full bg-violet-500 animate-bounce [animation-delay:-0.15s]" />
+                              <span className="size-1.5 rounded-full bg-violet-500 animate-bounce" />
                             </div>
                           </BubbleContent>
                         </Bubble>
@@ -502,7 +502,7 @@ export default function AISearchPage() {
               >
                 <div className="flex items-center gap-2 text-zinc-500">
                   <span className="inline-flex items-center gap-1 text-[11px] font-medium text-zinc-600 dark:text-zinc-400">
-                    <Sparkles size={12} className="text-emerald-600 dark:text-emerald-400" />
+                    <Sparkles size={12} className="text-violet-600 dark:text-violet-400" />
                     <span>RentMatch Search v2</span>
                   </span>
                   <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700">•</span>
@@ -517,7 +517,7 @@ export default function AISearchPage() {
                     variant="default"
                     onClick={() => handleSendMessage()}
                     disabled={!inputValue.trim() || isTyping}
-                    className="size-7 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:bg-zinc-100 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-600 text-white flex items-center justify-center transition-all cursor-pointer shadow-xs"
+                    className="size-7 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:bg-zinc-100 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-600 text-white flex items-center justify-center transition-all cursor-pointer shadow-xs"
                     aria-label="Send message"
                   >
                     <ArrowUp size={14} strokeWidth={2.5} />
@@ -535,7 +535,7 @@ export default function AISearchPage() {
           {/* History Header */}
           <div className="p-4 border-b border-zinc-200 dark:border-zinc-800/80 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <History size={16} className="text-emerald-600 dark:text-emerald-400" />
+              <History size={16} className="text-violet-600 dark:text-violet-400" />
               <span className="font-semibold text-sm text-zinc-900 dark:text-white">Search History</span>
             </div>
             <Button
@@ -591,7 +591,7 @@ export default function AISearchPage() {
                             <MessageSquare
                               size={14}
                               className={`shrink-0 ${
-                                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300'
+                                isActive ? 'text-violet-600 dark:text-violet-400' : 'text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300'
                               }`}
                             />
                             <div className="min-w-0">

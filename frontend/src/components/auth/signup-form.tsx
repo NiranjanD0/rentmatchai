@@ -169,7 +169,7 @@ export function SignupForm({
                     transition={{ duration: 0.15 }}
                     className="inline-flex"
                   >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -199,7 +199,7 @@ export function SignupForm({
                     transition={{ duration: 0.15 }}
                     className="inline-flex"
                   >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -360,7 +360,7 @@ export function SignupForm({
             <button
               type="button"
               onClick={() => navigateWithCurtains('/login', 'Login')}
-              className="font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+              className="font-bold text-violet-600 dark:text-violet-400 hover:underline cursor-pointer"
             >
               Login
             </button>

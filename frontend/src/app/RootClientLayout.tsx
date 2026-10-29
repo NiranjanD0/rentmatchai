@@ -35,7 +35,7 @@ function FooterSlot() {
           </div>
 
           <div className="flex flex-wrap gap-8 text-xs font-medium text-zinc-700 dark:text-zinc-300">
-            <a href="/explore" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+            <a href="/dashboard/explore" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
               Explore Homes
             </a>
             <a href="/login" className="hover:text-zinc-950 dark:hover:text-white transition-colors">

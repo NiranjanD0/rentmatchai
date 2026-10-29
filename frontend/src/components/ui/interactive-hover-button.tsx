@@ -27,7 +27,7 @@ export const InteractiveHoverButton = React.forwardRef<
         "group relative w-full cursor-pointer overflow-hidden rounded-2xl border p-2.5 px-6 text-center font-semibold text-xs sm:text-sm bg-white dark:bg-zinc-950 transition-colors shadow-xs",
         isInvalid
           ? "border-red-500 ring-2 ring-red-500/30 text-red-600 dark:text-red-400"
-          : "border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 hover:border-emerald-500/60",
+          : "border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 hover:border-violet-500/60",
         disabled && "opacity-50 cursor-not-allowed pointer-events-none",
         className
       )}
@@ -38,7 +38,7 @@ export const InteractiveHoverButton = React.forwardRef<
         <div
           className={cn(
             "h-2 w-2 rounded-full transition-all duration-300 group-hover:scale-[100.8]",
-            isInvalid ? "bg-red-500" : "bg-emerald-600 dark:bg-emerald-500"
+            isInvalid ? "bg-red-500" : "bg-violet-600 dark:bg-violet-500"
           )}
         />
         <span className="inline-block transition-all duration-300 group-hover:translate-x-12 group-hover:opacity-0">

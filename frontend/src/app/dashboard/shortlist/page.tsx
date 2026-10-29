@@ -69,8 +69,8 @@ export default function DashboardShortlistPage() {
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
               My Shortlist
             </h2>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-              <Bookmark size={11} className="fill-emerald-500/20" />
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20">
+              <Bookmark size={11} className="fill-violet-500/20" />
               {savedProperties.length} Saved
             </span>
           </div>
@@ -86,7 +86,7 @@ export default function DashboardShortlistPage() {
             onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
             className="h-9 text-xs gap-1.5 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer shadow-2xs"
           >
-            <Compass size={14} className="text-emerald-600 dark:text-emerald-400" />
+            <Compass size={14} className="text-violet-600 dark:text-violet-400" />
             <span>Find More Properties</span>
           </Button>
         </div>
@@ -175,8 +175,8 @@ export default function DashboardShortlistPage() {
       ) : (
         /* Empty Shortlist State */
         <div className="py-20 px-6 text-center rounded-3xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs">
-          <div className="size-16 mx-auto rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4 border border-emerald-500/20">
-            <Heart size={30} className="fill-emerald-500/20" />
+          <div className="size-16 mx-auto rounded-2xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center mb-4 border border-violet-500/20">
+            <Heart size={30} className="fill-violet-500/20" />
           </div>
           <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white">
             Your shortlist is empty
@@ -186,7 +186,7 @@ export default function DashboardShortlistPage() {
           </p>
           <Button
             onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-            className="h-10 text-xs px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold gap-2 shadow-xs cursor-pointer"
+            className="h-10 text-xs px-5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold gap-2 shadow-xs cursor-pointer"
           >
             <Compass size={15} />
             <span>Find Available Properties</span>

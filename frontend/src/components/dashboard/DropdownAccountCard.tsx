@@ -86,8 +86,8 @@ export const DropdownAccountCardMD = ({
             {name}
           </p>
           <p className="truncate text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{email}</p>
-          <p className="mt-1.5 inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-600 dark:text-emerald-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <p className="mt-1.5 inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-violet-600 dark:text-violet-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
             {role} account
           </p>
         </div>

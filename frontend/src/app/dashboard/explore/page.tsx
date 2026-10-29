@@ -154,8 +154,8 @@ function DashboardExploreContent() {
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-              <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20">
+              <span className="size-1.5 rounded-full bg-violet-500 animate-pulse" />
               {results.length} Available
             </span>
 
@@ -233,14 +233,14 @@ function DashboardExploreContent() {
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
-                <MapPin size={13} className="text-emerald-600 dark:text-emerald-400" />
+                <MapPin size={13} className="text-violet-600 dark:text-violet-400" />
                 <span>Locality / Sector</span>
               </label>
               {selectedArea !== 'All Areas' && (
                 <button
                   type="button"
                   onClick={() => setSelectedArea('All Areas')}
-                  className="text-[11px] text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+                  className="text-[11px] text-violet-600 dark:text-violet-400 hover:underline cursor-pointer"
                 >
                   Clear Area
                 </button>
@@ -324,7 +324,7 @@ function DashboardExploreContent() {
                 <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                   Max Budget
                 </label>
-                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                <span className="text-xs font-bold text-violet-600 dark:text-violet-400">
                   {money(budget)}/mo
                 </span>
               </div>
@@ -335,7 +335,7 @@ function DashboardExploreContent() {
                 step="1000"
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
-                className="w-full accent-emerald-600 dark:accent-emerald-400 cursor-pointer"
+                className="w-full accent-violet-600 dark:accent-violet-400 cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-zinc-400 dark:text-zinc-500 mt-1">
                 <span>₹8k</span>
@@ -352,11 +352,11 @@ function DashboardExploreContent() {
               onClick={() => setVerifiedOnly(!verifiedOnly)}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer border ${
                 verifiedOnly
-                  ? 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/40'
+                  ? 'bg-violet-500/15 text-violet-700 border-violet-500/30 dark:bg-violet-500/20 dark:text-violet-300 dark:border-violet-500/40'
                   : 'bg-zinc-100/80 text-zinc-700 border-transparent hover:bg-zinc-200/70 dark:bg-zinc-800/80 dark:text-zinc-300'
               }`}
             >
-              <ShieldCheck size={14} className={verifiedOnly ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500'} />
+              <ShieldCheck size={14} className={verifiedOnly ? 'text-violet-600 dark:text-violet-400' : 'text-zinc-500'} />
               <span>Verified Direct Owners Only</span>
               {verifiedOnly && <Check size={13} className="ml-0.5" />}
             </button>
@@ -403,7 +403,7 @@ function DashboardExploreContent() {
           </p>
           <Button
             onClick={resetFilters}
-            className="h-9 text-xs px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold gap-2 shadow-xs cursor-pointer"
+            className="h-9 text-xs px-4 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold gap-2 shadow-xs cursor-pointer"
           >
             <RotateCcw size={13} />
             <span>Reset All Filters</span>

@@ -53,9 +53,12 @@
 
   --navy: #09090b;
   --navy-dark: #000000;
-  --green: #059669;
-  --green-hover: #047857;
-  --green-light: #ecfdf5;
+  --green: #7c3aed;
+  --green-hover: #6d28d9;
+  --green-light: #f5f3ff;
+  --purple: #7c3aed;
+  --purple-hover: #6d28d9;
+  --purple-light: #f5f3ff;
   --line: #e4e4e7;
   --muted: #71717a;
   --danger: #ef4444;
@@ -3658,9 +3661,12 @@ footer > small {
   --navy-dark: #ffffff;
   --line: #1e293b;
   --card-bg: #0d131f;
-  --green: #10b981;
-  --green-hover: #059669;
-  --green-light: #064e3b;
+  --green: #a78bfa;
+  --green-hover: #8b5cf6;
+  --green-light: #2e1065;
+  --purple: #a78bfa;
+  --purple-hover: #8b5cf6;
+  --purple-light: #2e1065;
 }
 
 .dark body {

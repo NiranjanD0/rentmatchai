@@ -454,7 +454,7 @@ export default function DashboardInboxPage() {
         <section
           className={`${
             mobileThreadOpen ? 'flex' : 'hidden md:flex'
-          } flex-1 flex-col h-full min-w-0 bg-zinc-50/70 dark:bg-linear-to-b dark:from-zinc-950/40 dark:to-[#09090b] relative`}
+          } flex-1 flex-col h-full min-w-0 bg-zinc-50 dark:bg-[#09090b] relative`}
         >
           {/* Active Conversation Top Bar */}
           <header className="h-16 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/90 dark:bg-[#09090b]/90 backdrop-blur-md shrink-0">

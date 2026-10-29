@@ -299,7 +299,7 @@ export default function AISearchPage() {
   return (
     <div className="h-full w-full flex overflow-hidden bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 select-none transition-colors duration-200">
       {/* Center Chat Thread Area */}
-      <div className="flex-1 flex flex-col h-full min-w-0 relative bg-zinc-50/70 dark:bg-linear-to-b dark:from-zinc-950/40 dark:to-[#09090b] transition-colors duration-200">
+      <div className="flex-1 flex flex-col h-full min-w-0 relative bg-zinc-50 dark:bg-[#09090b] transition-colors duration-200">
         {/* Sub-header inside Chat Pane */}
         <div className="h-12 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/80 dark:bg-zinc-900/40 backdrop-blur-xs shrink-0 transition-colors duration-200">
           <div className="flex items-center gap-2 text-xs">

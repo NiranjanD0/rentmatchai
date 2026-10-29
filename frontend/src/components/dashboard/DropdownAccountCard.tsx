@@ -149,12 +149,12 @@ export const DropdownAccountCardMD = ({
             </Dropdown.Popover>
           </SubmenuTrigger>
 
-          <Dropdown.Separator className="my-1 bg-zinc-100 dark:bg-zinc-800/80" />
+          <Dropdown.Separator className="my-1 bg-zinc-200/80 dark:bg-zinc-800/80" />
 
           <Dropdown.Item
             icon={LogOut01}
             onAction={handleSignOut}
-            className="text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-500/10"
+            destructive
           >
             Sign Out
           </Dropdown.Item>

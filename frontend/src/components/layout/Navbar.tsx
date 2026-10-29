@@ -50,7 +50,18 @@ export default function Navbar({
   const onOpenAuth = propOpenAuth || ((tab, role) => openAuthModal(tab, role as UserRole));
 
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Scroll detection to adapt navbar backdrop over hero vs page content
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 15);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -102,7 +113,13 @@ export default function Navbar({
     : 'U';
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-black/90 backdrop-blur-xl supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-black/80 transition-colors">
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? 'border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-black/80 backdrop-blur-xl shadow-xs'
+          : 'border-b border-zinc-200/30 dark:border-zinc-800/30 bg-white/20 dark:bg-black/25 backdrop-blur-md'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-6">
         {/* Brand Logo */}
         <button

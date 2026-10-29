@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, Suspense } from 'react';
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Search,
@@ -15,7 +15,8 @@ import {
   Check,
   Compass,
 } from 'lucide-react';
-import { PropertyCard } from '@/src/components/property';
+import { PropertyCard, PropertyGridSkeleton } from '@/src/components/property';
+import { Skeleton } from '@/src/components/ui/skeleton';
 import { useProperty } from '@/src/context/PropertyContext';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
 import { Button } from '@/src/components/ui/button';
@@ -55,6 +56,7 @@ function DashboardExploreContent() {
   const { activeProperties, saved, toggleSave } = useProperty();
   const { navigateWithCurtains } = usePageCurtains();
 
+  const [mounted, setMounted] = useState(false);
   const initialQuery = searchParams.get('query') || '';
   const initialLocation = searchParams.get('location') || '';
   const initialBudget = searchParams.get('budget') || '50000';
@@ -68,8 +70,13 @@ function DashboardExploreContent() {
   const [sort, setSort] = useState('Best match');
   const [showFilters, setShowFilters] = useState(true);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Filter & Sort properties
   const results = useMemo(() => {
+
     const list = activeProperties.filter((p) => {
       // 1. Location match
       const locMatch =
@@ -139,8 +146,13 @@ function DashboardExploreContent() {
     navigateWithCurtains(`/properties/${id}`, 'Property Details');
   };
 
+  if (!mounted) {
+    return <DashboardExploreSkeleton />;
+  }
+
   return (
     <div className="w-full max-w-7xl mx-auto space-y-6">
+
       {/* 1. Header & Quick Search Bar */}
       <div className="flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -414,15 +426,64 @@ function DashboardExploreContent() {
   );
 }
 
+export function DashboardExploreSkeleton() {
+  return (
+    <div className="w-full max-w-7xl mx-auto space-y-6">
+      {/* Header Skeleton */}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-1.5">
+            <Skeleton className="h-7 w-48 rounded-lg" />
+            <Skeleton className="h-4 w-72 rounded-md" />
+          </div>
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-7 w-24 rounded-full" />
+            <Skeleton className="h-8 w-20 rounded-xl" />
+          </div>
+        </div>
+
+        {/* Search & Sort Skeleton */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+          <Skeleton className="h-10 flex-1 rounded-xl" />
+          <Skeleton className="h-10 w-36 rounded-xl shrink-0" />
+        </div>
+      </div>
+
+      {/* Filter Bar Skeleton */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs space-y-4">
+        <div className="space-y-2">
+          <Skeleton className="h-3.5 w-28 rounded" />
+          <div className="flex gap-2 overflow-hidden">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-8 w-20 rounded-xl shrink-0" />
+            ))}
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
+          <div className="space-y-2">
+            <Skeleton className="h-3.5 w-24 rounded" />
+            <Skeleton className="h-8 w-full rounded-xl" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-3.5 w-24 rounded" />
+            <Skeleton className="h-8 w-full rounded-xl" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-3.5 w-24 rounded" />
+            <Skeleton className="h-8 w-full rounded-xl" />
+          </div>
+        </div>
+      </div>
+
+      {/* Property Cards Grid Skeleton */}
+      <PropertyGridSkeleton count={6} />
+    </div>
+  );
+}
+
 export default function DashboardExplorePage() {
   return (
-    <Suspense
-      fallback={
-        <div className="w-full h-96 flex items-center justify-center text-xs text-zinc-400">
-          Loading properties...
-        </div>
-      }
-    >
+    <Suspense fallback={<DashboardExploreSkeleton />}>
       <DashboardExploreContent />
     </Suspense>
   );

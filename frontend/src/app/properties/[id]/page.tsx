@@ -8,6 +8,7 @@ import { useProperty } from '../../../context/PropertyContext';
 import { PropertyService } from '../../../services/propertyService';
 import { PROPERTY_STATUS } from '../../../constants/initialData';
 import { usePageCurtains } from '../../../components/ui/page-curtains';
+import { PropertyDetailSkeleton } from '@/src/components/property';
 
 const money = (n: number) => '₹' + Number(n).toLocaleString('en-IN');
 
@@ -33,8 +34,13 @@ function PropertyDetailsContent() {
   // Find property from context or database
   const property = properties.find((p) => String(p.id) === String(id)) || PropertyService.getProperty(id);
 
+  if (!property && properties.length === 0) {
+    return <PropertyDetailSkeleton />;
+  }
+
   if (!property) {
     return (
+
       <div className="wrap detail-page empty-profile">
         <h2>Property Not Found</h2>
         <p>The listing you are looking for does not exist or may have been deleted.</p>
@@ -322,8 +328,9 @@ function PropertyDetailsContent() {
 
 export default function PropertyDetailsRoute() {
   return (
-    <React.Suspense fallback={<div className="wrap detail-page"><p>Loading property details...</p></div>}>
+    <React.Suspense fallback={<PropertyDetailSkeleton />}>
       <PropertyDetailsContent />
     </React.Suspense>
   );
 }
+

@@ -43,8 +43,126 @@ import {
 } from '@/src/components/ui/input-group';
 import { ScrollArea, ScrollBar } from '@/src/components/ui/scroll-area';
 import { Button } from '@/src/components/ui/button';
+import { Skeleton } from '@/src/components/ui/skeleton';
+
+export function InboxSkeleton() {
+  return (
+    <div className="h-full w-full flex bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 overflow-hidden select-none transition-colors duration-200">
+      {/* 1. Left Conversation List Pane Skeleton */}
+      <aside className="w-full md:w-80 lg:w-96 flex flex-col border-r border-zinc-200 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/70 shrink-0 h-full">
+        {/* Pane Header */}
+        <div className="p-4 border-b border-zinc-200 dark:border-zinc-800/80 space-y-3 shrink-0">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Skeleton className="size-8 rounded-xl bg-violet-500/15 dark:bg-violet-500/20" />
+              <div className="space-y-1">
+                <Skeleton className="h-4 w-28 rounded bg-zinc-200/80 dark:bg-zinc-800/80" />
+                <Skeleton className="h-3 w-36 rounded bg-zinc-200/60 dark:bg-zinc-800/60" />
+              </div>
+            </div>
+            <Skeleton className="h-5 w-16 rounded-full bg-violet-500/15 dark:bg-violet-500/20" />
+          </div>
+
+          {/* Search Bar Skeleton */}
+          <Skeleton className="h-8 w-full rounded-xl bg-zinc-200/70 dark:bg-zinc-800/70" />
+
+          {/* Filter Tabs Skeleton */}
+          <div className="flex gap-1.5 pt-1">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-6 w-14 rounded-lg bg-zinc-200/60 dark:bg-zinc-800/60" />
+            ))}
+          </div>
+        </div>
+
+        {/* Conversation Items Skeleton */}
+        <div className="p-2 space-y-2 flex-1 overflow-hidden">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="p-3 rounded-2xl border border-zinc-100 dark:border-zinc-800/60 bg-zinc-50/60 dark:bg-zinc-900/30 flex items-start gap-3"
+            >
+              <Skeleton className="size-10 rounded-xl bg-zinc-200/70 dark:bg-zinc-800/70 shrink-0" />
+              <div className="flex-1 space-y-1.5 min-w-0">
+                <div className="flex items-center justify-between">
+                  <Skeleton className="h-3.5 w-24 rounded bg-zinc-200/80 dark:bg-zinc-800/80" />
+                  <Skeleton className="h-3 w-10 rounded bg-zinc-200/60 dark:bg-zinc-800/60" />
+                </div>
+                <Skeleton className="h-3 w-32 rounded bg-zinc-200/60 dark:bg-zinc-800/60" />
+                <Skeleton className="h-3 w-4/5 rounded bg-zinc-200/50 dark:bg-zinc-800/50" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </aside>
+
+      {/* 2. Middle Active Chat Pane Skeleton */}
+      <section className="hidden md:flex flex-1 flex-col h-full bg-white dark:bg-[#09090b] overflow-hidden">
+        {/* Chat Header Skeleton */}
+        <div className="h-16 px-4 border-b border-zinc-200 dark:border-zinc-800/80 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-3">
+            <Skeleton className="size-9 rounded-xl bg-zinc-200/70 dark:bg-zinc-800/70" />
+            <div className="space-y-1">
+              <Skeleton className="h-4 w-32 rounded bg-zinc-200/80 dark:bg-zinc-800/80" />
+              <Skeleton className="h-3 w-20 rounded bg-zinc-200/60 dark:bg-zinc-800/60" />
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Skeleton className="size-8 rounded-lg bg-zinc-200/60 dark:bg-zinc-800/60" />
+            <Skeleton className="size-8 rounded-lg bg-zinc-200/60 dark:bg-zinc-800/60" />
+            <Skeleton className="h-8 w-24 rounded-lg bg-zinc-200/60 dark:bg-zinc-800/60" />
+          </div>
+        </div>
+
+        {/* Message Thread Skeleton */}
+        <div className="flex-1 p-6 space-y-5 overflow-hidden">
+          <div className="flex items-start gap-2.5 max-w-md">
+            <Skeleton className="size-8 rounded-full bg-zinc-200/70 dark:bg-zinc-800/70 shrink-0" />
+            <div className="space-y-1.5 flex-1">
+              <Skeleton className="h-16 w-3/4 rounded-2xl bg-zinc-200/60 dark:bg-zinc-800/60" />
+              <Skeleton className="h-2.5 w-12 rounded bg-zinc-200/40 dark:bg-zinc-800/40" />
+            </div>
+          </div>
+
+          <div className="flex items-start justify-end gap-2.5">
+            <div className="space-y-1.5 flex flex-col items-end">
+              <Skeleton className="h-12 w-64 rounded-2xl bg-violet-500/20 dark:bg-violet-500/20" />
+              <Skeleton className="h-2.5 w-12 rounded bg-zinc-200/40 dark:bg-zinc-800/40" />
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2.5 max-w-md">
+            <Skeleton className="size-8 rounded-full bg-zinc-200/70 dark:bg-zinc-800/70 shrink-0" />
+            <div className="space-y-1.5 flex-1">
+              <Skeleton className="h-20 w-4/5 rounded-2xl bg-zinc-200/60 dark:bg-zinc-800/60" />
+              <Skeleton className="h-2.5 w-12 rounded bg-zinc-200/40 dark:bg-zinc-800/40" />
+            </div>
+          </div>
+        </div>
+
+        {/* Chat Input Skeleton */}
+        <div className="p-4 border-t border-zinc-200 dark:border-zinc-800/80 shrink-0">
+          <Skeleton className="h-12 w-full rounded-2xl bg-zinc-200/70 dark:bg-zinc-800/70" />
+        </div>
+      </section>
+
+      {/* 3. Right Property Details Pane Skeleton (Desktop) */}
+      <aside className="hidden lg:flex w-72 xl:w-80 border-l border-zinc-200 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-950/40 flex-col p-4 space-y-4 shrink-0">
+        <Skeleton className="h-4 w-32 rounded bg-zinc-200/70 dark:bg-zinc-800/70" />
+        <Skeleton className="w-full aspect-[16/10] rounded-2xl bg-zinc-200/70 dark:bg-zinc-800/70" />
+        <Skeleton className="h-5 w-48 rounded bg-zinc-200/80 dark:bg-zinc-800/80" />
+        <Skeleton className="h-4 w-36 rounded bg-zinc-200/60 dark:bg-zinc-800/60" />
+        <Skeleton className="h-6 w-24 rounded-lg bg-zinc-200/70 dark:bg-zinc-800/70" />
+        <div className="pt-2 space-y-2 border-t border-zinc-200/80 dark:border-zinc-800/80">
+          <Skeleton className="h-9 w-full rounded-xl bg-violet-500/20 dark:bg-violet-500/20" />
+          <Skeleton className="h-9 w-full rounded-xl bg-zinc-200/70 dark:bg-zinc-800/70" />
+        </div>
+      </aside>
+    </div>
+  );
+}
 
 interface ChatEntry {
+
   id: string;
   sender: 'user' | 'participant' | 'system';
   senderName: string;
@@ -318,8 +436,18 @@ export default function DashboardInboxPage() {
     'Is dedicated parking included?',
   ];
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <InboxSkeleton />;
+  }
+
   return (
     <div className="h-full w-full flex bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 overflow-hidden select-none transition-colors duration-200">
+
       {/* 1. Left Conversation List Pane */}
       <aside
         className={`${

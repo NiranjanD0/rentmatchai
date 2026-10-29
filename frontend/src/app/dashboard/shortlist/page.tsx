@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Heart,
@@ -13,23 +13,61 @@ import {
   X,
   Bookmark,
 } from 'lucide-react';
-import { PropertyCard } from '@/src/components/property';
+import { PropertyCard, PropertyGridSkeleton } from '@/src/components/property';
+import { Skeleton } from '@/src/components/ui/skeleton';
 import { useProperty } from '@/src/context/PropertyContext';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
 import { Button } from '@/src/components/ui/button';
 
-export default function DashboardShortlistPage() {
+export function DashboardShortlistSkeleton() {
+  return (
+    <div className="w-full max-w-7xl mx-auto space-y-6 select-none">
+      {/* 1. Header Skeleton */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-7 w-36 rounded-lg bg-zinc-200/80 dark:bg-zinc-800/80" />
+            <Skeleton className="h-5 w-20 rounded-full bg-violet-500/15 dark:bg-violet-500/20" />
+          </div>
+          <Skeleton className="h-4 w-64 sm:w-80 rounded-md bg-zinc-200/60 dark:bg-zinc-800/60" />
+        </div>
+        <Skeleton className="h-9 w-40 rounded-xl bg-zinc-200/70 dark:bg-zinc-800/70" />
+      </div>
+
+      {/* 2. Search & Sort Skeleton */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <Skeleton className="h-10 flex-1 rounded-xl bg-zinc-200/70 dark:bg-zinc-800/70" />
+        <Skeleton className="h-10 w-44 rounded-xl bg-zinc-200/70 dark:bg-zinc-800/70" />
+      </div>
+
+      {/* 3. Grid Skeleton */}
+      <PropertyGridSkeleton count={3} />
+    </div>
+  );
+}
+
+function DashboardShortlistContent() {
   const router = useRouter();
   const { properties, saved, toggleSave } = useProperty();
   const { navigateWithCurtains } = usePageCurtains();
 
+  const [mounted, setMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState<'recent' | 'price-asc' | 'price-desc' | 'match'>('recent');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Filter properties in shortlist
   const savedProperties = useMemo(() => {
     return properties.filter((p) => saved.includes(p.id));
   }, [properties, saved]);
+
+  if (!mounted) {
+    return <DashboardShortlistSkeleton />;
+  }
+
 
   // Search & Sort within shortlisted properties
   const displayedProperties = useMemo(() => {
@@ -196,3 +234,12 @@ export default function DashboardShortlistPage() {
     </div>
   );
 }
+
+export default function DashboardShortlistPage() {
+  return (
+    <Suspense fallback={<DashboardShortlistSkeleton />}>
+      <DashboardShortlistContent />
+    </Suspense>
+  );
+}
+

@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
-import { LoginForm } from "@/src/components/auth";
+import { LoginForm, AuthCardSkeleton } from "@/src/components/auth";
 import BrandLogo from "@/src/components/layout/BrandLogo";
 
 export default function LoginPage() {
@@ -11,7 +11,7 @@ export default function LoginPage() {
           <BrandLogo size="lg" />
         </Link>
         <div className="w-full">
-          <Suspense fallback={<div className="h-96 w-full animate-pulse bg-zinc-100 dark:bg-zinc-900 rounded-3xl" />}>
+          <Suspense fallback={<AuthCardSkeleton mode="login" />}>
             <LoginForm />
           </Suspense>
         </div>
@@ -19,3 +19,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

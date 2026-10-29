@@ -2815,6 +2815,7 @@ footer > small {
 }
 
 .role-option-card {
+  position: relative;
   border: 2px solid #e1e8e2;
   border-radius: 10px;
   padding: 12px;
@@ -2823,15 +2824,18 @@ footer > small {
   gap: 10px;
   cursor: pointer;
   background: #fbfdfb;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .role-option-card:hover {
   border-color: #afd2ba;
+  transform: translateY(-1px);
 }
 
 .role-option-card.selected {
   border-color: #286b50;
   background: #f0f7f2;
+  box-shadow: 0 4px 14px rgba(40, 107, 80, 0.12);
 }
 
 .role-icon {
@@ -2844,6 +2848,7 @@ footer > small {
   color: #286b50;
   border: 1px solid #d8e5db;
   flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .role-option-card.selected .role-icon {

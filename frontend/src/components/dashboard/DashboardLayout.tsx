@@ -106,20 +106,7 @@ export function DashboardLayout({
                 {displayTitle}
               </h1>
             </div>
-
-            {/* Right: Optional Header Action Slot */}
-            <div className="flex items-center gap-2">
-              {headerAction ? (
-                headerAction
-              ) : (
-                <div className="flex items-center gap-2">
-                  <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-zinc-900 border border-zinc-800 text-zinc-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    {isLister ? 'Landlord Portal' : 'Tenant Portal'}
-                  </span>
-                </div>
-              )}
-            </div>
+            
           </header>
 
           {/* Blank Main Content Area (Intentionally clean for future feature development) */}
@@ -131,3 +118,4 @@ export function DashboardLayout({
     </DashboardGuard>
   );
 }
+

@@ -1,5 +1,4 @@
-'use client';
-
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { SignupForm } from "@/src/components/auth";
 import BrandLogo from "@/src/components/layout/BrandLogo";
@@ -12,7 +11,9 @@ export default function SignupPage() {
           <BrandLogo size="lg" />
         </Link>
         <div className="w-full">
-          <SignupForm />
+          <Suspense fallback={<div className="h-96 w-full animate-pulse bg-zinc-100 dark:bg-zinc-900 rounded-3xl" />}>
+            <SignupForm />
+          </Suspense>
         </div>
       </div>
     </div>

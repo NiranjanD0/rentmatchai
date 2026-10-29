@@ -80,6 +80,9 @@ export default function Navbar({
     } else {
       if (targetPage === 'home') {
         navigateWithCurtains('/', 'Lander');
+      } else if (targetPage === 'dashboard') {
+        const dest = isLister ? '/dashboard/landlord' : '/dashboard/tenant';
+        navigateWithCurtains(dest, 'Dashboard');
       } else if (targetPage === 'results') {
         navigateWithCurtains('/explore', 'Explore Homes');
       } else if (targetPage === 'shortlist') {
@@ -196,7 +199,7 @@ export default function Navbar({
                     <button
                       type="button"
                       className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
-                      onClick={() => handleNav('profile')}
+                      onClick={() => handleNav('dashboard')}
                     >
                       <LayoutDashboard className="h-3.5 w-3.5 text-zinc-500" />
                       <span>Dashboard</span>

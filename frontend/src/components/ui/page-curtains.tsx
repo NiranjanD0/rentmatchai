@@ -8,8 +8,8 @@ export function getRouteTitle(url: string): string {
   try {
     const path = url.split('?')[0].split('#')[0];
     if (path === '/' || path === '') return 'Lander';
-    if (path === '/explore') return 'Explore Homes';
-    if (path === '/shortlist') return 'My Shortlist';
+    if (path === '/explore' || path === '/dashboard/explore') return 'Find Properties';
+    if (path === '/shortlist' || path === '/dashboard/shortlist') return 'My Shortlist';
     if (path === '/login') return 'Login';
     if (path === '/signup' || path === '/register') return 'Create Account';
     if (path === '/profile') return 'Dashboard & Profile';

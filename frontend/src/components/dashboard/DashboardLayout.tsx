@@ -45,6 +45,8 @@ export function DashboardLayout({
   const displayTitle = React.useMemo(() => {
     if (pathname === '/dashboard/ai-search') return 'AI Search';
     if (pathname === '/dashboard/inbox') return 'Inbox';
+    if (pathname === '/dashboard/explore') return 'Find Properties';
+    if (pathname === '/dashboard/shortlist') return 'My Shortlist';
     if (pathname === '/dashboard/compare') return 'Compare Properties';
     if (pathname === '/dashboard/landlord') return 'Landlord Dashboard';
     if (pathname === '/dashboard/tenant') return 'Tenant Dashboard';

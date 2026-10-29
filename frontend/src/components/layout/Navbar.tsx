@@ -84,9 +84,11 @@ export default function Navbar({
         const dest = isLister ? '/dashboard/landlord' : '/dashboard/tenant';
         navigateWithCurtains(dest, 'Dashboard');
       } else if (targetPage === 'results') {
-        navigateWithCurtains('/explore', 'Explore Homes');
+        const dest = isAuthenticated ? '/dashboard/explore' : '/explore';
+        navigateWithCurtains(dest, 'Find Properties');
       } else if (targetPage === 'shortlist') {
-        navigateWithCurtains('/shortlist', 'My Shortlist');
+        const dest = isAuthenticated ? '/dashboard/shortlist' : '/shortlist';
+        navigateWithCurtains(dest, 'My Shortlist');
       } else if (targetPage === 'profile') {
         navigateWithCurtains(extraTab ? `/profile?tab=${extraTab}` : '/profile', 'Dashboard & Profile');
       } else if (targetPage === 'login') {

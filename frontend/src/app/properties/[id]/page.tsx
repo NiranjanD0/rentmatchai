@@ -62,7 +62,16 @@ function PropertyDetailsContent() {
   return (
     <div className="wrap detail-page">
       {/* Back Button */}
-      <button className="back" onClick={() => navigateWithCurtains('/explore', 'Explore Homes')}>
+      <button
+        className="back"
+        onClick={() => {
+          if (window.history.length > 1) {
+            router.back();
+          } else {
+            navigateWithCurtains(user ? '/dashboard/explore' : '/explore', 'Find Properties');
+          }
+        }}
+      >
         <ArrowLeft size={16} /> Back to results
       </button>
 

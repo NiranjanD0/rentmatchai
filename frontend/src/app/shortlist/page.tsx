@@ -6,11 +6,19 @@ import { Heart, Search, ArrowUpRight, Bookmark, CircleHelp } from 'lucide-react'
 import { PropertyCard } from '@/src/components/property';
 import { useProperty } from '../../context/PropertyContext';
 import { usePageCurtains } from '../../components/ui/page-curtains';
+import { useAuth } from '@/src/context/AuthContext';
 
 export default function ShortlistRoute() {
   const router = useRouter();
+  const { isAuthenticated, loading } = useAuth();
   const { properties, saved, toggleSave } = useProperty();
   const { navigateWithCurtains } = usePageCurtains();
+
+  React.useEffect(() => {
+    if (!loading && isAuthenticated) {
+      router.replace('/dashboard/shortlist');
+    }
+  }, [loading, isAuthenticated, router]);
 
   const savedProperties = properties.filter((p) => saved.includes(p.id));
 

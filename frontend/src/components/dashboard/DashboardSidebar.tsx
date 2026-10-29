@@ -160,9 +160,9 @@ export function DashboardSidebar({
               {/* Find Properties */}
               <button
                 type="button"
-                onClick={() => handleNavClick('/explore', 'Find Properties')}
+                onClick={() => handleNavClick('/dashboard/explore', 'Find Properties')}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/explore'
+                  pathname === '/dashboard/explore' || pathname === '/explore'
                     ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
                     : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
@@ -174,9 +174,9 @@ export function DashboardSidebar({
               {/* My Shortlist */}
               <button
                 type="button"
-                onClick={() => handleNavClick('/shortlist', 'My Shortlist')}
+                onClick={() => handleNavClick('/dashboard/shortlist', 'My Shortlist')}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/shortlist'
+                  pathname === '/dashboard/shortlist' || pathname === '/shortlist'
                     ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
                     : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}

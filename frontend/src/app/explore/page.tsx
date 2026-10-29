@@ -7,13 +7,23 @@ import { PropertyCard } from '@/src/components/property';
 import { useProperty } from '../../context/PropertyContext';
 import { usePageCurtains } from '../../components/ui/page-curtains';
 
+import { useAuth } from '@/src/context/AuthContext';
+
 const money = (n: number | string) => '₹' + Number(n).toLocaleString('en-IN');
 
 function ExploreContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isAuthenticated, loading } = useAuth();
   const { activeProperties, saved, toggleSave } = useProperty();
   const { navigateWithCurtains } = usePageCurtains();
+
+  React.useEffect(() => {
+    if (!loading && isAuthenticated) {
+      const q = searchParams.toString();
+      router.replace(q ? `/dashboard/explore?${q}` : '/dashboard/explore');
+    }
+  }, [loading, isAuthenticated, router, searchParams]);
 
   const initialQuery = searchParams.get('query') || '';
   const initialLocation = searchParams.get('location') || 'Gandhinagar';

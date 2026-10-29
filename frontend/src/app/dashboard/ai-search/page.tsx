@@ -38,6 +38,7 @@ import {
   InputGroupButton,
 } from '@/src/components/ui/input-group';
 import { Button } from '@/src/components/ui/button';
+import { ScrollArea, ScrollBar } from '@/src/components/ui/scroll-area';
 
 interface ChatMessage {
   id: string;
@@ -463,22 +464,25 @@ export default function AISearchPage() {
           <div className="max-w-3xl mx-auto space-y-3">
             {/* Quick Suggestions Chips */}
             {messages.length <= 3 && (
-              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-                <span className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
-                  <Compass size={12} />
-                  Suggested:
-                </span>
-                {SUGGESTIONS.map((item, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => handleSendMessage(item)}
-                    className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs"
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
+              <ScrollArea className="w-full whitespace-nowrap py-1">
+                <div className="flex items-center gap-1.5 pb-1">
+                  <span className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
+                    <Compass size={12} />
+                    Suggested:
+                  </span>
+                  {SUGGESTIONS.map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleSendMessage(item)}
+                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
             )}
 
             {/* shadcn InputGroup with Textarea and Bottom Addons */}
@@ -560,66 +564,68 @@ export default function AISearchPage() {
           </div>
 
           {/* History Item List */}
-          <div className="flex-1 overflow-y-auto p-3 space-y-4">
-            {categories.map((category) => {
-              const items = filteredHistory.filter((item) => item.category === category);
-              if (items.length === 0) return null;
+          <ScrollArea className="flex-1 p-3">
+            <div className="space-y-4 pr-2">
+              {categories.map((category) => {
+                const items = filteredHistory.filter((item) => item.category === category);
+                if (items.length === 0) return null;
 
-              return (
-                <div key={category} className="space-y-1">
-                  <div className="px-2 py-1 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
-                    {category}
-                  </div>
-                  {items.map((item) => {
-                    const isActive = activeHistoryId === item.id;
-                    return (
-                      <div
-                        key={item.id}
-                        onClick={() => handleSelectHistory(item)}
-                        className={`group relative flex items-center justify-between p-2.5 rounded-xl text-xs transition-colors cursor-pointer ${
-                          isActive
-                            ? 'bg-zinc-100 text-zinc-900 font-medium border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/50 shadow-2xs'
-                            : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900/70 border border-transparent'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                          <MessageSquare
-                            size={14}
-                            className={`shrink-0 ${
-                              isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300'
-                            }`}
-                          />
-                          <div className="min-w-0">
-                            <p className="truncate text-xs font-medium">{item.title}</p>
-                            <p className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate mt-0.5">
-                              {item.timestamp}
-                            </p>
-                          </div>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={(e) => handleDeleteHistory(e, item.id)}
-                          className="opacity-0 group-hover:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-all cursor-pointer"
-                          aria-label="Delete history entry"
-                          title="Delete"
+                return (
+                  <div key={category} className="space-y-1">
+                    <div className="px-2 py-1 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+                      {category}
+                    </div>
+                    {items.map((item) => {
+                      const isActive = activeHistoryId === item.id;
+                      return (
+                        <div
+                          key={item.id}
+                          onClick={() => handleSelectHistory(item)}
+                          className={`group relative flex items-center justify-between p-2.5 rounded-xl text-xs transition-colors cursor-pointer ${
+                            isActive
+                              ? 'bg-zinc-100 text-zinc-900 font-medium border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/50 shadow-2xs'
+                              : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900/70 border border-transparent'
+                          }`}
                         >
-                          <Trash2 size={12} />
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+                          <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                            <MessageSquare
+                              size={14}
+                              className={`shrink-0 ${
+                                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300'
+                              }`}
+                            />
+                            <div className="min-w-0">
+                              <p className="truncate text-xs font-medium">{item.title}</p>
+                              <p className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate mt-0.5">
+                                {item.timestamp}
+                              </p>
+                            </div>
+                          </div>
 
-            {filteredHistory.length === 0 && (
-              <div className="text-center py-8 text-zinc-400 dark:text-zinc-500 text-xs">
-                <Clock size={20} className="mx-auto mb-2 opacity-50" />
-                No searches matching &quot;{historySearch}&quot;
-              </div>
-            )}
-          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => handleDeleteHistory(e, item.id)}
+                            className="opacity-0 group-hover:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-all cursor-pointer"
+                            aria-label="Delete history entry"
+                            title="Delete"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+
+              {filteredHistory.length === 0 && (
+                <div className="text-center py-8 text-zinc-400 dark:text-zinc-500 text-xs">
+                  <Clock size={20} className="mx-auto mb-2 opacity-50" />
+                  No searches matching &quot;{historySearch}&quot;
+                </div>
+              )}
+            </div>
+          </ScrollArea>
 
           {/* History Footer */}
           <div className="p-3 border-t border-zinc-200 dark:border-zinc-800/80 text-[11px] text-zinc-500 flex items-center justify-between">

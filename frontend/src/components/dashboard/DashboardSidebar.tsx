@@ -18,6 +18,7 @@ import { useAuth } from '@/src/context/AuthContext';
 import { useProperty } from '@/src/context/PropertyContext';
 import BrandLogo from '@/src/components/layout/BrandLogo';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
+import { ScrollArea } from '@/src/components/ui/scroll-area';
 import { DropdownAccountCardMD } from './DropdownAccountCard';
 
 interface DashboardSidebarProps {
@@ -73,9 +74,9 @@ export function DashboardSidebar({
       }`}
     >
       {/* Top Block: Logo and Close (mobile) */}
-      <div className="space-y-4">
+      <div className="shrink-0">
         {/* Brand Header */}
-        <div className="flex items-center justify-between px-1 pt-1">
+        <div className="flex items-center justify-between px-1 pt-1 pb-2">
           <Link
             href="/"
             onClick={() => onCloseMobileDrawer?.()}
@@ -95,8 +96,10 @@ export function DashboardSidebar({
             </button>
           )}
         </div>
+      </div>
 
-        {/* Dynamic Role Navigation Items */}
+      {/* Middle Block: Dynamic Role Navigation Items with ScrollArea */}
+      <ScrollArea className="flex-1 my-2 -mx-1 px-1">
         <nav className="space-y-1 pt-1">
           {/* Tenant Navigation */}
           {isTenant && (
@@ -257,10 +260,10 @@ export function DashboardSidebar({
             </>
           )}
         </nav>
-      </div>
+      </ScrollArea>
 
       {/* Bottom Block: Dropdown Account Card */}
-      <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800/70">
+      <div className="shrink-0 pt-3 border-t border-zinc-200 dark:border-zinc-800/70">
         <DropdownAccountCardMD
           name={displayName}
           email={displayEmail}

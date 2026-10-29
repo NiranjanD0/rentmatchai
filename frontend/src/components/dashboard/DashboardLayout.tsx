@@ -7,6 +7,8 @@ import { DashboardGuard } from './DashboardGuard';
 import { DashboardSidebar } from './DashboardSidebar';
 import BrandLogo from '@/src/components/layout/BrandLogo';
 import { useAuth } from '@/src/context/AuthContext';
+import { ScrollArea } from '@/src/components/ui/scroll-area';
+import { ToggleTheme } from '../lightswind/toggle-theme';
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -82,9 +84,9 @@ export function DashboardLayout({
         )}
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto bg-zinc-50 dark:bg-[#09090b] transition-colors duration-200">
+        <div className="flex-1 flex flex-col min-w-0 h-screen bg-zinc-50 dark:bg-[#09090b] transition-colors duration-200 overflow-hidden">
           {/* Top Bar (Mobile Drawer Toggle & Desktop Page Header) */}
-          <header className="sticky top-0 z-20 shrink-0 h-16 border-b border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-colors duration-200">
+          <header className="shrink-0 h-16 border-b border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-colors duration-200">
             {/* Left: Mobile hamburger or Page Title */}
             <div className="flex items-center gap-3">
               {/* Mobile Drawer Toggle */}
@@ -107,13 +109,26 @@ export function DashboardLayout({
                 {displayTitle}
               </h1>
             </div>
-            
+
+            {/* Right: Header Action & Dedicated Theme Toggle */}
+            <div className="flex items-center gap-3">
+              {headerAction}
+              <ToggleTheme />
+            </div>
           </header>
 
           {/* Main Content Area */}
-          <main className={`flex-1 ${pathname === '/dashboard/ai-search' ? 'p-0 overflow-hidden flex flex-col h-[calc(100vh-4rem)]' : 'p-4 sm:p-6 lg:p-8'}`}>
-            {children}
-          </main>
+          {pathname === '/dashboard/ai-search' ? (
+            <main className="flex-1 p-0 overflow-hidden flex flex-col h-[calc(100vh-4rem)]">
+              {children}
+            </main>
+          ) : (
+            <ScrollArea className="flex-1 h-[calc(100vh-4rem)]">
+              <main className="p-4 sm:p-6 lg:p-8">
+                {children}
+              </main>
+            </ScrollArea>
+          )}
         </div>
       </div>
     </DashboardGuard>

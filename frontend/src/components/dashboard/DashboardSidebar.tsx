@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
+  Sparkles,
   Compass,
   Heart,
   ArrowLeftRight,
@@ -114,6 +115,25 @@ export function DashboardSidebar({
                 <span className="truncate">Dashboard</span>
               </button>
 
+              {/* AI Search */}
+              <button
+                type="button"
+                onClick={() => handleNavClick('/dashboard/ai-search', 'AI Search')}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
+                  pathname === '/dashboard/ai-search'
+                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
+                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                }`}
+              >
+                <div className="flex items-center gap-3 truncate">
+                  <Sparkles size={16} strokeWidth={1.8} className="shrink-0 text-emerald-400" />
+                  <span className="truncate">AI Search</span>
+                </div>
+                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+                  AI
+                </span>
+              </button>
+
               {/* Find Properties */}
               <button
                 type="button"
@@ -180,6 +200,25 @@ export function DashboardSidebar({
               >
                 <LayoutDashboard size={16} strokeWidth={1.8} className="shrink-0" />
                 <span className="truncate">Dashboard</span>
+              </button>
+
+              {/* AI Search */}
+              <button
+                type="button"
+                onClick={() => handleNavClick('/dashboard/ai-search', 'AI Search')}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
+                  pathname === '/dashboard/ai-search'
+                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
+                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                }`}
+              >
+                <div className="flex items-center gap-3 truncate">
+                  <Sparkles size={16} strokeWidth={1.8} className="shrink-0 text-emerald-400" />
+                  <span className="truncate">AI Search</span>
+                </div>
+                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+                  AI
+                </span>
               </button>
 
               {/* My Properties */}

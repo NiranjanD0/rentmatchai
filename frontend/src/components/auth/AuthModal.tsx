@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '@/src/context/AuthContext';
 import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { useToast } from '@/src/components/ui/notifications';
-import { X, Mail, Lock, Eye, EyeOff, User, Phone, Sparkles, Building2, KeyRound } from 'lucide-react';
+import { X, Mail, Lock, Eye, EyeOff, User, Phone, Sparkles, Building2, KeyRound, CheckCircle2 } from 'lucide-react';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -332,35 +333,91 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
             <div className="role-selector-section">
               <label className="section-label">I am joining as:</label>
               <div className="role-options">
-                <div
+                <motion.div
                   className={`role-option-card ${role === USER_ROLES.TENANT ? 'selected' : ''}`}
                   onClick={() => setRole(USER_ROLES.TENANT)}
                   role="button"
                   tabIndex={0}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  animate={{
+                    scale: role === USER_ROLES.TENANT ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', stiffness: 450, damping: 28 }}
                 >
-                  <div className="role-icon">
+                  <motion.div
+                    className="role-icon"
+                    animate={{
+                      scale: role === USER_ROLES.TENANT ? [1, 1.2, 1] : 1,
+                      rotate: role === USER_ROLES.TENANT ? [0, -8, 8, 0] : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <User size={18} />
-                  </div>
+                  </motion.div>
                   <div className="role-info">
-                    <strong>Tenant / Renter</strong>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <strong>Tenant / Renter</strong>
+                      <AnimatePresence>
+                        {role === USER_ROLES.TENANT && (
+                          <motion.span
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{ duration: 0.18 }}
+                            style={{ display: 'inline-flex', color: '#286b50' }}
+                          >
+                            <CheckCircle2 size={13} />
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </div>
                     <small>Search homes, save shortlist, enquire</small>
                   </div>
-                </div>
+                </motion.div>
 
-                <div
+                <motion.div
                   className={`role-option-card ${role === USER_ROLES.PROPERTY_LISTER ? 'selected' : ''}`}
                   onClick={() => setRole(USER_ROLES.PROPERTY_LISTER)}
                   role="button"
                   tabIndex={0}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  animate={{
+                    scale: role === USER_ROLES.PROPERTY_LISTER ? 1.02 : 1,
+                  }}
+                  transition={{ type: 'spring', stiffness: 450, damping: 28 }}
                 >
-                  <div className="role-icon">
+                  <motion.div
+                    className="role-icon"
+                    animate={{
+                      scale: role === USER_ROLES.PROPERTY_LISTER ? [1, 1.2, 1] : 1,
+                      rotate: role === USER_ROLES.PROPERTY_LISTER ? [0, -8, 8, 0] : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <Building2 size={18} />
-                  </div>
+                  </motion.div>
                   <div className="role-info">
-                    <strong>Property Lister</strong>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <strong>Property Lister</strong>
+                      <AnimatePresence>
+                        {role === USER_ROLES.PROPERTY_LISTER && (
+                          <motion.span
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{ duration: 0.18 }}
+                            style={{ display: 'inline-flex', color: '#286b50' }}
+                          >
+                            <CheckCircle2 size={13} />
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </div>
                     <small>Publish &amp; manage rental listings</small>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
 

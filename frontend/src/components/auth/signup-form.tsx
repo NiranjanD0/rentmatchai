@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Mail, User, Phone, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/src/components/ui/card';
@@ -126,29 +127,67 @@ export function SignupForm({
             </div>
 
             {/* Role Selection Tabs */}
-            <div className="grid grid-cols-2 gap-2 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-2xl mb-5">
+            <div className="relative grid grid-cols-2 gap-2 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-2xl mb-5">
               <button
                 type="button"
                 onClick={() => setRole(USER_ROLES.TENANT)}
-                className={`flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`relative z-10 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
                   role === USER_ROLES.TENANT
-                    ? 'bg-white dark:bg-black text-zinc-950 dark:text-white shadow-xs'
+                    ? 'text-zinc-950 dark:text-white'
                     : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
-                {role === USER_ROLES.TENANT && <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />}
+                {role === USER_ROLES.TENANT && (
+                  <motion.div
+                    layoutId="activeRoleTabSignup"
+                    className="absolute inset-0 bg-white dark:bg-black rounded-xl shadow-xs -z-10"
+                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                  />
+                )}
+                <AnimatePresence>
+                  {role === USER_ROLES.TENANT && (
+                    <motion.span
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                      className="inline-flex"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
                 <span>I Want to Rent</span>
               </button>
               <button
                 type="button"
                 onClick={() => setRole(USER_ROLES.PROPERTY_LISTER)}
-                className={`flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`relative z-10 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
                   role === USER_ROLES.PROPERTY_LISTER
-                    ? 'bg-white dark:bg-black text-zinc-950 dark:text-white shadow-xs'
+                    ? 'text-zinc-950 dark:text-white'
                     : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
-                {role === USER_ROLES.PROPERTY_LISTER && <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />}
+                {role === USER_ROLES.PROPERTY_LISTER && (
+                  <motion.div
+                    layoutId="activeRoleTabSignup"
+                    className="absolute inset-0 bg-white dark:bg-black rounded-xl shadow-xs -z-10"
+                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                  />
+                )}
+                <AnimatePresence>
+                  {role === USER_ROLES.PROPERTY_LISTER && (
+                    <motion.span
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                      className="inline-flex"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
                 <span>I Own Property</span>
               </button>
             </div>

@@ -13,14 +13,16 @@ import { useAuth } from '../context/AuthContext';
 function HeaderSlot() {
   const pathname = usePathname();
   const isAuthPage = pathname === '/login' || pathname === '/signup' || pathname === '/register';
-  if (isAuthPage) return null;
+  const isDashboardPage = pathname?.startsWith('/dashboard');
+  if (isAuthPage || isDashboardPage) return null;
   return <Navbar />;
 }
 
 function FooterSlot() {
   const pathname = usePathname();
   const isAuthPage = pathname === '/login' || pathname === '/signup' || pathname === '/register';
-  if (isAuthPage) return null;
+  const isDashboardPage = pathname?.startsWith('/dashboard');
+  if (isAuthPage || isDashboardPage) return null;
   return (
     <footer className="border-t border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-black text-zinc-600 dark:text-zinc-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">

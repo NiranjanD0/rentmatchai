@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Lock, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/src/components/ui/card';
@@ -13,6 +13,7 @@ import {
 } from '@/src/components/ui/field';
 import { Input } from '@/src/components/ui/input';
 import { useAuth } from '@/src/context/AuthContext';
+import { USER_ROLES } from '@/src/constants/initialData';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
 import { useToast } from '@/src/components/ui/notifications';
 import { InteractiveHoverButton } from '@/src/components/ui/interactive-hover-button';
@@ -22,6 +23,8 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<'div'>) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectParam = searchParams.get('redirect');
   const { login, loginWithGoogle } = useAuth();
   const { notify } = useToast();
   const { navigateWithCurtains } = usePageCurtains();
@@ -30,6 +33,19 @@ export function LoginForm({
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
+
+  // Validate redirect parameter to ensure safe relative internal path
+  const getSafeDestination = (userRole?: string) => {
+    if (
+      redirectParam &&
+      redirectParam.startsWith('/') &&
+      !redirectParam.startsWith('//') &&
+      !redirectParam.includes('\\')
+    ) {
+      return redirectParam;
+    }
+    return userRole === USER_ROLES.PROPERTY_LISTER ? '/dashboard/landlord' : '/dashboard/tenant';
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,7 +75,8 @@ export function LoginForm({
     try {
       const res = await login(trimmedEmail, password);
       notify.success(`Welcome back, ${res.user.firstName}!`, 'Signed In');
-      navigateWithCurtains('/', 'Lander');
+      const target = getSafeDestination(res.user.role);
+      navigateWithCurtains(target, 'Dashboard');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Invalid credentials. Please check your email and password.';
       setIsInvalid(true);
@@ -74,7 +91,8 @@ export function LoginForm({
     try {
       const res = await loginWithGoogle();
       notify.success(`Welcome back, ${res.user.firstName}!`, 'Signed In');
-      navigateWithCurtains('/', 'Lander');
+      const target = getSafeDestination(res.user.role);
+      navigateWithCurtains(target, 'Dashboard');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google authentication failed.';
       notify.error(msg, 'Google Sign-In Error');

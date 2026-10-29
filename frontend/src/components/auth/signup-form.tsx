@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Mail, User, Phone, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -19,6 +19,8 @@ export function SignupForm({
   ...props
 }: React.ComponentProps<'div'>) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectParam = searchParams.get('redirect');
   const { register, loginWithGoogle } = useAuth();
   const { notify } = useToast();
   const { navigateWithCurtains } = usePageCurtains();
@@ -31,6 +33,19 @@ export function SignupForm({
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
+
+  // Validate redirect parameter to ensure safe relative internal path
+  const getSafeDestination = (userRole?: string) => {
+    if (
+      redirectParam &&
+      redirectParam.startsWith('/') &&
+      !redirectParam.startsWith('//') &&
+      !redirectParam.includes('\\')
+    ) {
+      return redirectParam;
+    }
+    return userRole === USER_ROLES.PROPERTY_LISTER ? '/dashboard/landlord' : '/dashboard/tenant';
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,7 +103,8 @@ export function SignupForm({
         phone: phone.trim() || undefined,
       });
       notify.success(`Welcome to RentMatch AI, ${res.user.firstName}!`, 'Account Created');
-      navigateWithCurtains('/', 'Lander');
+      const target = getSafeDestination(res.user.role);
+      navigateWithCurtains(target, 'Dashboard');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Registration failed. Please try again.';
       setIsInvalid(true);
@@ -103,7 +119,8 @@ export function SignupForm({
     try {
       const res = await loginWithGoogle(role);
       notify.success(`Welcome to RentMatch AI, ${res.user.firstName}!`, 'Account Created');
-      navigateWithCurtains('/', 'Lander');
+      const target = getSafeDestination(res.user.role);
+      navigateWithCurtains(target, 'Dashboard');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google authentication failed.';
       notify.error(msg, 'Google Sign-Up Error');

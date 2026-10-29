@@ -2657,7 +2657,7 @@ footer > small {
 .auth-modal {
   width: min(100%, 470px);
   max-height: 92vh;
-  overflow-y: auto;
+  overflow: hidden;
   background: white;
   border-radius: 18px;
   padding: 32px 28px;
@@ -2969,7 +2969,7 @@ footer > small {
 .property-modal-box {
   width: min(100%, 680px);
   max-height: 90vh;
-  overflow-y: auto;
+  overflow: hidden;
   background: white;
   border-radius: 18px;
   padding: 30px 32px;

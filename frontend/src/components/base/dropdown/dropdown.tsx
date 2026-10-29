@@ -39,9 +39,11 @@ interface DropdownItemProps extends AriaMenuItemProps {
     avatarUrl?: string;
     /** The selection indicator to be displayed on the item. */
     selectionIndicator?: "checkmark" | "checkbox" | "radio" | "toggle" | "none";
+    /** If true, the item will have destructive styling (e.g. Sign Out / Delete) */
+    destructive?: boolean;
 }
 
-const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled, selectionIndicator = "checkmark", ...props }: DropdownItemProps) => {
+const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled, selectionIndicator = "checkmark", destructive, ...props }: DropdownItemProps) => {
     const SelectionIndicator = useCallback(
         (state: MenuItemRenderProps & { className?: string }) => {
             if (selectionIndicator === "checkmark") {
@@ -92,8 +94,16 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
                 <div
                     className={cx(
                         "relative flex items-center rounded-md px-2.5 py-2 outline-focus-ring transition duration-100 ease-linear",
-                        !state.isDisabled && "group-hover:bg-primary_hover",
-                        state.isFocused && "bg-primary_hover",
+                        !state.isDisabled && (
+                            destructive
+                                ? "group-hover:bg-rose-50 dark:group-hover:bg-rose-500/10"
+                                : "group-hover:bg-zinc-100 dark:group-hover:bg-zinc-800/80"
+                        ),
+                        state.isFocused && (
+                            destructive
+                                ? "bg-rose-50 dark:bg-rose-500/10"
+                                : "bg-zinc-100 dark:bg-zinc-800/80"
+                        ),
                         state.isFocusVisible && "outline-2 -outline-offset-2",
                         state.hasSubmenu && "pr-1.5",
                     )}
@@ -106,17 +116,35 @@ const DropdownItem = ({ label, children, addon, icon: Icon, avatarUrl, unstyled,
                         </div>
                     )}
 
-                    {Icon && <Icon aria-hidden="true" className="mr-2 size-4 shrink-0 stroke-[2.25px] text-fg-quaternary" />}
+                    {Icon && (
+                        <Icon
+                            aria-hidden="true"
+                            className={cx(
+                                "mr-2.5 size-4 shrink-0 stroke-[2.25px] transition-colors",
+                                destructive
+                                    ? "text-rose-600 dark:text-rose-400 group-hover:text-rose-700 dark:group-hover:text-rose-300"
+                                    : "text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white"
+                            )}
+                        />
+                    )}
 
-                    <span className={cx("grow truncate text-sm font-semibold text-secondary", state.isFocused && "text-secondary_hover")}>
+                    <span
+                        className={cx(
+                            "grow truncate text-sm font-medium transition-colors",
+                            destructive
+                                ? "text-rose-600 dark:text-rose-400 group-hover:text-rose-700 dark:group-hover:text-rose-300"
+                                : "text-zinc-700 dark:text-zinc-200 group-hover:text-zinc-900 dark:group-hover:text-white",
+                            state.isFocused && (destructive ? "text-rose-700 dark:text-rose-300" : "text-zinc-900 dark:text-white")
+                        )}
+                    >
                         {label || (typeof children === "function" ? children(state) : children)}
                     </span>
 
-                    {addon && <span className="ml-1 shrink-0 pr-1 text-xs font-medium text-quaternary">{addon}</span>}
+                    {addon && <span className="ml-1 shrink-0 pr-1 text-xs font-medium text-zinc-400 dark:text-zinc-500">{addon}</span>}
 
                     {state.selectionMode !== "none" && (avatarUrl || Icon) && <SelectionIndicator {...state} className="ml-1" />}
 
-                    {state.hasSubmenu && <ChevronRight aria-hidden="true" className="ml-auto size-4 shrink-0 stroke-[2.25px] text-fg-quaternary" />}
+                    {state.hasSubmenu && <ChevronRight aria-hidden="true" className="ml-auto size-4 shrink-0 stroke-[2.25px] text-zinc-400 dark:text-zinc-500" />}
                 </div>
             )}
         </AriaMenuItem>
@@ -145,7 +173,7 @@ const DropdownPopover = (props: DropdownPopoverProps) => {
             {...props}
             className={(state) =>
                 cx(
-                    "w-62 origin-(--trigger-anchor-point) overflow-auto rounded-lg bg-primary shadow-lg ring-1 ring-secondary_alt will-change-transform",
+                    "w-62 origin-(--trigger-anchor-point) overflow-auto rounded-lg bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xl ring-1 ring-zinc-200 dark:ring-zinc-800 will-change-transform",
                     state.isEntering &&
                         "duration-150 ease-out animate-in fade-in placement-right:slide-in-from-left-0.5 placement-top:slide-in-from-bottom-0.5 placement-bottom:slide-in-from-top-0.5",
                     state.isExiting &&
@@ -160,7 +188,7 @@ const DropdownPopover = (props: DropdownPopoverProps) => {
 };
 
 const DropdownSeparator = (props: AriaSeparatorProps) => {
-    return <AriaSeparator {...props} className={cx("my-1 h-px w-full bg-border-secondary", props.className)} />;
+    return <AriaSeparator {...props} className={cx("my-1 h-px w-full bg-zinc-100 dark:bg-zinc-800/80", props.className)} />;
 };
 
 const DropdownDotsButton = (props: AriaButtonProps & RefAttributes<HTMLButtonElement>) => {

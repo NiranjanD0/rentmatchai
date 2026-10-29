@@ -18,6 +18,7 @@ import { useAuth } from '@/src/context/AuthContext';
 import { useProperty } from '@/src/context/PropertyContext';
 import BrandLogo from '@/src/components/layout/BrandLogo';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
+import { ScrollArea } from '@/src/components/ui/scroll-area';
 import { DropdownAccountCardMD } from './DropdownAccountCard';
 
 interface DashboardSidebarProps {
@@ -68,14 +69,14 @@ export function DashboardSidebar({
 
   return (
     <aside
-      className={`h-full flex flex-col justify-between bg-[#09090b] text-zinc-300 border-r border-zinc-800/80 select-none ${
+      className={`h-full flex flex-col justify-between bg-white dark:bg-[#09090b] text-zinc-700 dark:text-zinc-300 border-r border-zinc-200 dark:border-zinc-800/80 select-none transition-colors duration-200 ${
         isMobileDrawer ? 'w-full p-4' : 'w-64 xl:w-68 p-4'
       }`}
     >
       {/* Top Block: Logo and Close (mobile) */}
-      <div className="space-y-4">
+      <div className="shrink-0">
         {/* Brand Header */}
-        <div className="flex items-center justify-between px-1 pt-1">
+        <div className="flex items-center justify-between px-1 pt-1 pb-2">
           <Link
             href="/"
             onClick={() => onCloseMobileDrawer?.()}
@@ -88,15 +89,17 @@ export function DashboardSidebar({
             <button
               type="button"
               onClick={onCloseMobileDrawer}
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/80 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800/80 transition-colors cursor-pointer"
               aria-label="Close navigation"
             >
               <X size={18} />
             </button>
           )}
         </div>
+      </div>
 
-        {/* Dynamic Role Navigation Items */}
+      {/* Middle Block: Dynamic Role Navigation Items with ScrollArea */}
+      <ScrollArea className="flex-1 my-2 -mx-1 px-1">
         <nav className="space-y-1 pt-1">
           {/* Tenant Navigation */}
           {isTenant && (
@@ -107,8 +110,8 @@ export function DashboardSidebar({
                 onClick={() => handleNavClick('/dashboard/tenant', 'Dashboard')}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
                   isItemActive('/dashboard')
-                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
               >
                 <LayoutDashboard size={16} strokeWidth={1.8} className="shrink-0" />
@@ -121,15 +124,15 @@ export function DashboardSidebar({
                 onClick={() => handleNavClick('/dashboard/ai-search', 'AI Search')}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
                   pathname === '/dashboard/ai-search'
-                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
               >
                 <div className="flex items-center gap-3 truncate">
-                  <Sparkles size={16} strokeWidth={1.8} className="shrink-0 text-emerald-400" />
+                  <Sparkles size={16} strokeWidth={1.8} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
                   <span className="truncate">AI Search</span>
                 </div>
-                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
                   AI
                 </span>
               </button>
@@ -140,8 +143,8 @@ export function DashboardSidebar({
                 onClick={() => handleNavClick('/explore', 'Find Properties')}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
                   pathname === '/explore'
-                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
               >
                 <Compass size={16} strokeWidth={1.8} className="shrink-0" />
@@ -154,8 +157,8 @@ export function DashboardSidebar({
                 onClick={() => handleNavClick('/shortlist', 'My Shortlist')}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
                   pathname === '/shortlist'
-                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
               >
                 <div className="flex items-center gap-3 truncate">
@@ -163,7 +166,7 @@ export function DashboardSidebar({
                   <span className="truncate">My Shortlist</span>
                 </div>
                 {shortlistCount > 0 && (
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700/50">
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/50">
                     {shortlistCount}
                   </span>
                 )}
@@ -175,8 +178,8 @@ export function DashboardSidebar({
                 onClick={() => handleNavClick('/dashboard/compare', 'Compare Properties')}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
                   pathname === '/dashboard/compare'
-                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
               >
                 <ArrowLeftRight size={16} strokeWidth={1.8} className="shrink-0" />
@@ -194,8 +197,8 @@ export function DashboardSidebar({
                 onClick={() => handleNavClick('/dashboard/landlord', 'Dashboard')}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
                   isItemActive('/dashboard')
-                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
               >
                 <LayoutDashboard size={16} strokeWidth={1.8} className="shrink-0" />
@@ -208,15 +211,15 @@ export function DashboardSidebar({
                 onClick={() => handleNavClick('/dashboard/ai-search', 'AI Search')}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
                   pathname === '/dashboard/ai-search'
-                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
               >
                 <div className="flex items-center gap-3 truncate">
-                  <Sparkles size={16} strokeWidth={1.8} className="shrink-0 text-emerald-400" />
+                  <Sparkles size={16} strokeWidth={1.8} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
                   <span className="truncate">AI Search</span>
                 </div>
-                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
                   AI
                 </span>
               </button>
@@ -227,8 +230,8 @@ export function DashboardSidebar({
                 onClick={() => handleNavClick('/profile?tab=listings', 'My Properties')}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
                   pathname === '/profile' && typeof window !== 'undefined' && window.location.search.includes('listings')
-                    ? 'bg-zinc-800/90 text-white font-semibold shadow-xs border border-zinc-700/40'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium'
+                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
                 }`}
               >
                 <div className="flex items-center gap-3 truncate">
@@ -236,7 +239,7 @@ export function DashboardSidebar({
                   <span className="truncate">My Properties</span>
                 </div>
                 {myPropertiesCount > 0 && (
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700/50">
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/50">
                     {myPropertiesCount}
                   </span>
                 )}
@@ -249,18 +252,18 @@ export function DashboardSidebar({
                   onCloseMobileDrawer?.();
                   openAddProperty();
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 font-medium transition-colors cursor-pointer text-left"
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium transition-colors cursor-pointer text-left"
               >
-                <PlusCircle size={16} strokeWidth={1.8} className="shrink-0 text-emerald-400" />
+                <PlusCircle size={16} strokeWidth={1.8} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
                 <span className="truncate">Add Property</span>
               </button>
             </>
           )}
         </nav>
-      </div>
+      </ScrollArea>
 
       {/* Bottom Block: Dropdown Account Card */}
-      <div className="pt-3 border-t border-zinc-800/70">
+      <div className="shrink-0 pt-3 border-t border-zinc-200 dark:border-zinc-800/70">
         <DropdownAccountCardMD
           name={displayName}
           email={displayEmail}

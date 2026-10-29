@@ -58,7 +58,7 @@ export const DropdownAccountCardMD = ({
       <AriaButton
         className={({ isPressed, isFocusVisible }) =>
           cx(
-            'relative w-full cursor-pointer rounded-xl bg-zinc-900/60 p-2 text-left border border-zinc-800/80 hover:bg-zinc-800/70 hover:border-zinc-700/80 transition-all outline-offset-2 outline-focus-ring',
+            'relative w-full cursor-pointer rounded-xl bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/70 dark:border-zinc-800/80 p-2 text-left transition-all outline-offset-2 outline-focus-ring',
             (isPressed || isFocusVisible) && 'outline-2'
           )
         }
@@ -72,21 +72,21 @@ export const DropdownAccountCardMD = ({
         />
 
         <div className="absolute top-2.5 right-2 flex size-7 items-center justify-center rounded-md pointer-events-none">
-          <ChevronSelectorVertical className="size-4 shrink-0 stroke-[2.25px] text-zinc-400" />
+          <ChevronSelectorVertical className="size-4 shrink-0 stroke-[2.25px] text-zinc-400 dark:text-zinc-500" />
         </div>
       </AriaButton>
 
       <Dropdown.Popover
         placement="top start"
         offset={8}
-        className="w-64 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-1 text-zinc-200 z-50 animate-in fade-in zoom-in-95 duration-150"
+        className="w-64 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl p-1 text-zinc-800 dark:text-zinc-200 z-50 animate-in fade-in zoom-in-95 duration-150"
       >
-        <div className="border-b border-zinc-800/80 px-4 py-3">
-          <p className="truncate text-sm font-semibold text-white">
+        <div className="border-b border-zinc-100 dark:border-zinc-800/80 px-4 py-3">
+          <p className="truncate text-sm font-semibold text-zinc-900 dark:text-white">
             {name}
           </p>
-          <p className="truncate text-xs text-zinc-400 mt-0.5">{email}</p>
-          <p className="mt-1.5 inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-400">
+          <p className="truncate text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{email}</p>
+          <p className="mt-1.5 inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-600 dark:text-emerald-400">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             {role} account
           </p>
@@ -131,7 +131,7 @@ export const DropdownAccountCardMD = ({
             <Dropdown.Popover
               placement="right bottom"
               offset={4}
-              className="w-48 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-1 text-zinc-200 z-50"
+              className="w-48 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl p-1 text-zinc-800 dark:text-zinc-200 z-50"
             >
               <Dropdown.Menu className="py-1">
                 <Dropdown.Item
@@ -149,12 +149,12 @@ export const DropdownAccountCardMD = ({
             </Dropdown.Popover>
           </SubmenuTrigger>
 
-          <Dropdown.Separator className="my-1 bg-zinc-800/80" />
+          <Dropdown.Separator className="my-1 bg-zinc-200/80 dark:bg-zinc-800/80" />
 
           <Dropdown.Item
             icon={LogOut01}
             onAction={handleSignOut}
-            className="text-rose-400 hover:text-rose-300"
+            destructive
           >
             Sign Out
           </Dropdown.Item>

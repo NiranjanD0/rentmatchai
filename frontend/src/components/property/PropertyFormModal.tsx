@@ -6,6 +6,7 @@ import { useToast } from '@/src/components/ui/notifications';
 import { PropertyService, PropertyValidator, type PropertyFormData } from '@/src/services/propertyService';
 import { AVAILABLE_AMENITIES, CURATED_PHOTO_PRESETS, PROPERTY_STATUS, type Property, type PropertyStatus } from '@/src/constants/initialData';
 import { X, Building2, MapPin, IndianRupee, Maximize2, Image as ImageIcon, Sparkles, Check } from 'lucide-react';
+import { ScrollArea } from '@/src/components/ui/scroll-area';
 
 interface PropertyFormModalProps {
   isOpen: boolean;
@@ -179,7 +180,8 @@ export default function PropertyFormModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="property-form">
+        <ScrollArea className="max-h-[calc(88vh-100px)] -mr-2 pr-3">
+          <form onSubmit={handleSubmit} className="property-form">
           {/* Section 1: Basic Information */}
           <div className="form-section-title">
             <span>1</span> Basic Information &amp; Location
@@ -441,6 +443,7 @@ export default function PropertyFormModal({
             </button>
           </div>
         </form>
+        </ScrollArea>
       </div>
     </div>
   );

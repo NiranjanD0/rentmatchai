@@ -38,6 +38,7 @@ import {
   InputGroupButton,
 } from '@/src/components/ui/input-group';
 import { Button } from '@/src/components/ui/button';
+import { ScrollArea, ScrollBar } from '@/src/components/ui/scroll-area';
 
 interface ChatMessage {
   id: string;
@@ -296,18 +297,18 @@ export default function AISearchPage() {
   ];
 
   return (
-    <div className="h-full w-full flex overflow-hidden bg-[#09090b] text-zinc-100 select-none">
+    <div className="h-full w-full flex overflow-hidden bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 select-none transition-colors duration-200">
       {/* Center Chat Thread Area */}
-      <div className="flex-1 flex flex-col h-full min-w-0 relative bg-linear-to-b from-zinc-950/40 to-[#09090b]">
+      <div className="flex-1 flex flex-col h-full min-w-0 relative bg-zinc-50/70 dark:bg-linear-to-b dark:from-zinc-950/40 dark:to-[#09090b] transition-colors duration-200">
         {/* Sub-header inside Chat Pane */}
-        <div className="h-12 border-b border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-zinc-900/40 backdrop-blur-xs shrink-0">
+        <div className="h-12 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/80 dark:bg-zinc-900/40 backdrop-blur-xs shrink-0 transition-colors duration-200">
           <div className="flex items-center gap-2 text-xs">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
-              <Sparkles size={13} className="text-emerald-400" />
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium">
+              <Sparkles size={13} className="text-emerald-600 dark:text-emerald-400" />
               <span>RentMatch AI Agent</span>
             </span>
-            <span className="text-zinc-500 hidden sm:inline">•</span>
-            <span className="text-zinc-400 hidden sm:inline text-[11px]">
+            <span className="text-zinc-400 dark:text-zinc-500 hidden sm:inline">•</span>
+            <span className="text-zinc-500 dark:text-zinc-400 hidden sm:inline text-[11px]">
               Natural language rental search &amp; market intelligence
             </span>
           </div>
@@ -317,7 +318,7 @@ export default function AISearchPage() {
               variant="ghost"
               size="sm"
               onClick={handleNewChat}
-              className="text-xs text-zinc-400 hover:text-white hover:bg-zinc-800/80 h-8 gap-1.5 cursor-pointer"
+              className="text-xs text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800/80 h-8 gap-1.5 cursor-pointer"
             >
               <Plus size={14} />
               <span className="hidden sm:inline">New Search</span>
@@ -328,7 +329,7 @@ export default function AISearchPage() {
               variant="ghost"
               size="icon-sm"
               onClick={() => setIsHistoryOpen(!isHistoryOpen)}
-              className="text-zinc-400 hover:text-white hover:bg-zinc-800/80 cursor-pointer"
+              className="text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800/80 cursor-pointer"
               aria-label={isHistoryOpen ? 'Collapse history' : 'Expand history'}
               title={isHistoryOpen ? 'Hide search history' : 'Show search history'}
             >
@@ -350,24 +351,24 @@ export default function AISearchPage() {
                         <MessageAvatar
                           className={`size-8 text-xs font-semibold ${
                             msg.role === 'user'
-                              ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40'
-                              : 'bg-zinc-800 text-zinc-200 border border-zinc-700/80'
+                              ? 'bg-emerald-600/15 text-emerald-700 dark:bg-emerald-600/30 dark:text-emerald-300 border border-emerald-500/30'
+                              : 'bg-white text-zinc-800 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700/80 shadow-xs'
                           }`}
                         >
                           {msg.role === 'user' ? (
                             <span>{user?.firstName?.[0] || 'U'}</span>
                           ) : (
-                            <Bot size={15} className="text-emerald-400" />
+                            <Bot size={15} className="text-emerald-600 dark:text-emerald-400" />
                           )}
                         </MessageAvatar>
 
                         {/* Content */}
                         <MessageContent>
                           <MessageHeader>
-                            <span className="text-[11px] font-semibold text-zinc-400">
+                            <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
                               {msg.role === 'user' ? 'You' : 'RentMatch AI'}
                             </span>
-                            <span className="text-[10px] text-zinc-500 ml-2">
+                            <span className="text-[10px] text-zinc-400 dark:text-zinc-500 ml-2">
                               {msg.timestamp}
                             </span>
                           </MessageHeader>
@@ -380,45 +381,45 @@ export default function AISearchPage() {
                             <BubbleContent
                               className={`p-3.5 text-xs sm:text-sm leading-relaxed rounded-2xl ${
                                 msg.role === 'user'
-                                  ? 'bg-emerald-600 text-white shadow-md'
-                                  : 'bg-zinc-900 border border-zinc-800 text-zinc-200'
+                                  ? 'bg-emerald-600 text-white shadow-sm'
+                                  : 'bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-xs'
                               }`}
                             >
                               {msg.content}
 
                               {/* Rich Property Cards Inside Assistant Message */}
                               {msg.properties && msg.properties.length > 0 && (
-                                <div className="mt-3.5 pt-3 border-t border-zinc-800/80 space-y-2.5">
+                                <div className="mt-3.5 pt-3 border-t border-zinc-100 dark:border-zinc-800/80 space-y-2.5">
                                   {msg.properties.map((prop, idx) => (
                                     <div
                                       key={idx}
-                                      className="p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/90 hover:border-zinc-700 transition-colors flex items-center justify-between gap-3"
+                                      className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950/70 border border-zinc-200/90 dark:border-zinc-800/90 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors flex items-center justify-between gap-3 shadow-2xs"
                                     >
                                       <div className="min-w-0">
                                         <div className="flex items-center gap-2">
-                                          <span className="font-semibold text-xs sm:text-sm text-white truncate">
+                                          <span className="font-semibold text-xs sm:text-sm text-zinc-900 dark:text-white truncate">
                                             {prop.title}
                                           </span>
                                           {prop.badge && (
-                                            <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                                            <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
                                               {prop.badge}
                                             </span>
                                           )}
                                         </div>
-                                        <div className="text-[11px] text-zinc-400 truncate mt-0.5">
+                                        <div className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">
                                           {prop.location}
                                         </div>
-                                        <div className="text-[11px] font-medium text-zinc-300 mt-1">
+                                        <div className="text-[11px] font-medium text-zinc-700 dark:text-zinc-300 mt-1">
                                           {prop.beds}
                                         </div>
                                       </div>
 
                                       <div className="text-right shrink-0">
-                                        <div className="text-xs sm:text-sm font-bold text-emerald-400">
+                                        <div className="text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400">
                                           {prop.price}
                                         </div>
-                                        <div className="text-[10px] text-zinc-500 mt-0.5">
-                                          Match: <span className="text-emerald-400 font-semibold">{prop.matchScore}%</span>
+                                        <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                          Match: <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{prop.matchScore}%</span>
                                         </div>
                                       </div>
                                     </div>
@@ -435,16 +436,16 @@ export default function AISearchPage() {
                   {/* Typing Indicator */}
                   {isTyping && (
                     <Message align="start">
-                      <MessageAvatar className="size-8 bg-zinc-800 border border-zinc-700/80">
-                        <Bot size={15} className="text-emerald-400 animate-pulse" />
+                      <MessageAvatar className="size-8 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 shadow-xs">
+                        <Bot size={15} className="text-emerald-600 dark:text-emerald-400 animate-pulse" />
                       </MessageAvatar>
                       <MessageContent>
                         <Bubble variant="muted">
-                          <BubbleContent className="p-3 bg-zinc-900 border border-zinc-800 rounded-2xl">
+                          <BubbleContent className="p-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xs">
                             <div className="flex items-center gap-1.5 py-1 px-1">
-                              <span className="size-1.5 rounded-full bg-emerald-400 animate-bounce [animation-delay:-0.3s]" />
-                              <span className="size-1.5 rounded-full bg-emerald-400 animate-bounce [animation-delay:-0.15s]" />
-                              <span className="size-1.5 rounded-full bg-emerald-400 animate-bounce" />
+                              <span className="size-1.5 rounded-full bg-emerald-500 animate-bounce [animation-delay:-0.3s]" />
+                              <span className="size-1.5 rounded-full bg-emerald-500 animate-bounce [animation-delay:-0.15s]" />
+                              <span className="size-1.5 rounded-full bg-emerald-500 animate-bounce" />
                             </div>
                           </BubbleContent>
                         </Bubble>
@@ -459,51 +460,54 @@ export default function AISearchPage() {
         </div>
 
         {/* Input & Suggestions Footer Area */}
-        <div className="p-4 sm:p-6 pt-0 border-t border-zinc-800/80 bg-[#09090b]/80 backdrop-blur-md shrink-0">
+        <div className="p-4 sm:p-6 pt-0 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/80 backdrop-blur-md shrink-0 transition-colors duration-200">
           <div className="max-w-3xl mx-auto space-y-3">
             {/* Quick Suggestions Chips */}
             {messages.length <= 3 && (
-              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-                <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
-                  <Compass size={12} />
-                  Suggested:
-                </span>
-                {SUGGESTIONS.map((item, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => handleSendMessage(item)}
-                    className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:text-white text-zinc-300 transition-colors cursor-pointer"
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
+              <ScrollArea className="w-full whitespace-nowrap py-1">
+                <div className="flex items-center gap-1.5 pb-1">
+                  <span className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
+                    <Compass size={12} />
+                    Suggested:
+                  </span>
+                  {SUGGESTIONS.map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleSendMessage(item)}
+                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
             )}
 
             {/* shadcn InputGroup with Textarea and Bottom Addons */}
-            <InputGroup className="bg-zinc-900/90 border border-zinc-800 focus-within:border-zinc-600 focus-within:ring-1 focus-within:ring-zinc-600 rounded-2xl p-2 transition-all shadow-xl">
+            <InputGroup className="bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 focus-within:border-zinc-400 dark:focus-within:border-zinc-600 focus-within:ring-1 focus-within:ring-zinc-400 dark:focus-within:ring-zinc-600 rounded-2xl p-2 transition-all shadow-lg">
               <InputGroupTextarea
                 ref={textareaRef}
                 placeholder="Ask RentMatch AI to find homes, check rent trends, or compare neighborhoods..."
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 min-h-12 max-h-36 py-1 px-2 resize-none"
+                className="text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 min-h-12 max-h-36 py-1 px-2 resize-none"
               />
 
               <InputGroupAddon
                 align="block-end"
-                className="flex items-center justify-between border-t border-zinc-800/80 pt-2 px-1 text-xs"
+                className="flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/80 pt-2 px-1 text-xs"
               >
                 <div className="flex items-center gap-2 text-zinc-500">
-                  <span className="inline-flex items-center gap-1 text-[11px]">
-                    <Sparkles size={12} className="text-emerald-400" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-zinc-600 dark:text-zinc-400">
+                    <Sparkles size={12} className="text-emerald-600 dark:text-emerald-400" />
                     <span>RentMatch Search v2</span>
                   </span>
-                  <span className="hidden sm:inline text-zinc-700">•</span>
-                  <span className="hidden sm:inline text-[10px] text-zinc-500">
-                    Press <kbd className="px-1 py-0.5 rounded bg-zinc-800 border border-zinc-700 font-mono text-[9px]">Enter</kbd> to send
+                  <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700">•</span>
+                  <span className="hidden sm:inline text-[10px] text-zinc-400 dark:text-zinc-500">
+                    Press <kbd className="px-1 py-0.5 rounded bg-zinc-100 text-zinc-600 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-700 font-mono text-[9px]">Enter</kbd> to send
                   </span>
                 </div>
 
@@ -513,7 +517,7 @@ export default function AISearchPage() {
                     variant="default"
                     onClick={() => handleSendMessage()}
                     disabled={!inputValue.trim() || isTyping}
-                    className="size-7 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:bg-zinc-800 disabled:text-zinc-600 text-white flex items-center justify-center transition-all cursor-pointer"
+                    className="size-7 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:bg-zinc-100 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-600 text-white flex items-center justify-center transition-all cursor-pointer shadow-xs"
                     aria-label="Send message"
                   >
                     <ArrowUp size={14} strokeWidth={2.5} />
@@ -527,18 +531,18 @@ export default function AISearchPage() {
 
       {/* Right Side: Search History Sidebar */}
       {isHistoryOpen && (
-        <aside className="w-72 xl:w-80 h-full border-l border-zinc-800/80 bg-zinc-950/60 backdrop-blur-md flex flex-col shrink-0 animate-in slide-in-from-right duration-200">
+        <aside className="w-72 xl:w-80 h-full border-l border-zinc-200 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/60 backdrop-blur-md flex flex-col shrink-0 animate-in slide-in-from-right duration-200 transition-colors">
           {/* History Header */}
-          <div className="p-4 border-b border-zinc-800/80 flex items-center justify-between">
+          <div className="p-4 border-b border-zinc-200 dark:border-zinc-800/80 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <History size={16} className="text-emerald-400" />
-              <span className="font-semibold text-sm text-white">Search History</span>
+              <History size={16} className="text-emerald-600 dark:text-emerald-400" />
+              <span className="font-semibold text-sm text-zinc-900 dark:text-white">Search History</span>
             </div>
             <Button
               variant="outline"
               size="xs"
               onClick={handleNewChat}
-              className="text-[11px] h-7 gap-1 border-zinc-800 hover:bg-zinc-800/80 text-zinc-300 hover:text-white cursor-pointer"
+              className="text-[11px] h-7 gap-1 border-zinc-200 hover:bg-zinc-100 text-zinc-700 hover:text-zinc-900 dark:border-zinc-800 dark:hover:bg-zinc-800/80 dark:text-zinc-300 dark:hover:text-white cursor-pointer"
             >
               <Plus size={12} />
               <span>New</span>
@@ -546,88 +550,90 @@ export default function AISearchPage() {
           </div>
 
           {/* Search filter in history */}
-          <div className="p-3 border-b border-zinc-800/60">
+          <div className="p-3 border-b border-zinc-100 dark:border-zinc-800/60">
             <div className="relative">
-              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none" />
               <input
                 type="text"
                 placeholder="Search history..."
                 value={historySearch}
                 onChange={(e) => setHistorySearch(e.target.value)}
-                className="w-full bg-zinc-900/90 border border-zinc-800 rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-hidden focus:border-zinc-700 transition-colors"
+                className="w-full bg-zinc-50 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-zinc-900 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-700 transition-colors"
               />
             </div>
           </div>
 
           {/* History Item List */}
-          <div className="flex-1 overflow-y-auto p-3 space-y-4">
-            {categories.map((category) => {
-              const items = filteredHistory.filter((item) => item.category === category);
-              if (items.length === 0) return null;
+          <ScrollArea className="flex-1 p-3">
+            <div className="space-y-4 pr-2">
+              {categories.map((category) => {
+                const items = filteredHistory.filter((item) => item.category === category);
+                if (items.length === 0) return null;
 
-              return (
-                <div key={category} className="space-y-1">
-                  <div className="px-2 py-1 text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
-                    {category}
-                  </div>
-                  {items.map((item) => {
-                    const isActive = activeHistoryId === item.id;
-                    return (
-                      <div
-                        key={item.id}
-                        onClick={() => handleSelectHistory(item)}
-                        className={`group relative flex items-center justify-between p-2.5 rounded-xl text-xs transition-colors cursor-pointer ${
-                          isActive
-                            ? 'bg-zinc-800/90 text-white font-medium border border-zinc-700/50'
-                            : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/70 border border-transparent'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                          <MessageSquare
-                            size={14}
-                            className={`shrink-0 ${
-                              isActive ? 'text-emerald-400' : 'text-zinc-500 group-hover:text-zinc-300'
-                            }`}
-                          />
-                          <div className="min-w-0">
-                            <p className="truncate text-xs">{item.title}</p>
-                            <p className="text-[10px] text-zinc-500 truncate mt-0.5">
-                              {item.timestamp}
-                            </p>
-                          </div>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={(e) => handleDeleteHistory(e, item.id)}
-                          className="opacity-0 group-hover:opacity-100 p-1 rounded-md text-zinc-500 hover:text-rose-400 hover:bg-zinc-800 transition-all cursor-pointer"
-                          aria-label="Delete history entry"
-                          title="Delete"
+                return (
+                  <div key={category} className="space-y-1">
+                    <div className="px-2 py-1 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+                      {category}
+                    </div>
+                    {items.map((item) => {
+                      const isActive = activeHistoryId === item.id;
+                      return (
+                        <div
+                          key={item.id}
+                          onClick={() => handleSelectHistory(item)}
+                          className={`group relative flex items-center justify-between p-2.5 rounded-xl text-xs transition-colors cursor-pointer ${
+                            isActive
+                              ? 'bg-zinc-100 text-zinc-900 font-medium border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/50 shadow-2xs'
+                              : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900/70 border border-transparent'
+                          }`}
                         >
-                          <Trash2 size={12} />
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+                          <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                            <MessageSquare
+                              size={14}
+                              className={`shrink-0 ${
+                                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300'
+                              }`}
+                            />
+                            <div className="min-w-0">
+                              <p className="truncate text-xs font-medium">{item.title}</p>
+                              <p className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate mt-0.5">
+                                {item.timestamp}
+                              </p>
+                            </div>
+                          </div>
 
-            {filteredHistory.length === 0 && (
-              <div className="text-center py-8 text-zinc-500 text-xs">
-                <Clock size={20} className="mx-auto mb-2 opacity-50" />
-                No searches matching &quot;{historySearch}&quot;
-              </div>
-            )}
-          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => handleDeleteHistory(e, item.id)}
+                            className="opacity-0 group-hover:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-all cursor-pointer"
+                            aria-label="Delete history entry"
+                            title="Delete"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+
+              {filteredHistory.length === 0 && (
+                <div className="text-center py-8 text-zinc-400 dark:text-zinc-500 text-xs">
+                  <Clock size={20} className="mx-auto mb-2 opacity-50" />
+                  No searches matching &quot;{historySearch}&quot;
+                </div>
+              )}
+            </div>
+          </ScrollArea>
 
           {/* History Footer */}
-          <div className="p-3 border-t border-zinc-800/80 text-[11px] text-zinc-500 flex items-center justify-between">
+          <div className="p-3 border-t border-zinc-200 dark:border-zinc-800/80 text-[11px] text-zinc-500 flex items-center justify-between">
             <span>{historyItems.length} saved searches</span>
             <button
               type="button"
               onClick={() => setHistoryItems([])}
-              className="hover:text-zinc-300 transition-colors cursor-pointer"
+              className="hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors cursor-pointer"
             >
               Clear All
             </button>

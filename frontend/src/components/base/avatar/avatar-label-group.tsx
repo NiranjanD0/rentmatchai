@@ -35,9 +35,9 @@ export function AvatarLabelGroup({
         status={status}
       />
       <div className="min-w-0 flex-1 leading-tight">
-        <div className="truncate text-xs font-semibold text-zinc-100">{title}</div>
+        <div className="truncate text-xs font-semibold text-zinc-900 dark:text-zinc-100">{title}</div>
         {subtitle && (
-          <div className="truncate text-[10px] text-zinc-400 mt-0.5">{subtitle}</div>
+          <div className="truncate text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">{subtitle}</div>
         )}
       </div>
     </div>

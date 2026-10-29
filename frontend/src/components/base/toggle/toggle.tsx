@@ -51,9 +51,9 @@ export const ToggleBase = ({ className, isHovered, isDisabled, isFocusVisible, i
     return (
         <div
             className={cx(
-                "cursor-pointer rounded-full bg-tertiary ring-[0.5px] ring-secondary outline-focus-ring transition duration-150 ease-linear ring-inset",
-                isSelected && "bg-brand-solid",
-                isSelected && isHovered && "bg-brand-solid_hover",
+                "cursor-pointer rounded-full bg-zinc-200 dark:bg-zinc-700 ring-[0.5px] ring-zinc-300 dark:ring-zinc-600 outline-focus-ring transition duration-150 ease-linear ring-inset",
+                isSelected && "bg-emerald-600 dark:bg-emerald-500",
+                isSelected && isHovered && "bg-emerald-700 dark:bg-emerald-600",
                 isDisabled && "cursor-not-allowed opacity-50",
                 isFocusVisible && "outline-2 outline-offset-2",
 
@@ -68,13 +68,9 @@ export const ToggleBase = ({ className, isHovered, isDisabled, isFocusVisible, i
                     transition: "transform 0.15s ease-in-out, translate 0.15s ease-in-out, border-color 0.1s linear, background-color 0.1s linear",
                 }}
                 className={cx(
-                    "rounded-full bg-fg-white shadow-sm",
+                    "rounded-full bg-white shadow-sm ring-[0.5px] ring-black/10",
 
                     slim && "shadow-xs",
-                    slim && "border border-toggle-border",
-                    slim && isSelected && "border-toggle-slim-border_pressed",
-                    slim && isSelected && isHovered && "border-toggle-slim-border_pressed-hover",
-
                     classes.switch,
                 )}
             />

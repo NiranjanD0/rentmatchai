@@ -6,6 +6,7 @@ import { useAuth } from '@/src/context/AuthContext';
 import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { useToast } from '@/src/components/ui/notifications';
 import { X, Mail, Lock, Eye, EyeOff, User, Phone, Sparkles, Building2, KeyRound, CheckCircle2 } from 'lucide-react';
+import { ScrollArea } from '@/src/components/ui/scroll-area';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -194,7 +195,8 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
           <X size={20} />
         </button>
 
-        {/* Modal Header */}
+        <ScrollArea className="max-h-[82vh] -mr-3 pr-4">
+          {/* Modal Header */}
         <div className="auth-header">
           <div className="auth-badge">
             <Sparkles size={14} /> RentMatch AI Security
@@ -520,6 +522,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
             </button>
           </form>
         )}
+        </ScrollArea>
       </div>
     </div>
   );

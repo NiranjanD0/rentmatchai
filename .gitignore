@@ -1,29 +1,156 @@
+# ==============================================================================
+# Root .gitignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Environment Variables & Secrets
+# ------------------------------------------------------------------------------
 .env
 .env.*
+.env*.local
 !.env.example
-CONTRIBUTING.md
-.github/
+!.env.*.example
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
 
-# Python
+# ------------------------------------------------------------------------------
+# Python & Backend (FastAPI / Alembic / Pytest)
+# ------------------------------------------------------------------------------
 __pycache__/
 *.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+*$py.class
+*.so
+.Python
+
+# Distribution / Packaging
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
 .venv/
 venv/
+ENV/
+env/
 
-# JavaScript / frontend tooling
+# Python Linting, Formatting & Type Checking
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.pyre/
+.pytype/
+dmypy.json
+.dmypy.json
+
+# Test Coverage & Reports
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+htmlcov/
+.hypothesis/
+.tox/
+.nox/
+
+# ------------------------------------------------------------------------------
+# Node.js & Frontend (Next.js / TypeScript / Turbopack)
+# ------------------------------------------------------------------------------
 node_modules/
-dist/
-build/
 .next/
+out/
+.turbo/
 coverage/
+.nyc_output/
+.vercel/
 
-# IDE and operating system files
-.vscode/
-.idea/
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# E2E & Browser Testing
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+cypress/videos/
+cypress/screenshots/
+
+# Package Manager Logs & Caches
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# ------------------------------------------------------------------------------
+# Databases & Local Storage
+# ------------------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# ------------------------------------------------------------------------------
+# Logs & Temporary Files
+# ------------------------------------------------------------------------------
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# ------------------------------------------------------------------------------
+# IDEs & Operating System Files
+# ------------------------------------------------------------------------------
+# macOS
 .DS_Store
-Thumbs.db
+.AppleDouble
+.LSOverride
+._*
 
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+
+# Linux
+*~
+
+# Editors & IDEs
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# ------------------------------------------------------------------------------
+# Project & Tooling Artifacts
+# ------------------------------------------------------------------------------
 /graphify-out
+docker-compose.override.yml

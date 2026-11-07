@@ -456,23 +456,6 @@ export default function DashboardInboxPage() {
       >
         {/* Pane Header */}
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800/80 space-y-3 shrink-0">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="size-8 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 flex items-center justify-center">
-                <Inbox size={16} />
-              </div>
-              <div>
-                <h2 className="text-sm font-bold text-zinc-900 dark:text-white">Conversations</h2>
-                <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                  Direct renter-owner communication
-                </p>
-              </div>
-            </div>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-600 dark:text-violet-400 border border-violet-500/25">
-              3 Active
-            </span>
-          </div>
-
           {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 size-3.5 text-zinc-400 dark:text-zinc-500" />
@@ -483,24 +466,6 @@ export default function DashboardInboxPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl pl-8 pr-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 transition-colors"
             />
-          </div>
-
-          {/* Filter Tabs */}
-          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pt-0.5">
-            {(['All', 'Unread', 'Enquiries', 'Tours'] as const).map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setFilterTab(tab)}
-                className={`text-[11px] px-2.5 py-1 rounded-lg font-medium transition-colors cursor-pointer shrink-0 ${
-                  filterTab === tab
-                    ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 shadow-2xs'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/80'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
           </div>
         </div>
 

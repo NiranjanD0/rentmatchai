@@ -13,6 +13,9 @@
 *.pem
 *.key
 *.cert
+*.crt
+*.pfx
+*.p12
 
 # ------------------------------------------------------------------------------
 # Python & Backend (FastAPI / Alembic / Pytest)
@@ -22,6 +25,22 @@ __pycache__/
 *$py.class
 *.so
 .Python
+
+# Distribution / Packaging
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Virtual Environments
 .venv/
@@ -38,13 +57,16 @@ env/
 dmypy.json
 .dmypy.json
 
-# Test Coverage
+# Test Coverage & Reports
 .coverage
 .coverage.*
 nosetests.xml
 coverage.xml
 *.cover
 htmlcov/
+.hypothesis/
+.tox/
+.nox/
 
 # ------------------------------------------------------------------------------
 # Node.js & Frontend (Next.js / TypeScript / Turbopack)
@@ -52,16 +74,22 @@ htmlcov/
 node_modules/
 .next/
 out/
-build/
-dist/
 .turbo/
 coverage/
 .nyc_output/
-.vercel
+.vercel/
 
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# E2E & Browser Testing
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+cypress/videos/
+cypress/screenshots/
 
 # Package Manager Logs & Caches
 npm-debug.log*
@@ -92,9 +120,12 @@ lerna-debug.log*
 logs/
 *.tmp
 *.temp
+*.bak
+*.swp
+*.swo
 
 # ------------------------------------------------------------------------------
-# IDEs & System Files
+# IDEs & Operating System Files
 # ------------------------------------------------------------------------------
 # macOS
 .DS_Store
@@ -109,14 +140,17 @@ ehthumbs.db
 ehthumbs_vista.db
 [Dd]esktop.ini
 
-# Editors
-.idea/
-.vscode/
-*.swp
-*.swo
+# Linux
 *~
 
+# Editors & IDEs
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
 # ------------------------------------------------------------------------------
-# Tooling & Generated Artifacts
+# Project & Tooling Artifacts
 # ------------------------------------------------------------------------------
 /graphify-out
+docker-compose.override.yml

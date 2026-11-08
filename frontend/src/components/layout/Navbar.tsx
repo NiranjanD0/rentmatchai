@@ -20,7 +20,6 @@ import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { ToggleTheme } from '../lightswind/toggle-theme';
 import { usePageCurtains } from '../ui/page-curtains';
 import { useToast } from '../ui/notifications';
-import { RainbowButton } from '../ui/rainbow-button';
 import BrandLogo from './BrandLogo';
 
 interface NavbarProps {
@@ -253,14 +252,14 @@ export default function Navbar({
               </AnimatePresence>
             </div>
           ) : (
-            <RainbowButton
+            <button
               type="button"
-              className="rounded-full px-5 py-2 text-xs"
+              className="inline-flex items-center gap-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white text-white dark:text-zinc-900 px-4 py-2 text-xs font-medium tracking-tight transition-colors shadow-2xs active:scale-[0.98] cursor-pointer"
               onClick={() => handleNav('login')}
             >
-              <LogIn className="h-3.5 w-3.5" />
-              <span>Login</span>
-            </RainbowButton>
+              <LogIn className="size-3.5" strokeWidth={1.75} />
+              <span>Sign in</span>
+            </button>
           )}
         </div>
       </div>

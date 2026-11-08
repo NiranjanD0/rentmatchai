@@ -153,4 +153,5 @@ ehthumbs_vista.db
 # Project & Tooling Artifacts
 # ------------------------------------------------------------------------------
 /graphify-out
+.taste-skill/
 docker-compose.override.yml

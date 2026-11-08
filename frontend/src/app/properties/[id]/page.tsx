@@ -31,6 +31,8 @@ import { PropertyService } from '../../../services/propertyService';
 import { PROPERTY_STATUS } from '../../../constants/initialData';
 import { usePageCurtains } from '../../../components/ui/page-curtains';
 import { PropertyDetailSkeleton } from '@/src/components/property';
+import { BlurFade } from '@/src/components/ui/blur-fade';
+import { BorderBeam } from '@/src/components/ui/border-beam';
 
 const money = (n: number) => '₹' + Number(n).toLocaleString('en-IN');
 
@@ -416,10 +418,18 @@ function PropertyDetailsContent() {
 
           {/* Right Sticky Rent Box */}
           <aside className="lg:col-span-4">
-            <div className="sticky top-24 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 p-6 sm:p-8 shadow-xl shadow-zinc-950/5 dark:shadow-black/50">
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 block mb-1">
-                MONTHLY RENT
-              </span>
+            <BlurFade delay={0.2} inView>
+              <div className="sticky top-24 relative overflow-hidden rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 p-6 sm:p-8 shadow-xl shadow-zinc-950/5 dark:shadow-black/50">
+                <BorderBeam
+                  size={80}
+                  duration={7}
+                  colorFrom="#ffffff"
+                  colorTo="#71717a"
+                  borderWidth={1.5}
+                />
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 block mb-1">
+                  MONTHLY RENT
+                </span>
               <div className="text-3xl font-black text-zinc-950 dark:text-white tracking-tight mb-6 tabular-nums">
                 {money(property.rent)}{' '}
                 <span className="text-xs font-normal text-zinc-500 dark:text-zinc-400">/ month</span>
@@ -501,6 +511,7 @@ function PropertyDetailsContent() {
                 </div>
               )}
             </div>
+            </BlurFade>
           </aside>
         </div>
       </div>

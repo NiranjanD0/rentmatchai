@@ -21,6 +21,7 @@ import {
   SlidersHorizontal,
 } from 'lucide-react';
 import { usePageCurtains } from '../../components/ui/page-curtains';
+import { BlurFade } from '@/src/components/ui/blur-fade';
 
 function ProfileContent() {
   const router = useRouter();
@@ -312,6 +313,7 @@ function ProfileContent() {
           </button>
         </div>
 
+        <BlurFade key={activeTab} delay={0.05} inView>
         {/* TAB 1: Personal Details & Preferences */}
         {activeTab === 'personal' && (
           <div className="max-w-3xl">
@@ -672,6 +674,7 @@ function ProfileContent() {
             </div>
           </div>
         )}
+        </BlurFade>
       </div>
     </div>
   );

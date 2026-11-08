@@ -5,7 +5,19 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '@/src/context/AuthContext';
 import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { useToast } from '@/src/components/ui/notifications';
-import { X, Mail, Lock, Eye, EyeOff, User, Phone, Sparkles, Building2, KeyRound, CheckCircle2 } from 'lucide-react';
+import {
+  X,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  User,
+  Phone,
+  Sparkles,
+  Building2,
+  KeyRound,
+  CheckCircle2,
+} from 'lucide-react';
 import { ScrollArea } from '@/src/components/ui/scroll-area';
 
 interface AuthModalProps {
@@ -16,7 +28,13 @@ interface AuthModalProps {
   onAuthSuccess?: (msg: string) => void;
 }
 
-export default function AuthModal({ isOpen, onClose, initialTab = 'login', initialRole = USER_ROLES.TENANT, onAuthSuccess }: AuthModalProps) {
+export default function AuthModal({
+  isOpen,
+  onClose,
+  initialTab = 'login',
+  initialRole = USER_ROLES.TENANT,
+  onAuthSuccess,
+}: AuthModalProps) {
   const { login, register, loginWithGoogle } = useAuth();
   const { notify } = useToast();
 
@@ -34,7 +52,6 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
   const [showPassword, setShowPassword] = useState(false);
 
   // Sprint 1 State Machine tracking
-  // 'idle' | 'validating' | 'failed' | 'success'
   const [authStatus, setAuthStatus] = useState<'idle' | 'validating' | 'failed' | 'success'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -74,7 +91,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
       return;
     }
 
-    setAuthStatus('validating'); // Sprint 1: Validating Login state
+    setAuthStatus('validating');
     setErrorMessage('');
 
     try {
@@ -86,9 +103,10 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
         onClose();
       }, 400);
     } catch (err: unknown) {
-      const msg = (err as Error).message || 'Invalid credentials. Please verify your email and password.';
+      const msg =
+        (err as Error).message || 'Invalid credentials. Please verify your email and password.';
       notify.error(msg, 'Login Failed');
-      setAuthStatus('failed'); // Sprint 1: Login Failed state
+      setAuthStatus('failed');
       setErrorMessage(msg);
     }
   };
@@ -96,7 +114,6 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Client-side validations
     if (!firstName.trim()) {
       const msg = 'Please enter your first name.';
       notify.error(msg, 'Validation Error');
@@ -129,7 +146,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
       return;
     }
 
-    setAuthStatus('validating'); // Sprint 1: Validating Registration state
+    setAuthStatus('validating');
     setErrorMessage('');
 
     try {
@@ -139,11 +156,15 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
         email,
         password,
         role,
-        phone
+        phone,
       });
       setAuthStatus('success');
       if (onAuthSuccess) {
-        onAuthSuccess(`Account created successfully! Logged in as ${res.user.role === USER_ROLES.PROPERTY_LISTER ? 'Property Lister' : 'Tenant'}.`);
+        onAuthSuccess(
+          `Account created successfully! Logged in as ${
+            res.user.role === USER_ROLES.PROPERTY_LISTER ? 'Property Lister' : 'Tenant'
+          }.`
+        );
       }
       setTimeout(() => {
         resetForm();
@@ -152,7 +173,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
     } catch (err: unknown) {
       const msg = (err as Error).message || 'Registration failed. Please try again.';
       notify.error(msg, 'Registration Failed');
-      setAuthStatus('failed'); // Sprint 1: Registration Failed state
+      setAuthStatus('failed');
       setErrorMessage(msg);
     }
   };
@@ -189,341 +210,368 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', initi
   };
 
   return (
-    <div className="auth-overlay" onClick={onClose}>
-      <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="auth-close-btn" onClick={onClose} aria-label="Close modal">
-          <X size={20} />
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-md overflow-y-auto"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 10 }}
+        transition={{ type: 'spring', damping: 26, stiffness: 300 }}
+        className="relative w-full max-w-lg rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 p-6 sm:p-8 shadow-2xl shadow-zinc-950/20 dark:shadow-black/70 my-auto flex flex-col max-h-[92svh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          className="absolute top-5 right-5 h-8 w-8 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-500 hover:text-zinc-950 dark:hover:text-white flex items-center justify-center active:scale-90 transition-transform cursor-pointer z-10"
+          onClick={onClose}
+          aria-label="Close modal"
+        >
+          <X size={16} />
         </button>
 
-        <ScrollArea className="max-h-[82vh] -mr-3 pr-4">
-          {/* Modal Header */}
-        <div className="auth-header">
-          <div className="auth-badge">
-            <Sparkles size={14} /> RentMatch AI Security
-          </div>
-          <h2>{tab === 'login' ? 'Sign In to RentMatch' : 'Create an Account'}</h2>
-          <p>
-            {tab === 'login'
-              ? 'Access your saved shortlist, manage listings, and sync preferences.'
-              : 'Choose your role to get started with intelligent rental matching.'}
-          </p>
-        </div>
-
-        {/* Direct Google OAuth Option */}
-        <div className="auth-google-section">
-          <button
-            type="button"
-            className="btn-google"
-            onClick={handleGoogleAuth}
-            disabled={authStatus === 'validating'}
-          >
-            <svg className="google-icon" viewBox="0 0 24 24" width="20" height="20">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-            </svg>
-            <span>Continue with Google Account</span>
-          </button>
-
-          <div className="auth-divider">
-            <span>or use email and password</span>
-          </div>
-        </div>
-
-        {/* Tab switcher: Login / Register */}
-        <div className="auth-tab-bar">
-          <button
-            className={`auth-tab ${tab === 'login' ? 'active' : ''}`}
-            onClick={() => switchTab('login')}
-            type="button"
-          >
-            Sign In
-          </button>
-          <button
-            className={`auth-tab ${tab === 'register' ? 'active' : ''}`}
-            onClick={() => switchTab('register')}
-            type="button"
-          >
-            Create Account
-          </button>
-        </div>
-
-        {/* LOGIN FORM */}
-        {tab === 'login' && (
-          <form onSubmit={handleLoginSubmit} className="auth-form">
-            <div className="form-group">
-              <label htmlFor="login-email">Email Address</label>
-              <div className="input-with-icon">
-                <Mail size={16} />
-                <input
-                  id="login-email"
-                  type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  autoComplete="email"
-                />
-              </div>
+        <ScrollArea className="flex-1 pr-3 -mr-3">
+          {/* Header */}
+          <div className="mb-6">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200/60 dark:border-zinc-800 mb-2.5">
+              <Sparkles size={12} />
+              <span>RentMatch AI Security</span>
             </div>
+            <h2 className="text-xl sm:text-2xl font-black text-zinc-950 dark:text-white tracking-tight">
+              {tab === 'login' ? 'Sign In to RentMatch' : 'Create an Account'}
+            </h2>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+              {tab === 'login'
+                ? 'Access your saved shortlist, manage listings, and sync preferences.'
+                : 'Choose your role to get started with intelligent rental matching.'}
+            </p>
+          </div>
 
-            <div className="form-group">
-              <div className="form-label-row">
-                <label htmlFor="login-password">Password</label>
-              </div>
-              <div className="input-with-icon">
-                <Lock size={16} />
-                <input
-                  id="login-password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  autoComplete="current-password"
-                />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  tabIndex={-1}
-                  aria-label="Toggle password visibility"
-                >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
-              </div>
-            </div>
-
+          {/* Google Auth Button */}
+          <div className="space-y-4 mb-5">
             <button
-              type="submit"
-              className="btn-primary-auth"
+              type="button"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-850 text-xs font-bold text-zinc-900 dark:text-zinc-100 transition-all active:scale-[0.98] cursor-pointer shadow-2xs"
+              onClick={handleGoogleAuth}
               disabled={authStatus === 'validating'}
             >
-              {authStatus === 'validating' ? 'Validating credentials...' : 'Sign In'}
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                />
+              </svg>
+              <span>Continue with Google Account</span>
             </button>
 
-            {/* Quick Demo Credentials Fill for Testing/Grading */}
-            <div className="demo-credentials-box">
-              <div className="demo-credentials-title">
-                <KeyRound size={13} /> Instant Demo Credentials (1-Click Fill):
+            <div className="relative flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-zinc-200 dark:border-zinc-800" />
               </div>
-              <div className="demo-credentials-buttons">
-                <button
-                  type="button"
-                  className="btn-demo-chip"
-                  onClick={() => handleQuickDemoLogin(USER_ROLES.PROPERTY_LISTER)}
-                >
-                  <Building2 size={12} /> Lister (Rajesh)
-                </button>
-                <button
-                  type="button"
-                  className="btn-demo-chip"
-                  onClick={() => handleQuickDemoLogin(USER_ROLES.TENANT)}
-                >
-                  <User size={12} /> Tenant (Ananya)
-                </button>
-              </div>
+              <span className="relative px-3 bg-white dark:bg-zinc-950 text-[11px] font-medium text-zinc-400">
+                or use email and password
+              </span>
             </div>
-          </form>
-        )}
+          </div>
 
-        {/* REGISTER FORM */}
-        {tab === 'register' && (
-          <form onSubmit={handleRegisterSubmit} className="auth-form">
-            {/* Role Selection (Sprint 1 Class Diagram: UserRole enum) */}
-            <div className="role-selector-section">
-              <label className="section-label">I am joining as:</label>
-              <div className="role-options">
-                <motion.div
-                  className={`role-option-card ${role === USER_ROLES.TENANT ? 'selected' : ''}`}
-                  onClick={() => setRole(USER_ROLES.TENANT)}
-                  role="button"
-                  tabIndex={0}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  animate={{
-                    scale: role === USER_ROLES.TENANT ? 1.02 : 1,
-                  }}
-                  transition={{ type: 'spring', stiffness: 450, damping: 28 }}
-                >
-                  <motion.div
-                    className="role-icon"
-                    animate={{
-                      scale: role === USER_ROLES.TENANT ? [1, 1.2, 1] : 1,
-                      rotate: role === USER_ROLES.TENANT ? [0, -8, 8, 0] : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <User size={18} />
-                  </motion.div>
-                  <div className="role-info">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                      <strong>Tenant / Renter</strong>
-                      <AnimatePresence>
-                        {role === USER_ROLES.TENANT && (
-                          <motion.span
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            transition={{ duration: 0.18 }}
-                            style={{ display: 'inline-flex', color: '#286b50' }}
-                          >
-                            <CheckCircle2 size={13} />
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                    <small>Search homes, save shortlist, enquire</small>
-                  </div>
-                </motion.div>
+          {/* Segmented Tab Switcher */}
+          <div className="inline-flex w-full p-1 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 mb-5">
+            <button
+              type="button"
+              className={`flex-1 py-2 text-center text-xs font-semibold rounded-xl transition-all cursor-pointer ${
+                tab === 'login'
+                  ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white shadow-xs'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
+              }`}
+              onClick={() => switchTab('login')}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              className={`flex-1 py-2 text-center text-xs font-semibold rounded-xl transition-all cursor-pointer ${
+                tab === 'register'
+                  ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white shadow-xs'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
+              }`}
+              onClick={() => switchTab('register')}
+            >
+              Create Account
+            </button>
+          </div>
 
-                <motion.div
-                  className={`role-option-card ${role === USER_ROLES.PROPERTY_LISTER ? 'selected' : ''}`}
-                  onClick={() => setRole(USER_ROLES.PROPERTY_LISTER)}
-                  role="button"
-                  tabIndex={0}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  animate={{
-                    scale: role === USER_ROLES.PROPERTY_LISTER ? 1.02 : 1,
-                  }}
-                  transition={{ type: 'spring', stiffness: 450, damping: 28 }}
-                >
-                  <motion.div
-                    className="role-icon"
-                    animate={{
-                      scale: role === USER_ROLES.PROPERTY_LISTER ? [1, 1.2, 1] : 1,
-                      rotate: role === USER_ROLES.PROPERTY_LISTER ? [0, -8, 8, 0] : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Building2 size={18} />
-                  </motion.div>
-                  <div className="role-info">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                      <strong>Property Lister</strong>
-                      <AnimatePresence>
-                        {role === USER_ROLES.PROPERTY_LISTER && (
-                          <motion.span
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            transition={{ duration: 0.18 }}
-                            style={{ display: 'inline-flex', color: '#286b50' }}
-                          >
-                            <CheckCircle2 size={13} />
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                    <small>Publish &amp; manage rental listings</small>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-
-            <div className="form-row-2">
-              <div className="form-group">
-                <label htmlFor="reg-first-name">First Name</label>
-                <div className="input-with-icon">
-                  <User size={16} />
+          {/* LOGIN FORM */}
+          {tab === 'login' && (
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
+              <div className="space-y-1.5">
+                <label htmlFor="login-email" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                  Email Address
+                </label>
+                <div className="relative flex items-center">
+                  <Mail size={15} className="absolute left-3.5 text-zinc-400 pointer-events-none" />
                   <input
-                    id="reg-first-name"
-                    type="text"
-                    placeholder="e.g. Rahul"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    id="login-email"
+                    type="email"
+                    placeholder="name@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
+                    autoComplete="email"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                   />
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="reg-last-name">Last Name</label>
-                <input
-                  id="reg-last-name"
-                  type="text"
-                  placeholder="e.g. Patel"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className="input-plain"
-                />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="reg-email">Email Address</label>
-              <div className="input-with-icon">
-                <Mail size={16} />
-                <input
-                  id="reg-email"
-                  type="email"
-                  placeholder="your.email@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="reg-phone">Phone Number (Optional)</label>
-              <div className="input-with-icon">
-                <Phone size={16} />
-                <input
-                  id="reg-phone"
-                  type="tel"
-                  placeholder="+91 98765 00000"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="form-row-2">
-              <div className="form-group">
-                <label htmlFor="reg-password">Password</label>
-                <div className="input-with-icon">
-                  <Lock size={16} />
+              <div className="space-y-1.5">
+                <label htmlFor="login-password" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                  Password
+                </label>
+                <div className="relative flex items-center">
+                  <Lock size={15} className="absolute left-3.5 text-zinc-400 pointer-events-none" />
                   <input
-                    id="reg-password"
+                    id="login-password"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Min. 6 chars"
+                    placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    autoComplete="current-password"
+                    className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                   />
+                  <button
+                    type="button"
+                    className="absolute right-3 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                    onClick={() => setShowPassword(!showPassword)}
+                    tabIndex={-1}
+                    aria-label="Toggle password visibility"
+                  >
+                    {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                  </button>
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="reg-confirm-password">Confirm Password</label>
-                <div className="input-with-icon">
-                  <Lock size={16} />
+              <button
+                type="submit"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-zinc-950 hover:bg-zinc-850 dark:bg-white dark:hover:bg-zinc-150 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+                disabled={authStatus === 'validating'}
+              >
+                <span>{authStatus === 'validating' ? 'Validating credentials...' : 'Sign In'}</span>
+              </button>
+
+              {/* Quick Demo Credentials */}
+              <div className="p-3.5 rounded-2xl border border-zinc-200/70 dark:border-zinc-800/70 bg-zinc-50/70 dark:bg-zinc-900/50 mt-4">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-zinc-600 dark:text-zinc-300 mb-2">
+                  <KeyRound size={12} />
+                  <span>Instant Demo Credentials (1-Click Fill):</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    className="flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-[11px] font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer active:scale-95"
+                    onClick={() => handleQuickDemoLogin(USER_ROLES.PROPERTY_LISTER)}
+                  >
+                    <Building2 size={12} />
+                    <span>Lister (Rajesh)</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-[11px] font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer active:scale-95"
+                    onClick={() => handleQuickDemoLogin(USER_ROLES.TENANT)}
+                  >
+                    <User size={12} />
+                    <span>Tenant (Ananya)</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          )}
+
+          {/* REGISTER FORM */}
+          {tab === 'register' && (
+            <form onSubmit={handleRegisterSubmit} className="space-y-4">
+              {/* Role Selection */}
+              <div className="space-y-2">
+                <label className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 block">
+                  I am joining as:
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div
+                    className={`p-3.5 rounded-2xl border transition-all cursor-pointer text-left ${
+                      role === USER_ROLES.TENANT
+                        ? 'border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-zinc-950 shadow-xs'
+                        : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
+                    }`}
+                    onClick={() => setRole(USER_ROLES.TENANT)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <User size={16} />
+                      {role === USER_ROLES.TENANT && <CheckCircle2 size={14} />}
+                    </div>
+                    <strong className="block text-xs font-bold">Tenant / Renter</strong>
+                    <small className="text-[10px] opacity-75 block mt-0.5">
+                      Search homes, save shortlist, enquire
+                    </small>
+                  </div>
+
+                  <div
+                    className={`p-3.5 rounded-2xl border transition-all cursor-pointer text-left ${
+                      role === USER_ROLES.PROPERTY_LISTER
+                        ? 'border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-zinc-950 shadow-xs'
+                        : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
+                    }`}
+                    onClick={() => setRole(USER_ROLES.PROPERTY_LISTER)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <Building2 size={16} />
+                      {role === USER_ROLES.PROPERTY_LISTER && <CheckCircle2 size={14} />}
+                    </div>
+                    <strong className="block text-xs font-bold">Property Lister</strong>
+                    <small className="text-[10px] opacity-75 block mt-0.5">
+                      Publish &amp; manage rental listings
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label htmlFor="reg-first-name" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                    First Name
+                  </label>
+                  <div className="relative flex items-center">
+                    <User size={15} className="absolute left-3.5 text-zinc-400 pointer-events-none" />
+                    <input
+                      id="reg-first-name"
+                      type="text"
+                      placeholder="e.g. Rahul"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required
+                      className="w-full pl-10 pr-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label htmlFor="reg-last-name" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                    Last Name
+                  </label>
                   <input
-                    id="reg-confirm-password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Re-enter password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
+                    id="reg-last-name"
+                    type="text"
+                    placeholder="e.g. Patel"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
                   />
                 </div>
               </div>
-            </div>
 
-            <button
-              type="submit"
-              className="btn-primary-auth"
-              disabled={authStatus === 'validating'}
-            >
-              {authStatus === 'validating' ? 'Creating account...' : `Register as ${role === USER_ROLES.PROPERTY_LISTER ? 'Property Lister' : 'Tenant'}`}
-            </button>
-          </form>
-        )}
+              <div className="space-y-1.5">
+                <label htmlFor="reg-email" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                  Email Address
+                </label>
+                <div className="relative flex items-center">
+                  <Mail size={15} className="absolute left-3.5 text-zinc-400 pointer-events-none" />
+                  <input
+                    id="reg-email"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label htmlFor="reg-phone" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                  Phone Number (Optional)
+                </label>
+                <div className="relative flex items-center">
+                  <Phone size={15} className="absolute left-3.5 text-zinc-400 pointer-events-none" />
+                  <input
+                    id="reg-phone"
+                    type="tel"
+                    placeholder="+91 98765 00000"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full pl-10 pr-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label htmlFor="reg-password" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                    Password
+                  </label>
+                  <div className="relative flex items-center">
+                    <Lock size={15} className="absolute left-3.5 text-zinc-400 pointer-events-none" />
+                    <input
+                      id="reg-password"
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Min. 6 chars"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="w-full pl-10 pr-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label htmlFor="reg-confirm-password" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                    Confirm Password
+                  </label>
+                  <div className="relative flex items-center">
+                    <Lock size={15} className="absolute left-3.5 text-zinc-400 pointer-events-none" />
+                    <input
+                      id="reg-confirm-password"
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Re-enter password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      className="w-full pl-10 pr-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-zinc-950 hover:bg-zinc-850 dark:bg-white dark:hover:bg-zinc-150 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+                disabled={authStatus === 'validating'}
+              >
+                <span>
+                  {authStatus === 'validating'
+                    ? 'Creating account...'
+                    : `Register as ${role === USER_ROLES.PROPERTY_LISTER ? 'Property Lister' : 'Tenant'}`}
+                </span>
+              </button>
+            </form>
+          )}
         </ScrollArea>
-      </div>
+      </motion.div>
     </div>
   );
 }

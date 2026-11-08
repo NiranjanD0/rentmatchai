@@ -1,15 +1,11 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useMemo, useEffect, useCallback, Suspense } from 'react';
 import {
   Heart,
   Search,
   Compass,
   ArrowUpDown,
-  Sparkles,
-  ShieldCheck,
-  Building2,
   X,
   Bookmark,
 } from 'lucide-react';
@@ -47,7 +43,6 @@ export function DashboardShortlistSkeleton() {
 }
 
 function DashboardShortlistContent() {
-  const router = useRouter();
   const { properties, saved, toggleSave } = useProperty();
   const { navigateWithCurtains } = usePageCurtains();
 
@@ -63,11 +58,6 @@ function DashboardShortlistContent() {
   const savedProperties = useMemo(() => {
     return properties.filter((p) => saved.includes(p.id));
   }, [properties, saved]);
-
-  if (!mounted) {
-    return <DashboardShortlistSkeleton />;
-  }
-
 
   // Search & Sort within shortlisted properties
   const displayedProperties = useMemo(() => {
@@ -94,9 +84,16 @@ function DashboardShortlistContent() {
     return list;
   }, [savedProperties, searchQuery, sortOption]);
 
-  const handleOpenDetails = (id: string) => {
-    navigateWithCurtains(`/properties/${id}`, 'Property Details');
-  };
+  const handleOpenDetails = useCallback(
+    (id: string) => {
+      navigateWithCurtains(`/properties/${id}`, 'Property Details');
+    },
+    [navigateWithCurtains]
+  );
+
+  if (!mounted) {
+    return <DashboardShortlistSkeleton />;
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-6">
@@ -118,6 +115,17 @@ function DashboardShortlistContent() {
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
+          {savedProperties.length >= 2 && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigateWithCurtains('/dashboard/compare', 'Compare Properties')}
+              className="h-9 text-xs gap-1.5 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer shadow-2xs active:scale-[0.98] touch-manipulation"
+            >
+              <ArrowUpDown size={14} className="text-zinc-600 dark:text-zinc-400" />
+              <span>Compare Properties</span>
+            </Button>
+          )}
           <Button
             variant="outline"
             size="sm"
@@ -183,7 +191,7 @@ function DashboardShortlistContent() {
             <PropertyCard
               key={p.id}
               property={p}
-              isSaved={true}
+              isSaved={saved.includes(p.id)}
               onToggleSave={toggleSave}
               onOpenDetails={handleOpenDetails}
             />

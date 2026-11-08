@@ -46,11 +46,11 @@ export default function ComparePropertiesPage() {
 
   if (savedProperties.length < 2) {
     return (
-      <div className="w-full max-w-7xl mx-auto py-16 px-4 text-center">
-        <div className="size-16 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 flex items-center justify-center mb-4 border border-zinc-200 dark:border-zinc-700/60">
+      <div className="w-full max-w-7xl mx-auto py-20 px-4 text-center">
+        <div className="size-16 mx-auto rounded-3xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 flex items-center justify-center mb-4 border border-zinc-200 dark:border-zinc-700/60 shadow-2xs">
           <ArrowLeftRight size={28} />
         </div>
-        <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">
+        <h2 className="text-xl sm:text-2xl font-black tracking-tight text-zinc-950 dark:text-white">
           Compare Verified Homes
         </h2>
         <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mt-1 mb-6 leading-relaxed">
@@ -58,7 +58,7 @@ export default function ComparePropertiesPage() {
         </p>
         <Button
           onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-          className="h-10 text-xs px-5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 font-semibold gap-2 shadow-xs cursor-pointer active:scale-[0.99]"
+          className="h-10 text-xs px-6 rounded-full bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 font-bold gap-2 shadow-xs cursor-pointer active:scale-95 transition-all"
         >
           <Compass size={15} />
           <span>Browse Available Homes</span>
@@ -76,7 +76,7 @@ export default function ComparePropertiesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+          <h1 className="text-xl sm:text-2xl font-black tracking-tight text-zinc-950 dark:text-white">
             Compare Properties
           </h1>
           <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
@@ -89,15 +89,15 @@ export default function ComparePropertiesPage() {
             variant="outline"
             size="sm"
             onClick={() => navigateWithCurtains('/dashboard/shortlist', 'My Shortlist')}
-            className="text-xs border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 cursor-pointer"
+            className="text-xs rounded-full border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 cursor-pointer active:scale-95"
           >
             <span>Shortlist ({saved.length})</span>
           </Button>
         </div>
       </div>
 
-      {/* Comparison Matrix */}
-      <div className="overflow-x-auto rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/70 shadow-2xs">
+      {/* Comparison Matrix (Apple rounded container) */}
+      <div className="overflow-x-auto rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
         <table className="w-full text-left border-collapse min-w-[640px]">
           <thead>
             <tr className="border-b border-zinc-200/90 dark:border-zinc-800/90 bg-zinc-50/70 dark:bg-zinc-900/40">
@@ -107,7 +107,7 @@ export default function ComparePropertiesPage() {
               {comparedProperties.map((p) => (
                 <th key={p.id} className="py-4 px-6 min-w-[220px] align-top">
                   <div className="space-y-2">
-                    <div className="aspect-[16/10] w-full rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                    <div className="aspect-[16/10] w-full rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-800">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={p.image || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&q=80'}
@@ -123,13 +123,13 @@ export default function ComparePropertiesPage() {
                         <button
                           type="button"
                           onClick={() => removeProperty(p.id)}
-                          className="text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 p-1 cursor-pointer transition-colors"
+                          className="text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 p-1 cursor-pointer transition-colors active:scale-90"
                           title="Remove from comparison"
                         >
                           <X size={14} />
                         </button>
                       </div>
-                      <p className="text-xs font-bold text-zinc-900 dark:text-white truncate mt-1">
+                      <p className="text-xs font-bold text-zinc-950 dark:text-white truncate mt-1">
                         {p.title}
                       </p>
                       <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
@@ -146,7 +146,7 @@ export default function ComparePropertiesPage() {
             <tr>
               <td className="py-3.5 px-6 font-medium text-zinc-500 dark:text-zinc-400">Monthly Rent</td>
               {comparedProperties.map((p) => (
-                <td key={p.id} className="py-3.5 px-6 font-bold text-zinc-900 dark:text-white">
+                <td key={p.id} className="py-3.5 px-6 font-bold text-zinc-950 dark:text-white tabular-nums">
                   {money(p.rent)}/mo
                 </td>
               ))}
@@ -156,7 +156,7 @@ export default function ComparePropertiesPage() {
             <tr>
               <td className="py-3.5 px-6 font-medium text-zinc-500 dark:text-zinc-400">Security Deposit</td>
               {comparedProperties.map((p) => (
-                <td key={p.id} className="py-3.5 px-6 text-zinc-700 dark:text-zinc-300">
+                <td key={p.id} className="py-3.5 px-6 text-zinc-700 dark:text-zinc-300 tabular-nums">
                   {money(p.deposit)}
                 </td>
               ))}
@@ -176,7 +176,7 @@ export default function ComparePropertiesPage() {
             <tr>
               <td className="py-3.5 px-6 font-medium text-zinc-500 dark:text-zinc-400">Carpet Area</td>
               {comparedProperties.map((p) => (
-                <td key={p.id} className="py-3.5 px-6 text-zinc-700 dark:text-zinc-300">
+                <td key={p.id} className="py-3.5 px-6 text-zinc-700 dark:text-zinc-300 tabular-nums">
                   {p.sqft} sq ft
                 </td>
               ))}
@@ -207,7 +207,7 @@ export default function ComparePropertiesPage() {
               <td className="py-3.5 px-6 font-medium text-zinc-500 dark:text-zinc-400">Direct Owner</td>
               {comparedProperties.map((p) => (
                 <td key={p.id} className="py-3.5 px-6">
-                  <span className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium">
+                  <span className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold">
                     <Check size={14} strokeWidth={2.5} />
                     <span>{p.listerName}</span>
                   </span>
@@ -224,7 +224,7 @@ export default function ComparePropertiesPage() {
                   return (
                     <td key={p.id} className="py-3 px-6">
                       {hasAmenity ? (
-                        <Check size={15} className="text-zinc-900 dark:text-white" strokeWidth={2.5} />
+                        <Check size={15} className="text-zinc-950 dark:text-white" strokeWidth={2.5} />
                       ) : (
                         <span className="text-zinc-300 dark:text-zinc-700">—</span>
                       )}
@@ -243,7 +243,7 @@ export default function ComparePropertiesPage() {
                     <Button
                       size="sm"
                       onClick={() => handleOpenDetails(p.id)}
-                      className="w-full text-xs h-8 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 cursor-pointer font-semibold"
+                      className="w-full text-xs h-8.5 rounded-full bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 cursor-pointer font-bold active:scale-95 shadow-2xs"
                     >
                       View Details
                     </Button>
@@ -251,7 +251,7 @@ export default function ComparePropertiesPage() {
                       variant="outline"
                       size="sm"
                       onClick={() => openEnquiry(p)}
-                      className="w-full text-xs h-8 rounded-lg border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 cursor-pointer"
+                      className="w-full text-xs h-8.5 rounded-full border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 cursor-pointer active:scale-95"
                     >
                       Contact Owner
                     </Button>

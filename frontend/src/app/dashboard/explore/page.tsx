@@ -161,7 +161,7 @@ function DashboardExploreContent() {
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 tabular-nums">
               <span className="size-1.5 rounded-full bg-emerald-500" />
               {results.length} Available
             </span>
@@ -170,12 +170,12 @@ function DashboardExploreContent() {
               variant="outline"
               size="sm"
               onClick={() => setShowFilters(!showFilters)}
-              className="h-8 text-xs gap-1.5 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer shadow-2xs"
+              className="h-8 text-xs gap-1.5 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer shadow-2xs active:scale-[0.98] touch-manipulation"
             >
               <SlidersHorizontal size={13} />
               <span>Filters</span>
               {activeFilterCount > 0 && (
-                <span className="size-4 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-[10px] font-bold flex items-center justify-center ml-0.5">
+                <span className="size-4 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-[10px] font-bold flex items-center justify-center ml-0.5 tabular-nums">
                   {activeFilterCount}
                 </span>
               )}
@@ -196,13 +196,13 @@ function DashboardExploreContent() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search by area, landmark, or amenities (e.g. Balcony, Infocity, Furnished)..."
-              className="w-full h-10 pl-9 pr-9 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 shadow-2xs transition-colors"
+              className="w-full h-10 pl-9 pr-9 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-base sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 shadow-2xs transition-colors"
             />
             {query && (
               <button
                 type="button"
                 onClick={() => setQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-0.5 rounded cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-0.5 rounded cursor-pointer active:scale-95 touch-manipulation"
                 aria-label="Clear search query"
               >
                 <X size={14} />
@@ -216,7 +216,7 @@ function DashboardExploreContent() {
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                className="h-10 pl-3 pr-8 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 shadow-2xs appearance-none cursor-pointer transition-colors"
+                className="h-10 pl-3 pr-8 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-base sm:text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 shadow-2xs appearance-none cursor-pointer transition-colors touch-manipulation"
               >
                 {SORT_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -331,7 +331,7 @@ function DashboardExploreContent() {
                 <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                   Max Budget
                 </label>
-                <span className="text-xs font-bold text-zinc-900 dark:text-white">
+                <span className="text-xs font-bold text-zinc-900 dark:text-white tabular-nums">
                   {money(budget)}/mo
                 </span>
               </div>
@@ -342,9 +342,9 @@ function DashboardExploreContent() {
                 step="1000"
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
-                className="w-full accent-zinc-900 dark:accent-white cursor-pointer"
+                className="w-full accent-zinc-900 dark:accent-white cursor-pointer touch-manipulation"
               />
-              <div className="flex justify-between text-[10px] text-zinc-400 dark:text-zinc-500 mt-1">
+              <div className="flex justify-between text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 tabular-nums">
                 <span>₹8k</span>
                 <span>₹25k</span>
                 <span>₹50k</span>

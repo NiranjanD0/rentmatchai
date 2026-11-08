@@ -415,10 +415,10 @@ export default function AISearchPage() {
                                       </div>
 
                                       <div className="text-right shrink-0">
-                                        <div className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">
+                                        <div className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white tabular-nums">
                                           {prop.price}
                                         </div>
-                                        <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                        <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 tabular-nums">
                                           Match: <span className="text-zinc-900 dark:text-white font-semibold">{prop.matchScore}%</span>
                                         </div>
                                       </div>
@@ -460,7 +460,7 @@ export default function AISearchPage() {
         </div>
 
         {/* Input & Suggestions Footer Area */}
-        <div className="p-4 sm:p-6 pt-0 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/80 backdrop-blur-md shrink-0 transition-colors duration-200">
+        <div className="p-4 sm:p-6 pt-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pb-6 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/80 backdrop-blur-md shrink-0 transition-colors duration-200">
           <div className="max-w-3xl mx-auto space-y-3">
             {/* Quick Suggestions Chips */}
             {messages.length <= 3 && (
@@ -475,7 +475,7 @@ export default function AISearchPage() {
                       key={idx}
                       type="button"
                       onClick={() => handleSendMessage(item)}
-                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs"
+                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
                     >
                       {item}
                     </button>
@@ -493,7 +493,7 @@ export default function AISearchPage() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 min-h-12 max-h-36 py-1 px-2 resize-none"
+                className="text-base sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 min-h-12 max-h-36 py-1 px-2 resize-none"
               />
 
               <InputGroupAddon

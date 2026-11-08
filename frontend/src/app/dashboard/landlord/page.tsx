@@ -64,17 +64,17 @@ export default function LandlordDashboardPage() {
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 select-none">
       {/* 1. Welcome & Portfolio Banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/70 p-6 sm:p-8 shadow-xs">
+      <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60">
-              <span className="size-1.5 rounded-full bg-emerald-500" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-700/60 shadow-2xs">
+              <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <span>Verified Property Lister · Gandhinagar Portfolio</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
               Welcome, {displayName}
             </h1>
-            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed text-pretty">
               Manage your Gandhinagar rental inventory, track prospective tenant enquiries, and publish verified direct listings.
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function LandlordDashboardPage() {
           <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0">
             <Button
               onClick={openAddProperty}
-              className="h-10 text-xs px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 font-semibold gap-2 shadow-xs cursor-pointer active:scale-[0.99]"
+              className="h-10 text-xs px-5 rounded-full bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 font-bold gap-2 shadow-sm cursor-pointer active:scale-95 transition-all"
             >
               <Plus size={15} strokeWidth={2.2} />
               <span>Add New Property</span>
@@ -90,7 +90,7 @@ export default function LandlordDashboardPage() {
             <Button
               variant="outline"
               onClick={() => navigateWithCurtains('/dashboard/inbox', 'Inbox')}
-              className="h-10 text-xs px-4 rounded-xl border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 font-medium gap-2 cursor-pointer shadow-2xs active:scale-[0.99]"
+              className="h-10 text-xs px-5 rounded-full border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 font-semibold gap-2 cursor-pointer shadow-2xs active:scale-95 transition-all"
             >
               <Inbox size={14} />
               <span>View Enquiries (3)</span>
@@ -99,21 +99,21 @@ export default function LandlordDashboardPage() {
         </div>
       </div>
 
-      {/* 2. Key Metrics Row */}
+      {/* 2. Key Metrics Row (Apple tactile tiles with tabular nums) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1: Total Portfolio Listings */}
-        <div className="p-5 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/70 shadow-2xs">
+        <div className="p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Total Properties</span>
-            <div className="size-8 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 flex items-center justify-center">
+            <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Total Properties</span>
+            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <Building2 size={15} />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            <span className="text-3xl font-black tracking-tight text-zinc-950 dark:text-white tabular-nums">
               {myProperties.length}
             </span>
-            <span className="text-xs text-zinc-500 dark:text-zinc-400">properties</span>
+            <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">properties</span>
           </div>
           <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">
             {activeCount} currently live for rent
@@ -121,18 +121,18 @@ export default function LandlordDashboardPage() {
         </div>
 
         {/* Metric 2: Active / Occupancy Status */}
-        <div className="p-5 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/70 shadow-2xs">
+        <div className="p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Active Listings</span>
-            <div className="size-8 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Active Listings</span>
+            <div className="size-9 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-2xs">
               <CheckCircle2 size={16} />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            <span className="text-3xl font-black tracking-tight text-zinc-950 dark:text-white tabular-nums">
               {activeCount}
             </span>
-            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Published</span>
+            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Published</span>
           </div>
           <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">
             {myProperties.length - activeCount} paused / drafts
@@ -140,18 +140,18 @@ export default function LandlordDashboardPage() {
         </div>
 
         {/* Metric 3: Total Monthly Rental Value */}
-        <div className="p-5 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/70 shadow-2xs">
+        <div className="p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Monthly Yield</span>
-            <div className="size-8 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 flex items-center justify-center">
+            <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Monthly Yield</span>
+            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <TrendingUp size={15} />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            <span className="text-3xl font-black tracking-tight text-zinc-950 dark:text-white tabular-nums">
               {money(totalMonthlyRent)}
             </span>
-            <span className="text-xs text-zinc-500 dark:text-zinc-400">/mo</span>
+            <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">/mo</span>
           </div>
           <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">
             Active rent potential
@@ -161,21 +161,21 @@ export default function LandlordDashboardPage() {
         {/* Metric 4: Tenant Enquiries */}
         <div
           onClick={() => navigateWithCurtains('/dashboard/inbox', 'Inbox')}
-          className="group p-5 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/70 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-150 cursor-pointer shadow-2xs hover:-translate-y-0.5"
+          className="group p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Tenant Enquiries</span>
-            <div className="size-8 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 flex items-center justify-center">
+            <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Tenant Enquiries</span>
+            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <Inbox size={15} />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            <span className="text-3xl font-black tracking-tight text-zinc-950 dark:text-white tabular-nums">
               12
             </span>
-            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">3 Pending tours</span>
+            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">3 Pending tours</span>
           </div>
-          <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">
+          <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
             Respond directly in Inbox
           </p>
         </div>
@@ -185,7 +185,7 @@ export default function LandlordDashboardPage() {
       <section className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">
+            <h2 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-950 dark:text-white">
               Your Rental Properties
             </h2>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -195,13 +195,13 @@ export default function LandlordDashboardPage() {
 
           <div className="flex items-center gap-2">
             {/* View Switcher */}
-            <div className="flex items-center bg-zinc-100 dark:bg-zinc-800 p-0.5 rounded-lg border border-zinc-200 dark:border-zinc-700/50">
+            <div className="inline-flex items-center bg-zinc-100 dark:bg-zinc-800 p-1 rounded-xl border border-zinc-200 dark:border-zinc-700/50">
               <button
                 type="button"
                 onClick={() => setViewMode('grid')}
-                className={`p-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                className={`p-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   viewMode === 'grid'
-                    ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-2xs'
+                    ? 'bg-white dark:bg-zinc-900 text-zinc-950 dark:text-white shadow-2xs'
                     : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
                 title="Grid view"
@@ -212,9 +212,9 @@ export default function LandlordDashboardPage() {
               <button
                 type="button"
                 onClick={() => setViewMode('table')}
-                className={`p-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                className={`p-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   viewMode === 'table'
-                    ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-2xs'
+                    ? 'bg-white dark:bg-zinc-900 text-zinc-950 dark:text-white shadow-2xs'
                     : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
                 }`}
                 title="Table view"
@@ -227,7 +227,7 @@ export default function LandlordDashboardPage() {
             <Button
               size="sm"
               onClick={openAddProperty}
-              className="text-xs h-8 gap-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 font-semibold cursor-pointer active:scale-[0.99]"
+              className="text-xs h-9 gap-1.5 rounded-full bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 font-bold px-4 cursor-pointer active:scale-95 shadow-xs"
             >
               <Plus size={14} />
               <span>Add Property</span>
@@ -253,23 +253,23 @@ export default function LandlordDashboardPage() {
               ))}
             </div>
           ) : (
-            <div className="overflow-x-auto rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/70 shadow-2xs">
+            <div className="overflow-x-auto rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-zinc-100 dark:border-zinc-800/80 bg-zinc-50/70 dark:bg-zinc-900/40 text-zinc-500 dark:text-zinc-400 font-semibold">
-                    <th className="py-3 px-4">Property</th>
-                    <th className="py-3 px-4">Location</th>
-                    <th className="py-3 px-4">Monthly Rent</th>
-                    <th className="py-3 px-4">Status</th>
-                    <th className="py-3 px-4 text-right">Actions</th>
+                    <th className="py-3.5 px-5">Property</th>
+                    <th className="py-3.5 px-4">Location</th>
+                    <th className="py-3.5 px-4">Monthly Rent</th>
+                    <th className="py-3.5 px-4">Status</th>
+                    <th className="py-3.5 px-5 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/80">
                   {myProperties.map((p) => (
                     <tr key={p.id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/30 transition-colors">
-                      <td className="py-3 px-4 font-semibold text-zinc-900 dark:text-white">
+                      <td className="py-3.5 px-5 font-semibold text-zinc-900 dark:text-white">
                         <div className="flex items-center gap-3">
-                          <div className="size-10 rounded-lg overflow-hidden bg-zinc-100 dark:bg-zinc-800 shrink-0">
+                          <div className="size-10 rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 shrink-0">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={p.image || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=200&q=80'}
@@ -285,15 +285,15 @@ export default function LandlordDashboardPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="py-3 px-4 text-zinc-600 dark:text-zinc-400">{p.location}</td>
-                      <td className="py-3 px-4 font-semibold text-zinc-900 dark:text-white">
+                      <td className="py-3.5 px-4 text-zinc-600 dark:text-zinc-400">{p.location}</td>
+                      <td className="py-3.5 px-4 font-bold text-zinc-900 dark:text-white tabular-nums">
                         {money(p.rent)}/mo
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-3.5 px-4">
                         <button
                           type="button"
                           onClick={() => togglePropertyStatus(p.id)}
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold cursor-pointer transition-colors ${
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold cursor-pointer transition-colors active:scale-95 ${
                             p.status === PROPERTY_STATUS.ACTIVE
                               ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                               : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700/60'
@@ -307,12 +307,12 @@ export default function LandlordDashboardPage() {
                           {p.status === PROPERTY_STATUS.ACTIVE ? 'Active' : 'Paused'}
                         </button>
                       </td>
-                      <td className="py-3 px-4 text-right">
+                      <td className="py-3.5 px-5 text-right">
                         <div className="inline-flex items-center gap-1.5">
                           <button
                             type="button"
                             onClick={() => handleOpenDetails(p.id)}
-                            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 dark:hover:text-white transition-colors cursor-pointer"
+                            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 dark:hover:text-white transition-colors cursor-pointer active:scale-90"
                             title="View property details"
                           >
                             <Eye size={14} />
@@ -320,14 +320,14 @@ export default function LandlordDashboardPage() {
                           <button
                             type="button"
                             onClick={() => openEditProperty(p)}
-                            className="px-2 py-1 rounded-lg text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                            className="px-2.5 py-1 rounded-lg text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer active:scale-95"
                           >
                             Edit
                           </button>
                           <button
                             type="button"
                             onClick={() => openDeleteProperty(p)}
-                            className="px-2 py-1 rounded-lg text-xs font-medium text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
+                            className="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer active:scale-95"
                           >
                             Delete
                           </button>
@@ -340,20 +340,20 @@ export default function LandlordDashboardPage() {
             </div>
           )
         ) : (
-          <div className="rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 p-8 text-center bg-white/50 dark:bg-zinc-900/30">
-            <div className="size-12 mx-auto rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 flex items-center justify-center mb-3">
+          <div className="rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800 p-8 sm:p-10 text-center bg-white/50 dark:bg-zinc-900/30">
+            <div className="size-12 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 flex items-center justify-center mb-3">
               <Building2 size={20} />
             </div>
-            <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+            <h3 className="text-sm font-bold text-zinc-950 dark:text-white">
               No properties listed yet
             </h3>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto mt-1 mb-4">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto mt-1 mb-4 leading-relaxed">
               Publish your first Gandhinagar rental property to start receiving verified tenant enquiries.
             </p>
             <Button
               size="sm"
               onClick={openAddProperty}
-              className="text-xs rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 cursor-pointer font-semibold"
+              className="text-xs rounded-full bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 cursor-pointer font-bold px-5 active:scale-95 shadow-xs"
             >
               Add Property Now
             </Button>
@@ -362,10 +362,10 @@ export default function LandlordDashboardPage() {
       </section>
 
       {/* 4. Recent Tenant Enquiries Stream */}
-      <section className="rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/70 p-6 shadow-xs">
+      <section className="rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 p-6 sm:p-7 shadow-xs">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-base font-bold tracking-tight text-zinc-900 dark:text-white">
+            <h2 className="text-base font-bold tracking-tight text-zinc-950 dark:text-white">
               Recent Tenant Enquiries
             </h2>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -377,7 +377,7 @@ export default function LandlordDashboardPage() {
             variant="outline"
             size="sm"
             onClick={() => navigateWithCurtains('/dashboard/inbox', 'Inbox')}
-            className="text-xs gap-1.5 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer"
+            className="text-xs gap-1.5 rounded-full border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer active:scale-95"
           >
             <Inbox size={13} />
             <span>Open Inbox</span>
@@ -417,20 +417,20 @@ export default function LandlordDashboardPage() {
             <div
               key={item.id}
               onClick={() => navigateWithCurtains('/dashboard/inbox', 'Inbox')}
-              className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 -mx-3 px-3 rounded-xl transition-colors cursor-pointer"
+              className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 -mx-3 px-3 rounded-2xl transition-colors cursor-pointer active:scale-[0.99]"
             >
               <div className="flex items-start gap-3 min-w-0">
-                <div className="size-9 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-semibold text-xs flex items-center justify-center shrink-0 border border-zinc-200 dark:border-zinc-700/60 mt-0.5">
+                <div className="size-9 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-bold text-xs flex items-center justify-center shrink-0 border border-zinc-200 dark:border-zinc-700/60 shadow-2xs mt-0.5">
                   {item.renter.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-xs font-semibold text-zinc-900 dark:text-white truncate">
+                    <p className="text-xs font-bold text-zinc-950 dark:text-white truncate">
                       {item.renter}
                     </p>
-                    <span className="text-[10px] text-zinc-400 dark:text-zinc-500">· {item.role}</span>
+                    <span className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate">· {item.role}</span>
                   </div>
-                  <p className="text-[11px] font-medium text-zinc-700 dark:text-zinc-300 mt-0.5">
+                  <p className="text-[11px] font-semibold text-zinc-700 dark:text-zinc-300 mt-0.5">
                     Re: {item.property}
                   </p>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-1">
@@ -443,7 +443,7 @@ export default function LandlordDashboardPage() {
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60">
                   {item.status}
                 </span>
-                <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{item.date}</span>
+                <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500">{item.date}</span>
               </div>
             </div>
           ))}

@@ -27,6 +27,54 @@ interface DashboardSidebarProps {
   isMobileDrawer?: boolean;
 }
 
+interface NavItemProps {
+  label: string;
+  href: string;
+  icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+  count?: number;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+function NavItem({ label, icon: Icon, count, isActive, onClick }: NavItemProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`w-full h-9 flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer text-left ${
+        isActive
+          ? 'bg-zinc-100 text-zinc-900 font-medium border border-zinc-200/80 dark:bg-zinc-800/80 dark:text-zinc-100 dark:border-zinc-700/50 shadow-2xs'
+          : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100/70 dark:hover:bg-zinc-900/60 font-normal'
+      }`}
+    >
+      <div className="flex items-center gap-2.5 truncate">
+        <Icon
+          size={16}
+          strokeWidth={1.5}
+          className={`shrink-0 ${
+            isActive
+              ? 'text-zinc-900 dark:text-zinc-100'
+              : 'text-zinc-500 dark:text-zinc-400'
+          }`}
+        />
+        <span className="truncate">{label}</span>
+      </div>
+
+      {typeof count === 'number' && count > 0 && (
+        <span
+          className={`text-xs font-mono tabular-nums px-1.5 py-0.5 rounded-md border ${
+            isActive
+              ? 'bg-zinc-200/70 dark:bg-zinc-700/60 text-zinc-800 dark:text-zinc-200 border-zinc-300/60 dark:border-zinc-600/50'
+              : 'bg-zinc-100 dark:bg-zinc-800/70 text-zinc-500 dark:text-zinc-400 border-zinc-200/60 dark:border-zinc-700/40'
+          }`}
+        >
+          {count}
+        </span>
+      )}
+    </button>
+  );
+}
+
 export function DashboardSidebar({
   onCloseMobileDrawer,
   isMobileDrawer = false,
@@ -52,17 +100,10 @@ export function DashboardSidebar({
   // Tenant shortlist count
   const shortlistCount = saved.length;
 
-  // Active check helper
-  const isItemActive = (href: string) => {
-    if (href === '/dashboard') {
-      return (
-        pathname === '/dashboard' ||
-        pathname === '/dashboard/tenant' ||
-        pathname === '/dashboard/landlord'
-      );
-    }
-    return pathname === href;
-  };
+  const isDashboardActive =
+    pathname === '/dashboard' ||
+    pathname === '/dashboard/tenant' ||
+    pathname === '/dashboard/landlord';
 
   const displayName = `${user?.firstName || ''} ${user?.lastName || ''}`.trim() || 'User';
   const displayEmail = user?.email || '';
@@ -70,14 +111,13 @@ export function DashboardSidebar({
 
   return (
     <aside
-      className={`h-full flex flex-col justify-between bg-white dark:bg-[#09090b] text-zinc-700 dark:text-zinc-300 border-r border-zinc-200 dark:border-zinc-800/80 select-none transition-colors duration-200 ${
-        isMobileDrawer ? 'w-full p-4' : 'w-64 xl:w-68 p-4'
+      className={`h-full flex flex-col justify-between bg-white dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300 border-r border-zinc-200/80 dark:border-zinc-800/60 select-none transition-colors duration-200 ${
+        isMobileDrawer ? 'w-full p-4' : 'w-64 p-4'
       }`}
     >
       {/* Top Block: Logo and Close (mobile) */}
-      <div className="shrink-0">
-        {/* Brand Header */}
-        <div className="flex items-center justify-between px-1 pt-1 pb-2">
+      <div className="shrink-0 pb-3 border-b border-zinc-100 dark:border-zinc-800/60">
+        <div className="flex items-center justify-between px-1">
           <Link
             href="/"
             onClick={() => onCloseMobileDrawer?.()}
@@ -90,210 +130,119 @@ export function DashboardSidebar({
             <button
               type="button"
               onClick={onCloseMobileDrawer}
-              className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800/80 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-800/80 transition-colors cursor-pointer"
               aria-label="Close navigation"
             >
-              <X size={18} />
+              <X size={16} strokeWidth={1.5} />
             </button>
           )}
         </div>
       </div>
 
-      {/* Middle Block: Dynamic Role Navigation Items with ScrollArea */}
-      <ScrollArea className="flex-1 my-2 -mx-1 px-1">
-        <nav className="space-y-1 pt-1">
+      {/* Middle Block: Navigation Items */}
+      <ScrollArea className="flex-1 my-3 -mx-1 px-1">
+        <nav className="space-y-1">
           {/* Tenant Navigation */}
           {isTenant && (
             <>
-              {/* Dashboard */}
-              <button
-                type="button"
+              <NavItem
+                label="Dashboard"
+                href="/dashboard/tenant"
+                icon={LayoutDashboard}
+                isActive={isDashboardActive}
                 onClick={() => handleNavClick('/dashboard/tenant', 'Dashboard')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  isItemActive('/dashboard')
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <LayoutDashboard size={16} strokeWidth={1.8} className="shrink-0" />
-                <span className="truncate">Dashboard</span>
-              </button>
+              />
 
-              {/* AI Search */}
-              <button
-                type="button"
+              <NavItem
+                label="AI Search"
+                href="/dashboard/ai-search"
+                icon={Sparkles}
+                isActive={pathname === '/dashboard/ai-search'}
                 onClick={() => handleNavClick('/dashboard/ai-search', 'AI Search')}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/dashboard/ai-search'
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <div className="flex items-center gap-3 truncate">
-                  <Sparkles size={16} strokeWidth={1.8} className="shrink-0 text-violet-600 dark:text-violet-400" />
-                  <span className="truncate">AI Search</span>
-                </div>
-                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-violet-500/10 text-violet-600 border border-violet-500/20 dark:bg-violet-500/15 dark:text-violet-400 dark:border-violet-500/25">
-                  AI
-                </span>
-              </button>
+              />
 
-              {/* Inbox */}
-              <button
-                type="button"
+              <NavItem
+                label="Inbox"
+                href="/dashboard/inbox"
+                icon={Inbox}
+                count={3}
+                isActive={pathname === '/dashboard/inbox'}
                 onClick={() => handleNavClick('/dashboard/inbox', 'Inbox')}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/dashboard/inbox'
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <div className="flex items-center gap-3 truncate">
-                  <Inbox size={16} strokeWidth={1.8} className="shrink-0 text-violet-600 dark:text-violet-400" />
-                  <span className="truncate">Inbox</span>
-                </div>
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 dark:bg-violet-500/15 dark:text-violet-400 dark:border-violet-500/25">
-                  3
-                </span>
-              </button>
+              />
 
-              {/* Find Properties */}
-              <button
-                type="button"
+              <NavItem
+                label="Find Properties"
+                href="/dashboard/explore"
+                icon={Compass}
+                isActive={pathname === '/dashboard/explore' || pathname === '/explore'}
                 onClick={() => handleNavClick('/dashboard/explore', 'Find Properties')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/dashboard/explore' || pathname === '/explore'
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <Compass size={16} strokeWidth={1.8} className="shrink-0" />
-                <span className="truncate">Find Properties</span>
-              </button>
+              />
 
-              {/* My Shortlist */}
-              <button
-                type="button"
+              <NavItem
+                label="My Shortlist"
+                href="/dashboard/shortlist"
+                icon={Heart}
+                count={shortlistCount}
+                isActive={pathname === '/dashboard/shortlist' || pathname === '/shortlist'}
                 onClick={() => handleNavClick('/dashboard/shortlist', 'My Shortlist')}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/dashboard/shortlist' || pathname === '/shortlist'
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <div className="flex items-center gap-3 truncate">
-                  <Heart size={16} strokeWidth={1.8} className="shrink-0" />
-                  <span className="truncate">My Shortlist</span>
-                </div>
-                {shortlistCount > 0 && (
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/50">
-                    {shortlistCount}
-                  </span>
-                )}
-              </button>
+              />
 
-              {/* Compare Properties */}
-              <button
-                type="button"
+              <NavItem
+                label="Compare Properties"
+                href="/dashboard/compare"
+                icon={ArrowLeftRight}
+                isActive={pathname === '/dashboard/compare'}
                 onClick={() => handleNavClick('/dashboard/compare', 'Compare Properties')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/dashboard/compare'
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <ArrowLeftRight size={16} strokeWidth={1.8} className="shrink-0" />
-                <span className="truncate">Compare Properties</span>
-              </button>
+              />
             </>
           )}
 
           {/* Landlord Navigation */}
           {isLister && (
             <>
-              {/* Dashboard */}
-              <button
-                type="button"
+              <NavItem
+                label="Dashboard"
+                href="/dashboard/landlord"
+                icon={LayoutDashboard}
+                isActive={isDashboardActive}
                 onClick={() => handleNavClick('/dashboard/landlord', 'Dashboard')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  isItemActive('/dashboard')
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <LayoutDashboard size={16} strokeWidth={1.8} className="shrink-0" />
-                <span className="truncate">Dashboard</span>
-              </button>
+              />
 
-              {/* AI Search */}
-              <button
-                type="button"
+              <NavItem
+                label="AI Search"
+                href="/dashboard/ai-search"
+                icon={Sparkles}
+                isActive={pathname === '/dashboard/ai-search'}
                 onClick={() => handleNavClick('/dashboard/ai-search', 'AI Search')}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/dashboard/ai-search'
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <div className="flex items-center gap-3 truncate">
-                  <Sparkles size={16} strokeWidth={1.8} className="shrink-0 text-violet-600 dark:text-violet-400" />
-                  <span className="truncate">AI Search</span>
-                </div>
-                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-violet-500/10 text-violet-600 border border-violet-500/20 dark:bg-violet-500/15 dark:text-violet-400 dark:border-violet-500/25">
-                  AI
-                </span>
-              </button>
+              />
 
-              {/* Inbox */}
-              <button
-                type="button"
+              <NavItem
+                label="Inbox"
+                href="/dashboard/inbox"
+                icon={Inbox}
+                count={3}
+                isActive={pathname === '/dashboard/inbox'}
                 onClick={() => handleNavClick('/dashboard/inbox', 'Inbox')}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/dashboard/inbox'
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <div className="flex items-center gap-3 truncate">
-                  <Inbox size={16} strokeWidth={1.8} className="shrink-0 text-violet-600 dark:text-violet-400" />
-                  <span className="truncate">Inbox</span>
-                </div>
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 dark:bg-violet-500/15 dark:text-violet-400 dark:border-violet-500/25">
-                  3
-                </span>
-              </button>
+              />
 
-              {/* My Properties */}
-              <button
-                type="button"
+              <NavItem
+                label="My Properties"
+                href="/profile?tab=listings"
+                icon={Building2}
+                count={myPropertiesCount}
+                isActive={pathname === '/profile' && typeof window !== 'undefined' && window.location.search.includes('listings')}
                 onClick={() => handleNavClick('/profile?tab=listings', 'My Properties')}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
-                  pathname === '/profile' && typeof window !== 'undefined' && window.location.search.includes('listings')
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold shadow-xs border border-zinc-200/90 dark:bg-zinc-800/90 dark:text-white dark:border-zinc-700/40'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium'
-                }`}
-              >
-                <div className="flex items-center gap-3 truncate">
-                  <Building2 size={16} strokeWidth={1.8} className="shrink-0" />
-                  <span className="truncate">My Properties</span>
-                </div>
-                {myPropertiesCount > 0 && (
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/50">
-                    {myPropertiesCount}
-                  </span>
-                )}
-              </button>
+              />
 
-              {/* Add Property */}
               <button
                 type="button"
                 onClick={() => {
                   onCloseMobileDrawer?.();
                   openAddProperty();
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-900/70 font-medium transition-colors cursor-pointer text-left"
+                className="w-full h-9 flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs font-normal text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100/70 dark:hover:bg-zinc-900/60 transition-colors cursor-pointer text-left"
               >
-                <PlusCircle size={16} strokeWidth={1.8} className="shrink-0 text-violet-600 dark:text-violet-400" />
+                <PlusCircle size={16} strokeWidth={1.5} className="shrink-0 text-zinc-500 dark:text-zinc-400" />
                 <span className="truncate">Add Property</span>
               </button>
             </>
@@ -302,7 +251,7 @@ export function DashboardSidebar({
       </ScrollArea>
 
       {/* Bottom Block: Dropdown Account Card */}
-      <div className="shrink-0 pt-3 border-t border-zinc-200 dark:border-zinc-800/70">
+      <div className="shrink-0 pt-3 border-t border-zinc-200/80 dark:border-zinc-800/60">
         <DropdownAccountCardMD
           name={displayName}
           email={displayEmail}
@@ -317,4 +266,3 @@ export function DashboardSidebar({
     </aside>
   );
 }
-

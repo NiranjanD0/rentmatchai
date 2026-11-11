@@ -240,7 +240,7 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
                 if (variant === 'closing') handleClosingComplete();
                 if (variant === 'opening') handleOpeningComplete();
               }}
-              className="absolute top-0 left-0 bottom-0 w-1/2 bg-white dark:bg-black border-r border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-zinc-400/20 dark:shadow-black"
+              className="absolute top-0 left-0 bottom-0 w-1/2 bg-[#F9F5EF] dark:bg-[#171513] border-r border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-zinc-400/20 dark:shadow-black"
             />
 
             {/* Right Curtain Panel */}
@@ -248,7 +248,7 @@ function PageCurtainsInner({ children }: { children: React.ReactNode }) {
               variants={rightCurtainVariants}
               initial="initial"
               animate={isClosing ? 'closing' : isCovered ? 'covered' : 'opening'}
-              className="absolute top-0 right-0 bottom-0 w-1/2 bg-white dark:bg-black border-l border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-zinc-400/20 dark:shadow-black"
+              className="absolute top-0 right-0 bottom-0 w-1/2 bg-[#F9F5EF] dark:bg-[#171513] border-l border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-zinc-400/20 dark:shadow-black"
             />
 
             {/* Center Destination Title ONLY */}

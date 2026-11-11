@@ -298,9 +298,9 @@ export default function AISearchPage() {
   ];
 
   return (
-    <div className="h-full w-full flex overflow-hidden bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 select-none transition-colors duration-200">
+    <div className="h-full w-full flex overflow-hidden bg-zinc-50 dark:bg-[#171513] text-zinc-900 dark:text-zinc-100 select-none transition-colors duration-200">
       {/* Center Chat Thread Area */}
-      <div className="flex-1 flex flex-col h-full min-w-0 relative bg-zinc-50 dark:bg-[#09090b] transition-colors duration-200">
+      <div className="flex-1 flex flex-col h-full min-w-0 relative bg-zinc-50 dark:bg-[#171513] transition-colors duration-200">
         {/* Sub-header inside Chat Pane */}
         <div className="h-12 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/80 dark:bg-zinc-900/40 backdrop-blur-xs shrink-0 transition-colors duration-200">
           <div className="flex items-center gap-2 text-xs">
@@ -460,7 +460,7 @@ export default function AISearchPage() {
         </div>
 
         {/* Input & Suggestions Footer Area */}
-        <div className="p-4 sm:p-6 pt-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pb-6 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/80 backdrop-blur-md shrink-0 transition-colors duration-200">
+        <div className="p-4 sm:p-6 pt-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pb-6 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#211E1B]/80 backdrop-blur-md shrink-0 transition-colors duration-200">
           <div className="max-w-3xl mx-auto space-y-3">
             {/* Quick Suggestions Chips */}
             {messages.length <= 3 && (

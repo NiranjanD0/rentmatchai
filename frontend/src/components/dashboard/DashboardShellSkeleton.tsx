@@ -3,9 +3,9 @@ import { Skeleton } from '@/src/components/ui/skeleton';
 
 export function DashboardShellSkeleton() {
   return (
-    <div className="min-h-screen w-full flex bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 select-none transition-colors duration-200">
+    <div className="min-h-screen w-full flex bg-zinc-50 dark:bg-[#171513] text-zinc-900 dark:text-zinc-100 select-none transition-colors duration-200">
       {/* Sidebar Skeleton */}
-      <aside className="hidden lg:flex w-64 xl:w-72 flex-col justify-between p-4 border-r border-zinc-200 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/70 h-screen sticky top-0 shrink-0">
+      <aside className="hidden lg:flex w-64 xl:w-72 flex-col justify-between p-4 border-r border-zinc-200 dark:border-zinc-800/80 bg-white/95 dark:bg-[#211E1B]/95 h-screen sticky top-0 shrink-0">
         <div className="space-y-6">
           {/* Logo Skeleton */}
           <div className="flex items-center gap-3 px-2 py-1">
@@ -37,7 +37,7 @@ export function DashboardShellSkeleton() {
       {/* Main Workspace Skeleton */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header Bar Skeleton */}
-        <header className="h-16 px-6 border-b border-zinc-200 dark:border-zinc-800/80 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
+        <header className="h-16 px-6 border-b border-zinc-200 dark:border-zinc-800/80 bg-white/80 dark:bg-[#211E1B]/80 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
           <Skeleton className="h-6 w-36 rounded-lg bg-zinc-200/80 dark:bg-zinc-800/80" />
           <div className="flex items-center gap-3">
             <Skeleton className="size-9 rounded-xl bg-zinc-200/60 dark:bg-zinc-800/60" />

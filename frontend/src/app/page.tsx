@@ -87,13 +87,13 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-zinc-950 dark:text-zinc-50 transition-colors duration-200 overflow-x-hidden">
+    <div className="min-h-screen bg-[#F9F5EF] dark:bg-[#171513] text-zinc-950 dark:text-zinc-50 transition-colors duration-200 overflow-x-hidden font-nunito">
       {/* ===================== HERO SECTION: ACETERNITY SPOTLIGHT + MAGIC PARTICLES ===================== */}
       <section className="relative w-full -mt-18 sm:-mt-20 min-h-[100svh] flex flex-col justify-center items-center pt-24 pb-24 sm:pt-28 sm:pb-32 overflow-hidden border-b border-zinc-200/80 dark:border-zinc-800/80">
         {/* Aceternity Spotlight Effect */}
         <Spotlight
           className="-top-40 left-0 md:left-60 md:-top-20"
-          fill={isDark ? '#ffffff' : '#a1a1aa'}
+          fill={isDark ? '#F5EFE7' : '#EAE4DC'}
         />
 
         {/* Magic UI Interactive Particles Background */}
@@ -104,15 +104,15 @@ export default function HomePage() {
             staticity={40}
             ease={50}
             size={0.6}
-            color={isDark ? '#ffffff' : '#000000'}
+            color={isDark ? '#F5EFE7' : '#1A1A1A'}
           />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center my-auto -translate-y-2 sm:-translate-y-6">
           {/* Eyebrow Kicker with Magic UI AnimatedShinyText */}
           <BlurFade delay={0.1} inView>
-            <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 rounded-full border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md mb-6 shadow-2xs hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 rounded-full border border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-[#211E1B]/80 backdrop-blur-md mb-6 shadow-2xs hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#E8510E] dark:bg-[#F06A32] animate-pulse" />
               <AnimatedShinyText className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-700 dark:text-zinc-300">
                 Direct Rental Platform · Gandhinagar &amp; Ahmedabad
               </AnimatedShinyText>
@@ -125,8 +125,8 @@ export default function HomePage() {
               <span>Rent Direct.</span>{' '}
               <br />
               <LineShadowText
-                shadowColor={isDark ? '#ffffff' : '#000000'}
-                className="italic -skew-x-12 inline-block font-black text-zinc-700 dark:text-zinc-300 pr-4 sm:pr-6"
+                shadowColor={isDark ? '#F06A32' : '#E8510E'}
+                className="italic -skew-x-12 inline-block font-black text-[#E8510E] dark:text-[#F06A32] pr-4 sm:pr-6"
               >
                 Zero Brokerage.
               </LineShadowText>
@@ -145,8 +145,8 @@ export default function HomePage() {
             <div className="flex items-center justify-center gap-4">
               <ShimmerButton
                 onClick={() => navigateWithCurtains('/signup', 'Create Account')}
-                shimmerColor={isDark ? '#ffffff' : '#000000'}
-                background={isDark ? '#09090b' : '#18181b'}
+                shimmerColor={isDark ? '#F06A32' : '#FFFFFF'}
+                background={isDark ? '#211E1B' : '#000000'}
                 className="font-bold py-3.5 px-8 text-xs tracking-tight shadow-xl hover:shadow-2xl transition-all active:scale-95 cursor-pointer rounded-full"
               >
                 <span className="flex items-center gap-2 text-white">
@@ -167,7 +167,7 @@ export default function HomePage() {
             return (
               <div
                 key={idx}
-                className="flex items-center gap-2 mx-4 px-3 py-1.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 text-xs font-semibold text-zinc-700 dark:text-zinc-300 shadow-2xs whitespace-nowrap"
+                className="flex items-center gap-2 mx-4 px-3 py-1.5 rounded-full bg-white dark:bg-[#211E1B] border border-zinc-200/80 dark:border-zinc-800/80 text-xs font-semibold text-zinc-700 dark:text-zinc-300 shadow-2xs whitespace-nowrap"
               >
                 <Icon size={13} className="text-zinc-900 dark:text-zinc-100 shrink-0" />
                 <span>{item.label}</span>
@@ -237,12 +237,12 @@ export default function HomePage() {
 
             {/* The RentMatch AI Standard with Magic UI BorderBeam */}
             <BlurFade delay={0.3} inView>
-              <div className="relative rounded-3xl border border-zinc-950 dark:border-white bg-white dark:bg-zinc-900 p-7 sm:p-9 shadow-xl shadow-zinc-950/5 dark:shadow-black/40 flex flex-col justify-between backdrop-blur-xl h-full overflow-hidden">
+              <div className="relative rounded-3xl border border-zinc-950 dark:border-[#332A24] bg-white dark:bg-[#211E1B] p-7 sm:p-9 shadow-xl shadow-zinc-950/5 dark:shadow-black/40 flex flex-col justify-between backdrop-blur-xl h-full overflow-hidden">
                 <BorderBeam
                   size={90}
                   duration={6}
-                  colorFrom={isDark ? '#ffffff' : '#18181b'}
-                  colorTo={isDark ? '#71717a' : '#a1a1aa'}
+                  colorFrom="#E8510E"
+                  colorTo="#F06A32"
                   borderWidth={1.5}
                 />
                 <div>
@@ -250,31 +250,31 @@ export default function HomePage() {
                     <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-950 dark:text-white">
                       The RentMatch AI Standard
                     </span>
-                    <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-white">
+                    <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#E8510E]/10 dark:bg-[#F06A32]/15 text-[#E8510E] dark:text-[#F06A32]">
                       Direct
                     </span>
                   </div>
                   <ul className="space-y-4 text-xs text-zinc-800 dark:text-zinc-200">
                     <li className="flex items-start gap-3">
-                      <Check className="h-4 w-4 text-zinc-950 dark:text-white shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-[#E8510E] dark:text-[#F06A32] shrink-0 mt-0.5" />
                       <span>
                         <strong>Zero Brokerage Protocol:</strong> Save 100% of broker commissions to spend on your new home setup.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <Check className="h-4 w-4 text-zinc-950 dark:text-white shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-[#E8510E] dark:text-[#F06A32] shrink-0 mt-0.5" />
                       <span>
                         <strong>100% Deed-Verified Landlords:</strong> Real property owners authenticated with verified identity and deed records.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <Check className="h-4 w-4 text-zinc-950 dark:text-white shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-[#E8510E] dark:text-[#F06A32] shrink-0 mt-0.5" />
                       <span>
                         <strong>Privacy Protected:</strong> Your phone number remains completely confidential until you choose to connect.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <Check className="h-4 w-4 text-zinc-950 dark:text-white shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-[#E8510E] dark:text-[#F06A32] shrink-0 mt-0.5" />
                       <span>
                         <strong>Instant WhatsApp Dialogue:</strong> Chat directly with verified landlords, schedule site visits, and agree on terms.
                       </span>
@@ -307,9 +307,9 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Step 1 */}
             <BlurFade delay={0.2} inView>
-              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-950/50 p-8 flex flex-col justify-between hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
+              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
                 <div>
-                  <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
+                  <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] transition-colors">
                     01
                   </div>
                   <h3 className="text-lg font-bold tracking-tight text-zinc-950 dark:text-white mb-2">
@@ -320,7 +320,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <div className="mt-8 pt-4 border-t border-zinc-200/60 dark:border-zinc-800/60 flex items-center gap-2 text-[11px] font-bold text-zinc-900 dark:text-white">
-                  <ShieldCheck size={14} className="shrink-0 text-emerald-500" />
+                  <ShieldCheck size={14} className="shrink-0 text-[#E8510E] dark:text-[#F06A32]" />
                   <span>100% Genuine Deeds</span>
                 </div>
               </div>
@@ -328,9 +328,9 @@ export default function HomePage() {
 
             {/* Step 2 */}
             <BlurFade delay={0.3} inView>
-              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-950/50 p-8 flex flex-col justify-between hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
+              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
                 <div>
-                  <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
+                  <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] transition-colors">
                     02
                   </div>
                   <h3 className="text-lg font-bold tracking-tight text-zinc-950 dark:text-white mb-2">
@@ -341,7 +341,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <div className="mt-8 pt-4 border-t border-zinc-200/60 dark:border-zinc-800/60 flex items-center gap-2 text-[11px] font-bold text-zinc-900 dark:text-white">
-                  <Sparkles size={14} className="shrink-0 text-amber-500" />
+                  <Sparkles size={14} className="shrink-0 text-[#E8510E] dark:text-[#F06A32]" />
                   <span>Multi-Factor Compatibility</span>
                 </div>
               </div>
@@ -349,9 +349,9 @@ export default function HomePage() {
 
             {/* Step 3 */}
             <BlurFade delay={0.4} inView>
-              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-950/50 p-8 flex flex-col justify-between hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
+              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
                 <div>
-                  <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
+                  <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] transition-colors">
                     03
                   </div>
                   <h3 className="text-lg font-bold tracking-tight text-zinc-950 dark:text-white mb-2">
@@ -362,7 +362,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <div className="mt-8 pt-4 border-t border-zinc-200/60 dark:border-zinc-800/60 flex items-center gap-2 text-[11px] font-bold text-zinc-900 dark:text-white">
-                  <MessageCircle size={14} className="shrink-0 text-emerald-500" />
+                  <MessageCircle size={14} className="shrink-0 text-[#E8510E] dark:text-[#F06A32]" />
                   <span>Zero Broker Commission</span>
                 </div>
               </div>
@@ -390,8 +390,8 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <BlurFade delay={0.1} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <ShieldCheck size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -404,8 +404,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.15} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <Coins size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -418,8 +418,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.2} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <Sparkles size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -432,8 +432,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.25} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <MessageCircle size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -446,8 +446,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.3} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <Compass size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -460,8 +460,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.35} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <Clock size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -482,7 +482,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* For Tenants */}
             <BlurFade delay={0.2} inView>
-              <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 p-8 sm:p-12 flex flex-col justify-between hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full">
+              <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#211E1B] p-8 sm:p-12 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">
                     For Renters &amp; Students
@@ -495,15 +495,15 @@ export default function HomePage() {
                   </p>
                   <ul className="space-y-2.5 text-xs text-zinc-700 dark:text-zinc-300 mb-8">
                     <li className="flex items-center gap-2">
-                      <Check size={14} className="text-zinc-950 dark:text-white shrink-0" />
+                      <Check size={14} className="text-[#E8510E] dark:text-[#F06A32] shrink-0" />
                       <span>Direct WhatsApp chat with property owners</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check size={14} className="text-zinc-950 dark:text-white shrink-0" />
+                      <Check size={14} className="text-[#E8510E] dark:text-[#F06A32] shrink-0" />
                       <span>Save 100% of upfront broker fees</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check size={14} className="text-zinc-950 dark:text-white shrink-0" />
+                      <Check size={14} className="text-[#E8510E] dark:text-[#F06A32] shrink-0" />
                       <span>Smart commute compatibility matching</span>
                     </li>
                   </ul>
@@ -511,7 +511,7 @@ export default function HomePage() {
                 <button
                   type="button"
                   onClick={() => navigateWithCurtains('/signup', 'Join as Tenant')}
-                  className="w-full py-3.5 px-6 rounded-full bg-zinc-950 hover:bg-zinc-850 dark:bg-white dark:hover:bg-zinc-150 text-white dark:text-zinc-950 text-xs font-bold tracking-tight text-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
+                  className="w-full py-3.5 px-6 rounded-full bg-[#000000] hover:bg-[#1A1A1A] dark:bg-[#F5EFE7] dark:hover:bg-white text-white dark:text-[#171513] text-xs font-bold tracking-tight text-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
                 >
                   Join as Tenant
                 </button>
@@ -520,7 +520,7 @@ export default function HomePage() {
 
             {/* For Landlords */}
             <BlurFade delay={0.3} inView>
-              <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 p-8 sm:p-12 flex flex-col justify-between hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors h-full">
+              <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#211E1B] p-8 sm:p-12 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">
                     For Property Owners
@@ -533,15 +533,15 @@ export default function HomePage() {
                   </p>
                   <ul className="space-y-2.5 text-xs text-zinc-700 dark:text-zinc-300 mb-8">
                     <li className="flex items-center gap-2">
-                      <Check size={14} className="text-zinc-950 dark:text-white shrink-0" />
+                      <Check size={14} className="text-[#E8510E] dark:text-[#F06A32] shrink-0" />
                       <span>Zero listing fees and zero commission cuts</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check size={14} className="text-zinc-950 dark:text-white shrink-0" />
+                      <Check size={14} className="text-[#E8510E] dark:text-[#F06A32] shrink-0" />
                       <span>Pre-screened, verified student and professional tenants</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check size={14} className="text-zinc-950 dark:text-white shrink-0" />
+                      <Check size={14} className="text-[#E8510E] dark:text-[#F06A32] shrink-0" />
                       <span>Manage all inquiries and walkthroughs directly</span>
                     </li>
                   </ul>
@@ -549,7 +549,7 @@ export default function HomePage() {
                 <button
                   type="button"
                   onClick={() => navigateWithCurtains('/signup', 'Create Landlord Account')}
-                  className="w-full py-3.5 px-6 rounded-full border border-zinc-950 dark:border-white bg-transparent hover:bg-zinc-950 hover:text-white dark:hover:bg-white dark:hover:text-zinc-950 text-zinc-950 dark:text-white text-xs font-bold tracking-tight text-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
+                  className="w-full py-3.5 px-6 rounded-full border border-[#000000] dark:border-[#332A24] bg-transparent hover:bg-[#000000] hover:text-white dark:hover:bg-[#F5EFE7] dark:hover:text-[#171513] text-[#000000] dark:text-[#F5EFE7] text-xs font-bold tracking-tight text-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
                 >
                   List Property Free
                 </button>

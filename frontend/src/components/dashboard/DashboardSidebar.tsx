@@ -78,7 +78,7 @@ export function DashboardSidebar({
             }
           : undefined
       }
-      className={`h-full flex flex-col justify-between bg-white dark:bg-[#09090b] text-zinc-700 dark:text-zinc-300 border-r border-zinc-200 dark:border-zinc-800/80 select-none transition-colors duration-200 ${
+      className={`h-full flex flex-col justify-between bg-white dark:bg-[#211E1B] text-zinc-700 dark:text-zinc-300 border-r border-zinc-200 dark:border-zinc-800/80 select-none transition-colors duration-200 ${
         isMobileDrawer ? 'w-full p-4' : 'w-64 xl:w-68 p-4'
       }`}
     >

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "../styles.css";
 import { Providers } from "./providers";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Nunito } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 const fontSans = Plus_Jakarta_Sans({
@@ -9,6 +9,13 @@ const fontSans = Plus_Jakarta_Sans({
   variable: '--font-sans',
   weight: ['400', '500', '600', '700', '800'],
   style: ['normal', 'italic'],
+  display: 'swap',
+});
+
+const fontNunito = Nunito({
+  subsets: ['latin'],
+  variable: '--font-nunito',
+  weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
 });
 
@@ -30,8 +37,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#09090b' },
+    { media: '(prefers-color-scheme: light)', color: '#F9F5EF' },
+    { media: '(prefers-color-scheme: dark)', color: '#171513' },
   ],
   width: 'device-width',
   initialScale: 1.0,
@@ -45,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("font-sans", fontSans.variable)}>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", fontSans.variable, fontNunito.variable)}>
       <body>
         <Providers>{children}</Providers>
       </body>

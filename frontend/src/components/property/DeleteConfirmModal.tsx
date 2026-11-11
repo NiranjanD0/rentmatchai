@@ -32,7 +32,7 @@ export default function DeleteConfirmModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 8 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className="relative w-full max-w-md rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 p-6 sm:p-7 shadow-2xl shadow-zinc-950/20 dark:shadow-black/70 my-auto text-center"
+        className="relative w-full max-w-md rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] p-6 sm:p-7 shadow-2xl shadow-zinc-950/20 dark:shadow-black/70 my-auto text-center"
         onClick={(e) => e.stopPropagation()}
       >
         <button

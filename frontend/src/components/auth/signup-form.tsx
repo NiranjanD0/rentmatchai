@@ -164,7 +164,7 @@ export function SignupForm({
               {role === USER_ROLES.TENANT && (
                 <motion.div
                   layoutId="activeRoleTabSignup"
-                  className="absolute inset-0 bg-white dark:bg-black rounded-xl shadow-xs -z-10"
+                  className="absolute inset-0 bg-white dark:bg-[#211E1B] rounded-xl shadow-xs -z-10"
                   transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                 />
               )}
@@ -177,7 +177,7 @@ export function SignupForm({
                     transition={{ duration: 0.15 }}
                     className="inline-flex"
                   >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#E8510E] dark:text-[#F06A32]" />
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -194,7 +194,7 @@ export function SignupForm({
               {role === USER_ROLES.PROPERTY_LISTER && (
                 <motion.div
                   layoutId="activeRoleTabSignup"
-                  className="absolute inset-0 bg-white dark:bg-black rounded-xl shadow-xs -z-10"
+                  className="absolute inset-0 bg-white dark:bg-[#211E1B] rounded-xl shadow-xs -z-10"
                   transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                 />
               )}
@@ -207,7 +207,7 @@ export function SignupForm({
                     transition={{ duration: 0.15 }}
                     className="inline-flex"
                   >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#E8510E] dark:text-[#F06A32]" />
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -368,7 +368,7 @@ export function SignupForm({
             <button
               type="button"
               onClick={() => navigateWithCurtains('/login', 'Login')}
-              className="font-bold text-violet-600 dark:text-violet-400 hover:underline cursor-pointer"
+              className="font-bold text-[#E8510E] dark:text-[#F06A32] hover:underline cursor-pointer"
             >
               Login
             </button>

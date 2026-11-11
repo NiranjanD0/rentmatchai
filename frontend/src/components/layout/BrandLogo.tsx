@@ -42,7 +42,7 @@ export default function BrandLogo({
       {!hideText && (
         <div className="flex flex-col leading-none">
           <span className={`font-black tracking-tight text-zinc-950 dark:text-white ${text}`}>
-            RentMatch<span className="text-zinc-400 dark:text-zinc-500 font-light text-[0.85em]">.ai</span>
+            RentMatch<span className="text-[#E8510E] dark:text-[#F06A32] font-semibold text-[0.85em]">.ai</span>
           </span>
           <span className={`font-bold uppercase tracking-[0.2em] text-[9px] text-zinc-400 dark:text-zinc-500 mt-0.5 ${sub}`}>
             Editorial Rentals

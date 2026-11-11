@@ -47,7 +47,7 @@ export default function PropertyCard({
   return (
     <article
       className={cn(
-        'group relative flex flex-col rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-950 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-zinc-400 dark:hover:border-zinc-700 min-w-0',
+        'group relative flex flex-col rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 min-w-0',
         isInactive && 'opacity-60 grayscale-[30%]'
       )}
     >
@@ -139,7 +139,7 @@ export default function PropertyCard({
       </div>
 
       {/* Card Content - Editorial Layout */}
-      <div className="p-5 flex flex-col flex-1 bg-white dark:bg-zinc-950">
+      <div className="p-5 flex flex-col flex-1 bg-white dark:bg-zinc-900">
         {/* Locality Kicker */}
         <div className="flex items-center justify-between text-[11px] font-semibold tracking-wider uppercase text-zinc-500 dark:text-zinc-400 mb-1.5">
           <span className="flex items-center gap-1 truncate">

@@ -42,9 +42,9 @@ import { Skeleton } from '@/src/components/ui/skeleton';
 
 export function InboxSkeleton() {
   return (
-    <div className="h-full w-full flex bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 overflow-hidden select-none transition-colors duration-200">
+    <div className="h-full w-full flex bg-zinc-50 dark:bg-[#171513] text-zinc-900 dark:text-zinc-100 overflow-hidden select-none transition-colors duration-200">
       {/* 1. Left Conversation List Pane Skeleton */}
-      <aside className="w-full md:w-80 lg:w-96 flex flex-col border-r border-zinc-200 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/70 shrink-0 h-full">
+      <aside className="w-full md:w-80 lg:w-96 flex flex-col border-r border-zinc-200 dark:border-zinc-800/80 bg-white/95 dark:bg-[#211E1B]/95 shrink-0 h-full">
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800/80 space-y-3 shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -85,7 +85,7 @@ export function InboxSkeleton() {
       </aside>
 
       {/* 2. Middle Active Chat Pane Skeleton */}
-      <section className="hidden md:flex flex-1 flex-col h-full bg-white dark:bg-[#09090b] overflow-hidden">
+      <section className="hidden md:flex flex-1 flex-col h-full bg-white dark:bg-[#171513] overflow-hidden">
         <div className="h-16 border-b border-zinc-200 dark:border-zinc-800/80 px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Skeleton className="size-10 rounded-full bg-zinc-200/70 dark:bg-zinc-800/70" />
@@ -375,12 +375,12 @@ export default function DashboardInboxPage() {
   }
 
   return (
-    <div className="h-full w-full flex bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 overflow-hidden select-none transition-colors duration-200">
+    <div className="h-full w-full flex bg-zinc-50 dark:bg-[#171513] text-zinc-900 dark:text-zinc-100 overflow-hidden select-none transition-colors duration-200">
       {/* 1. Left Conversation List Pane */}
       <aside
         className={`${
           mobileThreadOpen ? 'hidden md:flex' : 'flex'
-        } w-full md:w-80 lg:w-96 flex-col border-r border-zinc-200 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/70 backdrop-blur-md shrink-0 h-full`}
+        } w-full md:w-80 lg:w-96 flex-col border-r border-zinc-200 dark:border-zinc-800/80 bg-white/95 dark:bg-[#211E1B]/95 backdrop-blur-md shrink-0 h-full`}
       >
         {/* Pane Header */}
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800/80 space-y-3 shrink-0">
@@ -513,10 +513,10 @@ export default function DashboardInboxPage() {
         <section
           className={`${
             mobileThreadOpen ? 'flex' : 'hidden md:flex'
-          } flex-1 flex-col h-full min-w-0 bg-zinc-50 dark:bg-[#09090b] relative`}
+          } flex-1 flex-col h-full min-w-0 bg-zinc-50 dark:bg-[#171513] relative`}
         >
           {/* Active Conversation Top Bar */}
-          <header className="h-16 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/90 dark:bg-[#09090b]/90 backdrop-blur-md shrink-0">
+          <header className="h-16 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/90 dark:bg-[#211E1B]/90 backdrop-blur-md shrink-0">
             <div className="flex items-center gap-3 min-w-0">
               <button
                 type="button"
@@ -666,7 +666,7 @@ export default function DashboardInboxPage() {
           </ScrollArea>
 
           {/* Bottom Message Input Area */}
-          <footer className="p-4 sm:p-6 pt-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pb-6 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/90 backdrop-blur-md shrink-0">
+          <footer className="p-4 sm:p-6 pt-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pb-6 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#211E1B]/90 backdrop-blur-md shrink-0">
             <div className="max-w-3xl mx-auto space-y-3">
               {/* Quick Replies */}
               <ScrollArea className="w-full whitespace-nowrap py-1">

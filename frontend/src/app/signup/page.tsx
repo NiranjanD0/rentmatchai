@@ -14,11 +14,11 @@ export default function SignupPage() {
   const isDark = resolvedTheme === "dark";
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-4 sm:p-6 bg-white dark:bg-black transition-colors">
+    <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-4 sm:p-6 bg-[#F9F5EF] dark:bg-[#171513] transition-colors">
       {/* Aceternity Spotlight Effect */}
       <Spotlight
         className="-top-40 left-0 md:left-60 md:-top-20"
-        fill={isDark ? "#ffffff" : "#a1a1aa"}
+        fill={isDark ? "#F5EFE7" : "#EAE4DC"}
       />
 
       {/* Magic UI Particles */}
@@ -29,7 +29,7 @@ export default function SignupPage() {
           staticity={50}
           ease={50}
           size={0.6}
-          color={isDark ? "#ffffff" : "#000000"}
+          color={isDark ? "#F5EFE7" : "#1A1A1A"}
         />
       </div>
 

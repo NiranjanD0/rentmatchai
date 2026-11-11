@@ -203,10 +203,10 @@ function ProfileContent() {
   const userInitials = `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-zinc-950 dark:text-zinc-50 pb-24 sm:pb-32">
+    <div className="min-h-screen bg-[#F9F5EF] dark:bg-[#171513] text-zinc-950 dark:text-zinc-50 pb-24 sm:pb-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10">
         {/* Profile Header Banner */}
-        <div className="p-6 sm:p-8 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-zinc-50/60 dark:bg-zinc-950/60 backdrop-blur-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm mb-8">
+        <div className="p-6 sm:p-8 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] backdrop-blur-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm mb-8">
           <div className="flex items-start sm:items-center gap-4 sm:gap-6">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center font-black text-xl sm:text-2xl shadow-md shrink-0">
               {user.avatar && !user.avatar.includes('dicebear') ? (
@@ -317,7 +317,7 @@ function ProfileContent() {
         {/* TAB 1: Personal Details & Preferences */}
         {activeTab === 'personal' && (
           <div className="max-w-3xl">
-            <div className="p-6 sm:p-9 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 shadow-sm">
+            <div className="p-6 sm:p-9 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-sm">
               <div className="mb-6 pb-4 border-b border-zinc-100 dark:border-zinc-850">
                 <h2 className="text-xl sm:text-2xl font-black text-zinc-950 dark:text-white tracking-tight">
                   Personal Information
@@ -480,7 +480,7 @@ function ProfileContent() {
           <div className="space-y-8">
             {/* Stats Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-5 sm:p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 shadow-xs">
+              <div className="p-5 sm:p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-xs">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
                   Total Properties
                 </span>
@@ -490,7 +490,7 @@ function ProfileContent() {
                 <small className="text-xs text-zinc-500 mt-1 block">All owned listings</small>
               </div>
 
-              <div className="p-5 sm:p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 shadow-xs">
+              <div className="p-5 sm:p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-xs">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">
                   Active (Live)
                 </span>
@@ -500,7 +500,7 @@ function ProfileContent() {
                 <small className="text-xs text-zinc-500 mt-1 block">Visible on search to tenants</small>
               </div>
 
-              <div className="p-5 sm:p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 shadow-xs">
+              <div className="p-5 sm:p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-xs">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
                   Inactive (Drafts/Hidden)
                 </span>

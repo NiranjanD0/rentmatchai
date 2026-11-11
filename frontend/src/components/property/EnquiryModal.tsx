@@ -41,7 +41,7 @@ export default function EnquiryModal({ property, onClose }: EnquiryModalProps) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 8 }}
         transition={{ type: 'spring', damping: 26, stiffness: 300 }}
-        className="relative w-full max-w-lg rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-950 p-6 sm:p-8 shadow-2xl shadow-zinc-950/20 dark:shadow-black/70 my-auto"
+        className="relative w-full max-w-lg rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] p-6 sm:p-8 shadow-2xl shadow-zinc-950/20 dark:shadow-black/70 my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Dismiss Button */}

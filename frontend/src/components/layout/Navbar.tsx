@@ -137,8 +137,8 @@ export default function Navbar({
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? 'border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/85 dark:bg-black/85 backdrop-blur-xl shadow-xs'
-          : 'border-b border-zinc-200/40 dark:border-zinc-800/40 bg-white/40 dark:bg-black/40 backdrop-blur-md'
+          ? 'border-b border-zinc-200/80 dark:border-zinc-800/80 bg-[#F9F5EF]/90 dark:bg-[#171513]/90 backdrop-blur-xl shadow-xs'
+          : 'border-b border-zinc-200/40 dark:border-zinc-800/40 bg-[#F9F5EF]/60 dark:bg-[#171513]/60 backdrop-blur-md'
       }`}
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
@@ -194,7 +194,7 @@ export default function Navbar({
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
-                className="flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 pl-1.5 pr-2.5 py-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all cursor-pointer shadow-xs active:scale-95"
+                className="flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#211E1B] pl-1.5 pr-2.5 py-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all cursor-pointer shadow-xs active:scale-95"
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                 aria-expanded={userDropdownOpen}
               >
@@ -224,7 +224,7 @@ export default function Navbar({
                     exit={{ opacity: 0, scale: 0.95, y: 6 }}
                     transition={{ type: 'spring', damping: 24, stiffness: 280 }}
                     style={{ transformOrigin: 'top right' }}
-                    className="absolute right-0 mt-2 w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl p-2 shadow-xl shadow-zinc-950/10 dark:shadow-black/50 z-50"
+                    className="absolute right-0 mt-2 w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#211E1B]/95 backdrop-blur-xl p-2 shadow-xl shadow-zinc-950/10 dark:shadow-black/50 z-50"
                   >
                     <div className="px-3 py-2.5 border-b border-zinc-100 dark:border-zinc-800/80 mb-1">
                       <div className="font-bold text-xs text-zinc-950 dark:text-zinc-100">
@@ -318,7 +318,7 @@ export default function Navbar({
           {/* Mobile Navigation Trigger Button */}
           <button
             type="button"
-            className="md:hidden flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 cursor-pointer active:scale-90 transition-transform"
+            className="md:hidden flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-[#211E1B]/80 text-zinc-700 dark:text-zinc-300 cursor-pointer active:scale-90 transition-transform"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
           >
@@ -335,7 +335,7 @@ export default function Navbar({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="md:hidden overflow-hidden border-t border-zinc-200/80 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-6 py-5 space-y-3"
+            className="md:hidden overflow-hidden border-t border-zinc-200/80 dark:border-zinc-800/80 bg-white/95 dark:bg-[#211E1B]/95 backdrop-blur-2xl px-6 py-5 space-y-3"
           >
             <div className="flex flex-col space-y-2">
               <button

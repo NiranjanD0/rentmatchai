@@ -180,7 +180,7 @@ export function LoginForm({
                       if (isInvalid) setIsInvalid(false);
                     }}
                     placeholder="you@domain.com"
-                    className="rounded-xl border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-xs sm:text-sm h-10 pl-9.5 focus:border-violet-500 focus:ring-violet-500/20"
+                    className="rounded-xl border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-xs sm:text-sm h-10 pl-9.5 focus:border-[#E8510E] focus:ring-[#E8510E]/20 dark:focus:border-[#F06A32] dark:focus:ring-[#F06A32]/20"
                   />
                 </div>
               </Field>
@@ -193,7 +193,7 @@ export function LoginForm({
                   <button
                     type="button"
                     onClick={() => notify.info('Password reset instructions sent to your email.', 'Password Reset')}
-                    className="text-xs text-violet-600 hover:text-violet-700 dark:text-violet-400 font-semibold cursor-pointer"
+                    className="text-xs text-[#E8510E] hover:text-[#D04509] dark:text-[#F06A32] font-semibold cursor-pointer"
                   >
                     Forgot password?
                   </button>
@@ -209,7 +209,7 @@ export function LoginForm({
                       if (isInvalid) setIsInvalid(false);
                     }}
                     placeholder="••••••••"
-                    className="rounded-xl border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-xs sm:text-sm h-10 pl-9.5 focus:border-violet-500 focus:ring-violet-500/20"
+                    className="rounded-xl border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 text-xs sm:text-sm h-10 pl-9.5 focus:border-[#E8510E] focus:ring-[#E8510E]/20 dark:focus:border-[#F06A32] dark:focus:ring-[#F06A32]/20"
                   />
                 </div>
               </Field>
@@ -231,7 +231,7 @@ export function LoginForm({
             <button
               type="button"
               onClick={() => navigateWithCurtains('/signup', 'Create Account')}
-              className="font-bold text-violet-600 dark:text-violet-400 hover:underline cursor-pointer"
+              className="font-bold text-[#E8510E] dark:text-[#F06A32] hover:underline cursor-pointer"
             >
               Create Account
             </button>

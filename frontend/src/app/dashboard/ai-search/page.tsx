@@ -68,43 +68,43 @@ const INITIAL_MESSAGES: ChatMessage[] = [
     id: 'msg-1',
     role: 'assistant',
     content:
-      "Hello! I'm your RentMatch AI Search assistant. Describe what you're looking for—such as neighborhood, budget, pet policies, or specific amenities—and I'll find matching properties and market comparisons.",
+      "Hello! I'm your RentMatch AI assistant. Describe your ideal home in Gandhinagar—such as preferred locality (Kudasan, Infocity, Raysan), monthly budget, bedrooms, or commute to DA-IICT/Infocity—and I'll surface verified direct listings with zero brokerage.",
     timestamp: '10:42 AM',
   },
   {
     id: 'msg-2',
     role: 'user',
     content:
-      'Find me pet-friendly 2-bedroom apartments near Downtown Austin with in-unit laundry under $2,400/month.',
+      'Find me furnished 2 BHK flats near Infocity or Kudasan with covered car parking under ₹24,000/month.',
     timestamp: '10:43 AM',
   },
   {
     id: 'msg-3',
     role: 'assistant',
     content:
-      'I analyzed 48 properties in Downtown and surrounding corridors. Here are 3 top matches fitting your criteria:',
+      'I analyzed verified direct rental inventory across Kudasan and Infocity corridors. Here are 3 top matches fitting your constraints:',
     timestamp: '10:43 AM',
     properties: [
       {
-        title: 'The Monarch High-Rise',
-        price: '$2,350/mo',
-        location: 'Downtown • 0.4 mi to transit',
-        beds: '2 Bed • 2 Bath',
+        title: 'Shivalik Parkview 2 BHK',
+        price: '₹22,000/mo',
+        location: 'Kudasan • 8 min to Infocity',
+        beds: '2 BHK • Fully Furnished',
         matchScore: 98,
         badge: 'Top Match',
       },
       {
-        title: 'Barton Springs Lofts',
-        price: '$2,180/mo',
-        location: 'South Congress • Dog park on-site',
-        beds: '2 Bed • 1.5 Bath',
+        title: 'Swagat Flamingo Heights',
+        price: '₹20,500/mo',
+        location: 'Sargasan • Covered Parking',
+        beds: '2 BHK • Semi Furnished',
         matchScore: 94,
       },
       {
-        title: 'Rainey Street Residences',
-        price: '$2,400/mo',
-        location: 'Rainey Historic District • In-unit W/D',
-        beds: '2 Bed • 2 Bath',
+        title: 'Infocity Greens Residency',
+        price: '₹23,500/mo',
+        location: 'Infocity • Walking distance to IT Park',
+        beds: '2 BHK • Fully Furnished',
         matchScore: 91,
       },
     ],
@@ -114,54 +114,54 @@ const INITIAL_MESSAGES: ChatMessage[] = [
 const INITIAL_HISTORY: HistoryItem[] = [
   {
     id: 'h-1',
-    title: 'Downtown Austin 2BHK with balcony',
+    title: 'Kudasan 2 BHK with covered parking',
     timestamp: 'Just now',
     category: 'Today',
     previewPrompt:
-      'Find me pet-friendly 2-bedroom apartments near Downtown Austin with in-unit laundry under $2,400/month.',
+      'Find me furnished 2 BHK flats near Infocity or Kudasan with covered car parking under ₹24,000/month.',
   },
   {
     id: 'h-2',
-    title: 'Pet friendly flats near Zilker Park',
+    title: 'Flats near DA-IICT under ₹18,000',
     timestamp: '2 hours ago',
     category: 'Today',
-    previewPrompt: 'Looking for modern flats near Zilker Park allowing large dogs.',
+    previewPrompt: 'Looking for modern 1 or 2 BHK flats near DA-IICT campus for postgraduate students.',
   },
   {
     id: 'h-3',
-    title: 'Average rent in Travis County',
+    title: 'Average rent trends in Gandhinagar',
     timestamp: 'Yesterday',
     category: 'Yesterday',
-    previewPrompt: 'Compare average rental yield and rent growth in Travis County.',
+    previewPrompt: 'Compare average rental rates between Kudasan, Raysan, and Sargasan.',
   },
   {
     id: 'h-4',
-    title: 'Modern studio near University campus',
+    title: 'Furnished studio near PDPU / Raysan',
     timestamp: 'Yesterday',
     category: 'Yesterday',
-    previewPrompt: 'Furnished studio lofts near university with high-speed internet.',
+    previewPrompt: 'Furnished studio apartments near PDPU with high-speed internet and power backup.',
   },
   {
     id: 'h-5',
-    title: 'High-rise lofts with EV charging',
+    title: '3 BHK penthouses in Sargasan',
     timestamp: '3 days ago',
     category: 'Previous 7 Days',
-    previewPrompt: 'Apartments with dedicated EV charging stalls and garage parking.',
+    previewPrompt: 'Spacious 3 and 4 BHK luxury flats with large balcony in Sargasan.',
   },
   {
     id: 'h-6',
-    title: 'Quiet 1-bedroom near tech hubs',
+    title: 'Family flats near TCS Infocity',
     timestamp: '5 days ago',
     category: 'Previous 7 Days',
-    previewPrompt: 'Quiet 1-bed apartments within 15 minutes of Apple campus.',
+    previewPrompt: 'Family-friendly 2 or 3 BHK gated communities within 10 minutes of TCS Garima Park.',
   },
 ];
 
 const SUGGESTIONS = [
-  '2-bed pet-friendly apartments under $2,200',
-  'Compare average rent near tech hubs',
-  'Lofts with in-unit laundry and garage',
-  'Top-rated school district family rentals',
+  '2 BHK furnished near Infocity under ₹22,000',
+  'Family gated societies in Kudasan with security',
+  'Bachelor-friendly 1 BHK flats near PDPU / Raysan',
+  '3 BHK flats with EV charging and parking',
 ];
 
 export default function AISearchPage() {
@@ -180,11 +180,13 @@ export default function AISearchPage() {
     const text = (textToSend || inputValue).trim();
     if (!text || isTyping) return;
 
+    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
     const userMsg: ChatMessage = {
-      id: `msg-${Date.now()}`,
+      id: `msg-user-${Date.now()}`,
       role: 'user',
       content: text,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: currentTime,
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -196,29 +198,29 @@ export default function AISearchPage() {
       const assistantMsg: ChatMessage = {
         id: `msg-ai-${Date.now()}`,
         role: 'assistant',
-        content: `I searched RentMatch AI's verified database for "${text}". Found multiple matching listings with current lease availability and market valuation.`,
+        content: `I searched RentMatch AI's verified Gandhinagar database for "${text}". Found multiple matching listings with current lease availability and direct owner contacts.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         properties: [
           {
-            title: 'Cedar Valley Residences',
-            price: '$2,150/mo',
-            location: 'Central District • Fast transit link',
-            beds: '2 Bed • 2 Bath',
+            title: 'Kudasan Heights Residency',
+            price: '₹21,500/mo',
+            location: 'Kudasan • 10 min to Infocity',
+            beds: '2 BHK • Semi Furnished',
             matchScore: 96,
             badge: 'Verified Match',
           },
           {
-            title: 'Skyline Overlook Lofts',
-            price: '$2,300/mo',
-            location: 'West End • Balcony & Parking',
-            beds: '2 Bed • 2 Bath',
+            title: 'Raysan Green Valley',
+            price: '₹19,000/mo',
+            location: 'Raysan • Near PDPU',
+            beds: '2 BHK • Garden Facing',
             matchScore: 92,
           },
         ],
       };
       setMessages((prev) => [...prev, assistantMsg]);
       setIsTyping(false);
-    }, 800);
+    }, 750);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -230,7 +232,6 @@ export default function AISearchPage() {
 
   const handleSelectHistory = (item: HistoryItem) => {
     setActiveHistoryId(item.id);
-    // Load conversation context preview
     setMessages([
       {
         id: `prev-1-${item.id}`,
@@ -245,18 +246,18 @@ export default function AISearchPage() {
         timestamp: item.timestamp,
         properties: [
           {
-            title: 'The Monarch High-Rise',
-            price: '$2,350/mo',
-            location: 'Downtown • 0.4 mi to transit',
-            beds: '2 Bed • 2 Bath',
+            title: 'Shivalik Parkview 2 BHK',
+            price: '₹22,000/mo',
+            location: 'Kudasan • 8 min to Infocity',
+            beds: '2 BHK • Fully Furnished',
             matchScore: 98,
             badge: 'Top Match',
           },
           {
-            title: 'Barton Springs Lofts',
-            price: '$2,180/mo',
-            location: 'South Congress • Dog park on-site',
-            beds: '2 Bed • 1.5 Bath',
+            title: 'Swagat Flamingo Heights',
+            price: '₹20,500/mo',
+            location: 'Sargasan • Covered Parking',
+            beds: '2 BHK • Semi Furnished',
             matchScore: 94,
           },
         ],
@@ -271,7 +272,7 @@ export default function AISearchPage() {
         id: `new-${Date.now()}`,
         role: 'assistant',
         content:
-          "Ready for a new search! Tell me your desired city, budget, bedrooms, or special preferences.",
+          "Ready for a new search! Tell me your target area in Gandhinagar, budget, preferred bedrooms, or specific requirements.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ]);
@@ -303,13 +304,13 @@ export default function AISearchPage() {
         {/* Sub-header inside Chat Pane */}
         <div className="h-12 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/80 dark:bg-zinc-900/40 backdrop-blur-xs shrink-0 transition-colors duration-200">
           <div className="flex items-center gap-2 text-xs">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20 font-medium">
-              <Sparkles size={13} className="text-violet-600 dark:text-violet-400" />
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 font-semibold">
+              <Sparkles size={13} className="text-zinc-700 dark:text-zinc-300" />
               <span>RentMatch AI Agent</span>
             </span>
             <span className="text-zinc-400 dark:text-zinc-500 hidden sm:inline">•</span>
             <span className="text-zinc-500 dark:text-zinc-400 hidden sm:inline text-[11px]">
-              Natural language rental search &amp; market intelligence
+              Natural language rental search · Gandhinagar
             </span>
           </div>
 
@@ -324,7 +325,6 @@ export default function AISearchPage() {
               <span className="hidden sm:inline">New Search</span>
             </Button>
 
-            {/* Toggle History Sidebar button */}
             <Button
               variant="ghost"
               size="icon-sm"
@@ -351,14 +351,14 @@ export default function AISearchPage() {
                         <MessageAvatar
                           className={`size-8 text-xs font-semibold ${
                             msg.role === 'user'
-                              ? 'bg-violet-600/15 text-violet-700 dark:bg-violet-600/30 dark:text-violet-300 border border-violet-500/30'
+                              ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
                               : 'bg-white text-zinc-800 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700/80 shadow-xs'
                           }`}
                         >
                           {msg.role === 'user' ? (
                             <span>{user?.firstName?.[0] || 'U'}</span>
                           ) : (
-                            <Bot size={15} className="text-violet-600 dark:text-violet-400" />
+                            <Bot size={15} className="text-zinc-700 dark:text-zinc-300" />
                           )}
                         </MessageAvatar>
 
@@ -381,13 +381,13 @@ export default function AISearchPage() {
                             <BubbleContent
                               className={`p-3.5 text-xs sm:text-sm leading-relaxed rounded-2xl ${
                                 msg.role === 'user'
-                                  ? 'bg-violet-600 text-white shadow-sm'
+                                  ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 shadow-sm'
                                   : 'bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-xs'
                               }`}
                             >
                               {msg.content}
 
-                              {/* Rich Property Cards Inside Assistant Message */}
+                              {/* Property Cards */}
                               {msg.properties && msg.properties.length > 0 && (
                                 <div className="mt-3.5 pt-3 border-t border-zinc-100 dark:border-zinc-800/80 space-y-2.5">
                                   {msg.properties.map((prop, idx) => (
@@ -401,7 +401,7 @@ export default function AISearchPage() {
                                             {prop.title}
                                           </span>
                                           {prop.badge && (
-                                            <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-violet-500/15 text-violet-600 dark:text-violet-400 border border-violet-500/25">
+                                            <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60">
                                               {prop.badge}
                                             </span>
                                           )}
@@ -415,11 +415,11 @@ export default function AISearchPage() {
                                       </div>
 
                                       <div className="text-right shrink-0">
-                                        <div className="text-xs sm:text-sm font-bold text-violet-600 dark:text-violet-400">
+                                        <div className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white tabular-nums">
                                           {prop.price}
                                         </div>
-                                        <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">
-                                          Match: <span className="text-violet-600 dark:text-violet-400 font-semibold">{prop.matchScore}%</span>
+                                        <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 tabular-nums">
+                                          Match: <span className="text-zinc-900 dark:text-white font-semibold">{prop.matchScore}%</span>
                                         </div>
                                       </div>
                                     </div>
@@ -437,15 +437,15 @@ export default function AISearchPage() {
                   {isTyping && (
                     <Message align="start">
                       <MessageAvatar className="size-8 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 shadow-xs">
-                        <Bot size={15} className="text-violet-600 dark:text-violet-400 animate-pulse" />
+                        <Bot size={15} className="text-zinc-600 dark:text-zinc-400" />
                       </MessageAvatar>
                       <MessageContent>
                         <Bubble variant="muted">
                           <BubbleContent className="p-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xs">
                             <div className="flex items-center gap-1.5 py-1 px-1">
-                              <span className="size-1.5 rounded-full bg-violet-500 animate-bounce [animation-delay:-0.3s]" />
-                              <span className="size-1.5 rounded-full bg-violet-500 animate-bounce [animation-delay:-0.15s]" />
-                              <span className="size-1.5 rounded-full bg-violet-500 animate-bounce" />
+                              <span className="size-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 animate-bounce [animation-delay:-0.3s]" />
+                              <span className="size-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 animate-bounce [animation-delay:-0.15s]" />
+                              <span className="size-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 animate-bounce" />
                             </div>
                           </BubbleContent>
                         </Bubble>
@@ -460,7 +460,7 @@ export default function AISearchPage() {
         </div>
 
         {/* Input & Suggestions Footer Area */}
-        <div className="p-4 sm:p-6 pt-0 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/80 backdrop-blur-md shrink-0 transition-colors duration-200">
+        <div className="p-4 sm:p-6 pt-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pb-6 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#09090b]/80 backdrop-blur-md shrink-0 transition-colors duration-200">
           <div className="max-w-3xl mx-auto space-y-3">
             {/* Quick Suggestions Chips */}
             {messages.length <= 3 && (
@@ -475,7 +475,7 @@ export default function AISearchPage() {
                       key={idx}
                       type="button"
                       onClick={() => handleSendMessage(item)}
-                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs"
+                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
                     >
                       {item}
                     </button>
@@ -485,15 +485,15 @@ export default function AISearchPage() {
               </ScrollArea>
             )}
 
-            {/* shadcn InputGroup with Textarea and Bottom Addons */}
+            {/* InputGroup with Textarea */}
             <InputGroup className="bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 focus-within:border-zinc-400 dark:focus-within:border-zinc-600 focus-within:ring-1 focus-within:ring-zinc-400 dark:focus-within:ring-zinc-600 rounded-2xl p-2 transition-all shadow-lg">
               <InputGroupTextarea
                 ref={textareaRef}
-                placeholder="Ask RentMatch AI to find homes, check rent trends, or compare neighborhoods..."
+                placeholder="Ask RentMatch AI to find homes, check rent trends, or compare neighborhoods in Gandhinagar..."
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 min-h-12 max-h-36 py-1 px-2 resize-none"
+                className="text-base sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 min-h-12 max-h-36 py-1 px-2 resize-none"
               />
 
               <InputGroupAddon
@@ -502,7 +502,7 @@ export default function AISearchPage() {
               >
                 <div className="flex items-center gap-2 text-zinc-500">
                   <span className="inline-flex items-center gap-1 text-[11px] font-medium text-zinc-600 dark:text-zinc-400">
-                    <Sparkles size={12} className="text-violet-600 dark:text-violet-400" />
+                    <Sparkles size={12} className="text-zinc-700 dark:text-zinc-300" />
                     <span>RentMatch Search v2</span>
                   </span>
                   <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700">•</span>
@@ -517,7 +517,7 @@ export default function AISearchPage() {
                     variant="default"
                     onClick={() => handleSendMessage()}
                     disabled={!inputValue.trim() || isTyping}
-                    className="size-7 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:bg-zinc-100 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-600 text-white flex items-center justify-center transition-all cursor-pointer shadow-xs"
+                    className="size-7 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 disabled:bg-zinc-100 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-600 text-white dark:text-zinc-900 flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
                     aria-label="Send message"
                   >
                     <ArrowUp size={14} strokeWidth={2.5} />
@@ -535,7 +535,7 @@ export default function AISearchPage() {
           {/* History Header */}
           <div className="p-4 border-b border-zinc-200 dark:border-zinc-800/80 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <History size={16} className="text-violet-600 dark:text-violet-400" />
+              <History size={16} className="text-zinc-700 dark:text-zinc-300" />
               <span className="font-semibold text-sm text-zinc-900 dark:text-white">Search History</span>
             </div>
             <Button
@@ -591,7 +591,7 @@ export default function AISearchPage() {
                             <MessageSquare
                               size={14}
                               className={`shrink-0 ${
-                                isActive ? 'text-violet-600 dark:text-violet-400' : 'text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300'
+                                isActive ? 'text-zinc-900 dark:text-white' : 'text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-700 dark:group-hover:text-zinc-300'
                               }`}
                             />
                             <div className="min-w-0">

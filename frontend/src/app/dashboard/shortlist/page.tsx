@@ -1,15 +1,11 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useMemo, useEffect, useCallback, Suspense } from 'react';
 import {
   Heart,
   Search,
   Compass,
   ArrowUpDown,
-  Sparkles,
-  ShieldCheck,
-  Building2,
   X,
   Bookmark,
 } from 'lucide-react';
@@ -27,7 +23,7 @@ export function DashboardShortlistSkeleton() {
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Skeleton className="h-7 w-36 rounded-lg bg-zinc-200/80 dark:bg-zinc-800/80" />
-            <Skeleton className="h-5 w-20 rounded-full bg-violet-500/15 dark:bg-violet-500/20" />
+            <Skeleton className="h-5 w-20 rounded-full bg-zinc-200/60 dark:bg-zinc-800/60" />
           </div>
           <Skeleton className="h-4 w-64 sm:w-80 rounded-md bg-zinc-200/60 dark:bg-zinc-800/60" />
         </div>
@@ -47,7 +43,6 @@ export function DashboardShortlistSkeleton() {
 }
 
 function DashboardShortlistContent() {
-  const router = useRouter();
   const { properties, saved, toggleSave } = useProperty();
   const { navigateWithCurtains } = usePageCurtains();
 
@@ -63,11 +58,6 @@ function DashboardShortlistContent() {
   const savedProperties = useMemo(() => {
     return properties.filter((p) => saved.includes(p.id));
   }, [properties, saved]);
-
-  if (!mounted) {
-    return <DashboardShortlistSkeleton />;
-  }
-
 
   // Search & Sort within shortlisted properties
   const displayedProperties = useMemo(() => {
@@ -94,9 +84,16 @@ function DashboardShortlistContent() {
     return list;
   }, [savedProperties, searchQuery, sortOption]);
 
-  const handleOpenDetails = (id: string) => {
-    navigateWithCurtains(`/properties/${id}`, 'Property Details');
-  };
+  const handleOpenDetails = useCallback(
+    (id: string) => {
+      navigateWithCurtains(`/properties/${id}`, 'Property Details');
+    },
+    [navigateWithCurtains]
+  );
+
+  if (!mounted) {
+    return <DashboardShortlistSkeleton />;
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-6">
@@ -107,8 +104,8 @@ function DashboardShortlistContent() {
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
               My Shortlist
             </h2>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20">
-              <Bookmark size={11} className="fill-violet-500/20" />
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 tabular-nums">
+              <Bookmark size={11} className="fill-zinc-400 dark:fill-zinc-500" />
               {savedProperties.length} Saved
             </span>
           </div>
@@ -118,13 +115,24 @@ function DashboardShortlistContent() {
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
+          {savedProperties.length >= 2 && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigateWithCurtains('/dashboard/compare', 'Compare Properties')}
+              className="h-9 text-xs gap-1.5 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer shadow-2xs active:scale-[0.98] touch-manipulation"
+            >
+              <ArrowUpDown size={14} className="text-zinc-600 dark:text-zinc-400" />
+              <span>Compare Properties</span>
+            </Button>
+          )}
           <Button
             variant="outline"
             size="sm"
             onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-            className="h-9 text-xs gap-1.5 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer shadow-2xs"
+            className="h-9 text-xs gap-1.5 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 cursor-pointer shadow-2xs active:scale-[0.98] touch-manipulation"
           >
-            <Compass size={14} className="text-violet-600 dark:text-violet-400" />
+            <Compass size={14} className="text-zinc-600 dark:text-zinc-400" />
             <span>Find More Properties</span>
           </Button>
         </div>
@@ -143,13 +151,13 @@ function DashboardShortlistContent() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search saved homes by title, area, or amenities..."
-              className="w-full h-10 pl-9 pr-9 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 shadow-2xs transition-colors"
+              className="w-full h-10 pl-9 pr-9 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-base sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 shadow-2xs transition-colors"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-0.5 rounded cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-0.5 rounded cursor-pointer active:scale-95 touch-manipulation"
                 aria-label="Clear search"
               >
                 <X size={14} />
@@ -161,7 +169,7 @@ function DashboardShortlistContent() {
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value as any)}
-              className="h-10 pl-3 pr-8 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 shadow-2xs appearance-none cursor-pointer transition-colors"
+              className="h-10 pl-3 pr-8 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-base sm:text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-hidden focus:border-zinc-400 dark:focus:border-zinc-600 shadow-2xs appearance-none cursor-pointer transition-colors touch-manipulation"
             >
               <option value="recent">Sort: Recently Added</option>
               <option value="match">Sort: Highest Match</option>
@@ -183,7 +191,7 @@ function DashboardShortlistContent() {
             <PropertyCard
               key={p.id}
               property={p}
-              isSaved={true}
+              isSaved={saved.includes(p.id)}
               onToggleSave={toggleSave}
               onOpenDetails={handleOpenDetails}
             />
@@ -213,8 +221,8 @@ function DashboardShortlistContent() {
       ) : (
         /* Empty Shortlist State */
         <div className="py-20 px-6 text-center rounded-3xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs">
-          <div className="size-16 mx-auto rounded-2xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center mb-4 border border-violet-500/20">
-            <Heart size={30} className="fill-violet-500/20" />
+          <div className="size-16 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 flex items-center justify-center mb-4 border border-zinc-200 dark:border-zinc-700/60">
+            <Heart size={28} className="fill-zinc-300 dark:fill-zinc-700" />
           </div>
           <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white">
             Your shortlist is empty
@@ -224,7 +232,7 @@ function DashboardShortlistContent() {
           </p>
           <Button
             onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-            className="h-10 text-xs px-5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold gap-2 shadow-xs cursor-pointer"
+            className="h-10 text-xs px-5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 font-semibold gap-2 shadow-xs cursor-pointer active:scale-[0.99]"
           >
             <Compass size={15} />
             <span>Find Available Properties</span>

@@ -13,6 +13,9 @@ import {
   ChevronDown,
   LayoutDashboard,
   ShieldCheck,
+  Menu,
+  X,
+  Compass,
 } from 'lucide-react';
 import { useAuth } from '@/src/context/AuthContext';
 import { useProperty } from '@/src/context/PropertyContext';
@@ -50,6 +53,7 @@ export default function Navbar({
   const onOpenAuth = propOpenAuth || ((tab, role) => openAuthModal(tab, role as UserRole));
 
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -96,12 +100,14 @@ export default function Navbar({
       }
     }
     setUserDropdownOpen(false);
+    setMobileMenuOpen(false);
   };
 
   const handleLogout = () => {
     const firstName = user?.firstName;
     logout();
     setUserDropdownOpen(false);
+    setMobileMenuOpen(false);
     notify.info(
       firstName
         ? `You have been signed out. See you soon, ${firstName}!`
@@ -115,13 +121,26 @@ export default function Navbar({
     ? `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase()
     : 'U';
 
+  const scrollToSection = (id: string) => {
+    setMobileMenuOpen(false);
+    if (pathname !== '/') {
+      router.push(`/#${id}`);
+      return;
+    }
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? 'border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-black/80 backdrop-blur-xl shadow-xs'
-          : 'border-b border-zinc-200/30 dark:border-zinc-800/30 bg-white/20 dark:bg-black/25 backdrop-blur-md'
+          ? 'border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/85 dark:bg-black/85 backdrop-blur-xl shadow-xs'
+          : 'border-b border-zinc-200/40 dark:border-zinc-800/40 bg-white/40 dark:bg-black/40 backdrop-blur-md'
       }`}
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-6">
         {/* Brand Logo */}
@@ -133,8 +152,40 @@ export default function Navbar({
           <BrandLogo size="md" />
         </button>
 
-        {/* Right Action Cluster: Two buttons only (Theme & Capsuled Login) */}
-        <div className="flex items-center gap-3">
+        {/* Desktop Middle Navigation Links (Apple-style minimalism) */}
+        <nav className="hidden md:flex items-center gap-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400">
+          <button
+            type="button"
+            onClick={() => handleNav('results')}
+            className="px-3.5 py-1.5 rounded-full hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100/80 dark:hover:bg-zinc-800/80 transition-all active:scale-95 cursor-pointer"
+          >
+            Explore Homes
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('how-it-works')}
+            className="px-3.5 py-1.5 rounded-full hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100/80 dark:hover:bg-zinc-800/80 transition-all active:scale-95 cursor-pointer"
+          >
+            How It Works
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('features')}
+            className="px-3.5 py-1.5 rounded-full hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100/80 dark:hover:bg-zinc-800/80 transition-all active:scale-95 cursor-pointer"
+          >
+            Features
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('faqs')}
+            className="px-3.5 py-1.5 rounded-full hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100/80 dark:hover:bg-zinc-800/80 transition-all active:scale-95 cursor-pointer"
+          >
+            FAQs
+          </button>
+        </nav>
+
+        {/* Right Action Cluster */}
+        <div className="flex items-center gap-2.5 sm:gap-3">
           {/* Black & White Theme Toggle */}
           <ToggleTheme />
 
@@ -164,14 +215,15 @@ export default function Navbar({
                 />
               </button>
 
-              {/* User Dropdown Card */}
+              {/* User Dropdown Card (Apple spring entrance) */}
               <AnimatePresence>
                 {userDropdownOpen && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.96, y: 6 }}
+                    initial={{ opacity: 0, scale: 0.95, y: 6 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.96, y: 6 }}
-                    transition={{ duration: 0.15 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 6 }}
+                    transition={{ type: 'spring', damping: 24, stiffness: 280 }}
+                    style={{ transformOrigin: 'top right' }}
                     className="absolute right-0 mt-2 w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl p-2 shadow-xl shadow-zinc-950/10 dark:shadow-black/50 z-50"
                   >
                     <div className="px-3 py-2.5 border-b border-zinc-100 dark:border-zinc-800/80 mb-1">
@@ -189,7 +241,7 @@ export default function Navbar({
 
                     <button
                       type="button"
-                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer active:scale-[0.98]"
                       onClick={() => handleNav('profile', 'personal')}
                     >
                       <User className="h-3.5 w-3.5 text-zinc-500" />
@@ -198,7 +250,7 @@ export default function Navbar({
 
                     <button
                       type="button"
-                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer active:scale-[0.98]"
                       onClick={() => handleNav('dashboard')}
                     >
                       <LayoutDashboard className="h-3.5 w-3.5 text-zinc-500" />
@@ -209,7 +261,7 @@ export default function Navbar({
                       <>
                         <button
                           type="button"
-                          className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                          className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer active:scale-[0.98]"
                           onClick={() => handleNav('profile', 'listings')}
                         >
                           <Building2 className="h-3.5 w-3.5 text-zinc-500" />
@@ -217,7 +269,7 @@ export default function Navbar({
                         </button>
                         <button
                           type="button"
-                          className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-zinc-950 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                          className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-zinc-950 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer active:scale-[0.98]"
                           onClick={() => {
                             setUserDropdownOpen(false);
                             onOpenAddProperty();
@@ -230,7 +282,7 @@ export default function Navbar({
                     ) : (
                       <button
                         type="button"
-                        className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer"
+                        className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left transition-colors cursor-pointer active:scale-[0.98]"
                         onClick={() => handleNav('shortlist')}
                       >
                         <Heart className="h-3.5 w-3.5 text-zinc-500" />
@@ -238,11 +290,11 @@ export default function Navbar({
                       </button>
                     )}
 
-                    <div className="h-px bg-zinc-100 dark:border-zinc-800/80 my-1" />
+                    <div className="h-px bg-zinc-100 dark:bg-zinc-800/80 my-1" />
 
                     <button
                       type="button"
-                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl text-left transition-colors cursor-pointer"
+                      className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl text-left transition-colors cursor-pointer active:scale-[0.98]"
                       onClick={handleLogout}
                     >
                       <LogOut className="h-3.5 w-3.5" />
@@ -255,15 +307,70 @@ export default function Navbar({
           ) : (
             <RainbowButton
               type="button"
-              className="rounded-full px-5 py-2 text-xs"
+              className="rounded-full px-5 py-2 text-xs cursor-pointer active:scale-95 transition-transform"
               onClick={() => handleNav('login')}
             >
               <LogIn className="h-3.5 w-3.5" />
               <span>Login</span>
             </RainbowButton>
           )}
+
+          {/* Mobile Navigation Trigger Button */}
+          <button
+            type="button"
+            className="md:hidden flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 cursor-pointer active:scale-90 transition-transform"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? <X size={17} /> : <Menu size={17} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Drawer Menu (Fluid Apple-style drop) */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="md:hidden overflow-hidden border-t border-zinc-200/80 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-6 py-5 space-y-3"
+          >
+            <div className="flex flex-col space-y-2">
+              <button
+                type="button"
+                onClick={() => handleNav('results')}
+                className="flex items-center justify-between w-full py-2.5 px-3 text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left cursor-pointer active:scale-[0.98]"
+              >
+                <span>Explore Homes</span>
+                <Compass size={16} className="text-zinc-400" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection('how-it-works')}
+                className="flex items-center justify-between w-full py-2.5 px-3 text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left cursor-pointer active:scale-[0.98]"
+              >
+                <span>How It Works</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection('features')}
+                className="flex items-center justify-between w-full py-2.5 px-3 text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left cursor-pointer active:scale-[0.98]"
+              >
+                <span>Features</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection('faqs')}
+                className="flex items-center justify-between w-full py-2.5 px-3 text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-xl text-left cursor-pointer active:scale-[0.98]"
+              >
+                <span>FAQs</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

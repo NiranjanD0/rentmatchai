@@ -68,6 +68,11 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -94,13 +99,52 @@ button, input, textarea, select {
   font: inherit;
 }
 
-button {
+/* Mobile-native: prevent iOS zoom on input focus */
+@media (pointer: coarse) {
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+/* Mobile-native & Apple touch responsiveness */
+button, a, [role="button"] {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
   cursor: pointer;
-  transition: all 0.15s ease;
+}
+
+/* Tactile press response with spring feel */
+.apple-press {
+  transition: transform 120ms cubic-bezier(0.25, 1, 0.5, 1), opacity 120ms ease;
+}
+.apple-press:active {
+  transform: scale(0.97);
+}
+
+/* Translucent Apple Glass Material */
+.apple-glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+.dark .apple-glass {
+  background: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 3px solid #9cd4b2;
+  outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 
@@ -3610,6 +3654,44 @@ footer > small {
     }
   100% {
     background-position: 100% -100%;
+    }
+  }
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-shiny-text: shiny-text 8s infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes shiny-text {
+  0%, 90%, 100% {
+    background-position: calc(-100% - var(--shiny-width)) 0;
+    }
+  30%, 60% {
+    background-position: calc(100% + var(--shiny-width)) 0;
+    }
+  }
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+  @keyframes spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -40%) scale(1);
     }
   }}
 

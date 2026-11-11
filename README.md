@@ -280,6 +280,7 @@ rentmatchai/
 │   ├── package.json              # Client dependencies and build scripts
 │   └── tsconfig.json             # TypeScript configuration
 ├── .gitignore                    # Git exclusions
+├── CONTRIBUTING.md               # Developer guidelines, branching, and PR workflow
 └── README.md                     # Main repository documentation
 ```
 
@@ -303,11 +304,14 @@ rentmatchai/
 
 ---
 
-## Contribution & Workflow
+## Contributing
 
-- **Branching Model:** Branch from `develop` using `feature/<name>` or `fix/<name>`. Keep pull requests small and focused, ideally under 300 lines.
-- **Commit Style:** Use Conventional Commits such as `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, and `chore:`.
-- **Reviews:** Require at least one approval, two for core authentication/backend changes, and passing CI tests before merging.
+We welcome contributions to RentMatchAI! Please refer to the [Contributing Guide](CONTRIBUTING.md) for details on:
+- Branching strategy and naming conventions
+- Conventional Commit message formats
+- Architectural guardrails (shadcn/ui, real data integration, end-to-end flows)
+- Local testing and linting standards
+- Pull request submission and code review requirements
 
 ---
 

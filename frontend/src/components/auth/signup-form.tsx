@@ -13,6 +13,7 @@ import { USER_ROLES, type UserRole } from '@/src/constants/initialData';
 import { usePageCurtains } from '@/src/components/ui/page-curtains';
 import { useToast } from '@/src/components/ui/notifications';
 import { InteractiveHoverButton } from '@/src/components/ui/interactive-hover-button';
+import { BorderBeam } from '@/src/components/ui/border-beam';
 
 export function SignupForm({
   className,
@@ -131,7 +132,14 @@ export function SignupForm({
 
   return (
     <div className={cn('flex flex-col gap-5', className)} {...props}>
-      <Card className="border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 rounded-3xl p-7 sm:p-9">
+      <Card className="relative overflow-hidden border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl shadow-zinc-900/5 dark:shadow-black/50 rounded-3xl p-7 sm:p-9">
+        <BorderBeam
+          size={80}
+          duration={8}
+          colorFrom="#ffffff"
+          colorTo="#71717a"
+          borderWidth={1.5}
+        />
         <CardContent className="p-0">
 
           <div className="mb-6">

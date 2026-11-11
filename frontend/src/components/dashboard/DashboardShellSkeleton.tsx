@@ -9,7 +9,7 @@ export function DashboardShellSkeleton() {
         <div className="space-y-6">
           {/* Logo Skeleton */}
           <div className="flex items-center gap-3 px-2 py-1">
-            <Skeleton className="size-9 rounded-xl bg-violet-500/20 dark:bg-violet-500/30" />
+            <Skeleton className="size-9 rounded-xl bg-zinc-200/80 dark:bg-zinc-800/80" />
             <Skeleton className="h-5 w-32 rounded-lg bg-zinc-200/80 dark:bg-zinc-800/80" />
           </div>
 

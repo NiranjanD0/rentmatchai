@@ -3,32 +3,48 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Shield, Mail, CheckCircle2, Lock, FileText, ExternalLink } from 'lucide-react';
+import { motion } from 'motion/react';
 import BrandLogo from '@/src/components/layout/BrandLogo';
 import { BlurFade } from '@/src/components/ui/blur-fade';
+import { usePageCurtains } from '@/src/components/ui/page-curtains';
 
 export default function PrivacyPolicyPage() {
+  const { navigateWithCurtains } = usePageCurtains();
+
   return (
-    <div className="min-h-screen bg-[#F9F5EF] dark:bg-[#171513] text-zinc-950 dark:text-zinc-50 transition-colors">
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      className="min-h-screen bg-[#F9F5EF] dark:bg-[#171513] text-zinc-950 dark:text-zinc-50 transition-colors"
+    >
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-40 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-[#F9F5EF]/85 dark:bg-[#171513]/85 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="hover:opacity-90 transition-opacity flex items-center">
+          <button
+            type="button"
+            onClick={() => navigateWithCurtains('/', 'Lander')}
+            className="hover:opacity-90 transition-opacity flex items-center cursor-pointer"
+          >
             <BrandLogo size="md" />
-          </Link>
+          </button>
           <div className="flex items-center gap-3">
-            <Link
-              href="/terms"
-              className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white px-3 py-1.5 rounded-full hover:bg-zinc-200/60 dark:hover:bg-zinc-800/60 transition-colors"
+            <button
+              type="button"
+              onClick={() => navigateWithCurtains('/terms', 'Terms of Service')}
+              className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white px-3 py-1.5 rounded-full hover:bg-zinc-200/60 dark:hover:bg-zinc-800/60 transition-colors cursor-pointer"
             >
               Terms of Service
-            </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 hover:bg-zinc-850 dark:hover:bg-zinc-150 transition-all shadow-2xs"
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateWithCurtains('/', 'Lander')}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 hover:bg-zinc-850 dark:hover:bg-zinc-150 transition-all shadow-2xs cursor-pointer"
             >
               <ArrowLeft size={13} />
               <span>Back to Home</span>
-            </Link>
+            </button>
           </div>
         </div>
       </header>
@@ -38,10 +54,6 @@ export default function PrivacyPolicyPage() {
         <BlurFade delay={0.1} inView>
           {/* Header */}
           <div className="mb-10 text-center sm:text-left">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 mb-3">
-              <Shield size={12} />
-              <span>Legal &amp; Data Protection</span>
-            </div>
             <h1 className="text-3xl sm:text-4xl font-black text-zinc-950 dark:text-white tracking-tight">
               Privacy Policy
             </h1>
@@ -193,15 +205,19 @@ export default function PrivacyPolicyPage() {
         <div className="mt-12 pt-8 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
           <p>© 2026 RentMatchAI. Direct &amp; Zero-Brokerage Rentals.</p>
           <div className="flex items-center gap-4">
-            <Link href="/terms" className="hover:text-zinc-950 dark:hover:text-white underline">
+            <button
+              type="button"
+              onClick={() => navigateWithCurtains('/terms', 'Terms of Service')}
+              className="hover:text-zinc-950 dark:hover:text-white underline cursor-pointer"
+            >
               Terms of Service
-            </Link>
-            <Link href="/privacy" className="font-semibold text-zinc-950 dark:text-white">
+            </button>
+            <span className="font-semibold text-zinc-950 dark:text-white">
               Privacy Policy
-            </Link>
+            </span>
           </div>
         </div>
       </main>
-    </div>
+    </motion.div>
   );
 }

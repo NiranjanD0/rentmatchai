@@ -128,6 +128,7 @@ export function GoogleAuthButton({
   }, [scriptLoaded, scriptError, mode]);
 
   const handleFallbackClick = () => {
+    if (isButtonDisabled) return;
     if (!GOOGLE_CLIENT_ID) {
       onError(new Error('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not configured.'));
       return;
@@ -196,10 +197,14 @@ export function GoogleAuthButton({
         </button>
 
         {/* Invisible Google GIS Overlay: Captures click directly into Google's official popup */}
-        {scriptLoaded && !scriptError && !isButtonDisabled && (
+        {scriptLoaded && !scriptError && (
           <div
             ref={overlayRef}
-            className="absolute inset-0 opacity-[0.0001] cursor-pointer flex items-center justify-center overflow-hidden scale-110"
+            className={`absolute inset-0 opacity-[0.0001] flex items-center justify-center overflow-hidden scale-110 ${
+              isButtonDisabled
+                ? 'pointer-events-none cursor-not-allowed'
+                : 'cursor-pointer'
+            }`}
             aria-hidden="true"
           />
         )}

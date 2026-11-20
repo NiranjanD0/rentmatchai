@@ -184,6 +184,54 @@ export const AuthService = {
   clearSession(): void {
     if (typeof window !== 'undefined') window.localStorage.removeItem(AUTH_SESSION_KEY);
   },
+
+  async sendPasswordResetOtp(email: string): Promise<{ message: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+    return apiRequest<{ message: string }>('/forgot-password', {
+      method: 'POST',
+      ...jsonBody({ email: normalizedEmail }),
+    });
+  },
+
+  async verifyPasswordResetOtp(email: string, otp: string): Promise<{ valid: boolean; message?: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+    return apiRequest<{ valid: boolean; message?: string }>('/verify-otp', {
+      method: 'POST',
+      ...jsonBody({ email: normalizedEmail, otp: otp.trim() }),
+    });
+  },
+
+  async resetPasswordWithOtp(
+    email: string,
+    otp: string,
+    newPassword: string,
+  ): Promise<{ message: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+    return apiRequest<{ message: string }>('/reset-password', {
+      method: 'POST',
+      ...jsonBody({
+        email: normalizedEmail,
+        otp: otp.trim(),
+        new_password: newPassword,
+      }),
+    });
+  },
+
+  async sendEmailVerificationOtp(email: string): Promise<{ message: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+    return apiRequest<{ message: string }>('/send-email-otp', {
+      method: 'POST',
+      ...jsonBody({ email: normalizedEmail }),
+    });
+  },
+
+  async verifyEmailOtp(email: string, otp: string): Promise<{ valid: boolean; message?: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+    return apiRequest<{ valid: boolean; message?: string }>('/verify-email-otp', {
+      method: 'POST',
+      ...jsonBody({ email: normalizedEmail, otp: otp.trim() }),
+    });
+  },
 };
 
 export const ProfileService = {

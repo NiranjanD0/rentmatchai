@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { ScrollArea } from '@/src/components/ui/scroll-area';
 import { GoogleAuthButton } from './GoogleAuthButton';
+import ForgotPasswordModal from './ForgotPasswordModal';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -32,14 +33,15 @@ export default function AuthModal({
   isOpen,
   onClose,
   initialTab = 'login',
-  initialRole = USER_ROLES.TENANT,
+  initialRole,
   onAuthSuccess,
 }: AuthModalProps) {
   const { login, register } = useAuth();
   const { notify } = useToast();
 
   const [tab, setTab] = useState(initialTab); // 'login' | 'register'
-  const [role, setRole] = useState<UserRole>(initialRole);
+  const [role, setRole] = useState<UserRole | null>(initialRole ?? null);
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
 
   // Form fields
   const [firstName, setFirstName] = useState('');
@@ -57,7 +59,7 @@ export default function AuthModal({
 
   useEffect(() => {
     setTab(initialTab);
-    setRole(initialRole);
+    setRole(initialRole ?? null);
     setErrorMessage('');
     setAuthStatus('idle');
   }, [initialTab, initialRole, isOpen]);
@@ -113,6 +115,14 @@ export default function AuthModal({
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!role) {
+      const msg = 'Please choose your role (Tenant or Property Lister).';
+      notify.error(msg, 'Role Required');
+      setErrorMessage(msg);
+      setAuthStatus('failed');
+      return;
+    }
 
     if (!firstName.trim()) {
       const msg = 'Please enter your first name.';
@@ -229,8 +239,8 @@ export default function AuthModal({
           <div className="space-y-4 mb-5">
             <GoogleAuthButton
               mode={tab === 'register' ? 'signup' : 'signin'}
-              preferredRole={role}
-              disabled={authStatus === 'validating'}
+              preferredRole={role || undefined}
+              disabled={authStatus === 'validating' || (tab === 'register' && !role)}
               onLoadingChange={(loading) => {
                 setAuthStatus(loading ? 'validating' : 'idle');
                 if (loading) setErrorMessage('');
@@ -249,6 +259,11 @@ export default function AuthModal({
                 setErrorMessage(err.message);
               }}
             />
+            {tab === 'register' && !role && (
+              <p className="text-[11px] text-zinc-400 dark:text-zinc-500 text-center font-medium">
+                Select your role below to enable Google Sign-Up
+              </p>
+            )}
 
             <div className="relative flex items-center justify-center">
               <div className="absolute inset-0 flex items-center">
@@ -332,6 +347,15 @@ export default function AuthModal({
                     aria-label="Toggle password visibility"
                   >
                     {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                  </button>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setIsForgotPasswordOpen(true)}
+                    className="text-xs text-[#E8510E] dark:text-[#F06A32] font-semibold hover:underline cursor-pointer"
+                  >
+                    Forgot password?
                   </button>
                 </div>
               </div>
@@ -508,17 +532,26 @@ export default function AuthModal({
               <button
                 type="submit"
                 className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-zinc-950 hover:bg-zinc-850 dark:bg-white dark:hover:bg-zinc-150 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
-                disabled={authStatus === 'validating'}
+                disabled={authStatus === 'validating' || !role}
               >
                 <span>
                   {authStatus === 'validating'
                     ? 'Creating account...'
+                    : !role
+                    ? 'Select a Role to Continue'
                     : `Register as ${role === USER_ROLES.PROPERTY_LISTER ? 'Property Lister' : 'Tenant'}`}
                 </span>
               </button>
             </form>
           )}
         </ScrollArea>
+
+        {/* Forgot Password Modal */}
+        <ForgotPasswordModal
+          isOpen={isForgotPasswordOpen}
+          onClose={() => setIsForgotPasswordOpen(false)}
+          initialEmail={email}
+        />
       </motion.div>
     </div>
   );

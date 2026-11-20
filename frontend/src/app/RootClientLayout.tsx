@@ -15,7 +15,8 @@ function HeaderSlot() {
   const pathname = usePathname();
   const isAuthPage = pathname === '/login' || pathname === '/signup' || pathname === '/register';
   const isDashboardPage = pathname?.startsWith('/dashboard');
-  if (isAuthPage || isDashboardPage) return null;
+  const isLegalPage = pathname === '/privacy' || pathname === '/terms';
+  if (isAuthPage || isDashboardPage || isLegalPage) return null;
   return <Navbar />;
 }
 
@@ -23,7 +24,8 @@ function FooterSlot() {
   const pathname = usePathname();
   const isAuthPage = pathname === '/login' || pathname === '/signup' || pathname === '/register';
   const isDashboardPage = pathname?.startsWith('/dashboard');
-  if (isAuthPage || isDashboardPage) return null;
+  const isLegalPage = pathname === '/privacy' || pathname === '/terms';
+  if (isAuthPage || isDashboardPage || isLegalPage) return null;
   return (
     <footer className="border-t border-zinc-200/80 dark:border-zinc-800/80 bg-[#F9F5EF] dark:bg-[#171513] text-zinc-600 dark:text-zinc-400">
       <BlurFade delay={0.1} inView>

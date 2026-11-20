@@ -19,6 +19,7 @@ import { useToast } from '@/src/components/ui/notifications';
 import { InteractiveHoverButton } from '@/src/components/ui/interactive-hover-button';
 import { BorderBeam } from '@/src/components/ui/border-beam';
 import { GoogleAuthButton } from './GoogleAuthButton';
+import ForgotPasswordModal from './ForgotPasswordModal';
 
 export function LoginForm({
   className,
@@ -37,6 +38,7 @@ export function LoginForm({
   const [loading, setLoading] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
 
   // Validate redirect parameter to ensure safe relative internal path
   const getSafeDestination = (userRole?: string) => {
@@ -207,7 +209,7 @@ export function LoginForm({
                   <button
                     type="button"
                     disabled={loading || isRedirecting}
-                    onClick={() => notify.info('Password reset is not available yet.', 'Password Reset')}
+                    onClick={() => setIsForgotPasswordOpen(true)}
                     className="text-xs text-violet-600 hover:text-violet-700 dark:text-violet-400 font-semibold cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
                   >
                     Forgot password?
@@ -281,6 +283,13 @@ export function LoginForm({
       <FieldDescription className="text-center text-[11px] text-zinc-500 dark:text-zinc-400">
         By continuing, you agree to RentMatch AI&apos;s Terms of Service and Privacy Policy.
       </FieldDescription>
+
+      {/* Forgot Password Modal with 6-digit OTP verification */}
+      <ForgotPasswordModal
+        isOpen={isForgotPasswordOpen}
+        onClose={() => setIsForgotPasswordOpen(false)}
+        initialEmail={email}
+      />
     </div>
   );
 }

@@ -16,6 +16,7 @@ import { useToast } from '@/src/components/ui/notifications';
 import { InteractiveHoverButton } from '@/src/components/ui/interactive-hover-button';
 import { BorderBeam } from '@/src/components/ui/border-beam';
 import { GoogleAuthButton } from './GoogleAuthButton';
+import VerifyEmailOtpModal from './VerifyEmailOtpModal';
 
 export function SignupForm({
   className,
@@ -28,7 +29,7 @@ export function SignupForm({
   const { notify } = useToast();
   const { navigateWithCurtains } = usePageCurtains();
 
-  const [role, setRole] = useState<UserRole>(USER_ROLES.TENANT);
+  const [role, setRole] = useState<UserRole | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,6 +39,8 @@ export function SignupForm({
   const [loading, setLoading] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
+  const [isVerifyEmailOpen, setIsVerifyEmailOpen] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   // Validate redirect parameter to ensure safe relative internal path
   const getSafeDestination = (userRole?: string) => {
@@ -67,6 +70,12 @@ export function SignupForm({
     const trimmedFirst = firstName.trim();
     const trimmedLast = lastName.trim();
     const trimmedEmail = email.trim();
+
+    if (!role) {
+      notify.error('Please select your role (I Want to Rent or I Own Property).', 'Role Required');
+      setIsInvalid(true);
+      return;
+    }
 
     if (!trimmedFirst) {
       notify.error('Please enter your first name.', 'Missing First Name');
@@ -153,7 +162,17 @@ export function SignupForm({
           </div>
 
           {/* Role Selection Tabs */}
-          <div className="relative grid grid-cols-2 gap-2 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-2xl mb-5">
+          <div className="mb-2 flex items-center justify-between">
+            <label className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+              Account Role *
+            </label>
+            {!role && (
+              <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                Please select your role
+              </span>
+            )}
+          </div>
+          <div className="relative grid grid-cols-2 gap-2 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-2xl mb-4">
             <button
               type="button"
               disabled={loading || isRedirecting}
@@ -219,31 +238,37 @@ export function SignupForm({
           </div>
 
           {/* Social Google Signup Button */}
-          <GoogleAuthButton
-            mode="signup"
-            preferredRole={role}
-            disabled={loading || isRedirecting}
-            className="mb-4"
-            onLoadingChange={(isLoading) => {
-              if (!isRedirecting) setLoading(isLoading);
-            }}
-            onSuccess={(session) => {
-              setIsRedirecting(true);
-              setLoading(true);
-              notify.success(`Welcome to RentMatch AI, ${session.user.firstName}! Preparing your dashboard...`, 'Account Created');
-              const target = getSafeDestination(session.user.role);
-              navigateWithCurtains(target, 'Dashboard');
-              setTimeout(() => {
-                router.push(target);
-              }, 450);
-            }}
-            onError={(err) => {
-              setIsRedirecting(false);
-              setLoading(false);
-              setIsInvalid(true);
-              notify.error(err.message, 'Google Sign-Up Error');
-            }}
-          />
+          <div className="mb-4">
+            <GoogleAuthButton
+              mode="signup"
+              preferredRole={role || undefined}
+              disabled={!role || loading || isRedirecting}
+              onLoadingChange={(isLoading) => {
+                if (!isRedirecting) setLoading(isLoading);
+              }}
+              onSuccess={(session) => {
+                setIsRedirecting(true);
+                setLoading(true);
+                notify.success(`Welcome to RentMatch AI, ${session.user.firstName}! Preparing your dashboard...`, 'Account Created');
+                const target = getSafeDestination(session.user.role);
+                navigateWithCurtains(target, 'Dashboard');
+                setTimeout(() => {
+                  router.push(target);
+                }, 450);
+              }}
+              onError={(err) => {
+                setIsRedirecting(false);
+                setLoading(false);
+                setIsInvalid(true);
+                notify.error(err.message, 'Google Sign-Up Error');
+              }}
+            />
+            {!role && (
+              <p className="text-[11px] text-zinc-400 dark:text-zinc-500 text-center mt-1.5 font-medium">
+                Select your role above to enable Google Sign-Up
+              </p>
+            )}
+          </div>
 
           {/* Centered Horizontal Separator */}
           <div className="relative my-4">
@@ -312,9 +337,26 @@ export function SignupForm({
             </div>
 
             <div>
-              <FieldLabel htmlFor="signup-email" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 mb-1">
-                Email Address *
-              </FieldLabel>
+              <div className="flex items-center justify-between mb-1">
+                <FieldLabel htmlFor="signup-email" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                  Email Address *
+                </FieldLabel>
+                {email.trim() && (
+                  <button
+                    type="button"
+                    onClick={() => setIsVerifyEmailOpen(true)}
+                    className="text-[11px] font-semibold text-[#E8510E] dark:text-[#F06A32] hover:underline cursor-pointer"
+                  >
+                    {isEmailVerified ? (
+                      <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 size={11} /> Verified
+                      </span>
+                    ) : (
+                      'Verify with OTP'
+                    )}
+                  </button>
+                )}
+              </div>
               <div className="relative">
                 <Mail className="h-4 w-4 text-zinc-400 absolute left-3 top-3 pointer-events-none" />
                 <Input
@@ -386,9 +428,9 @@ export function SignupForm({
 
             <InteractiveHoverButton
               type="submit"
-              disabled={loading || isRedirecting}
+              disabled={!role || loading || isRedirecting}
               isInvalid={isInvalid}
-              className="mt-3"
+              className="mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isRedirecting ? (
                 <span className="inline-flex items-center gap-2">
@@ -400,6 +442,8 @@ export function SignupForm({
                   <Loader2 className="size-3.5 animate-spin" />
                   <span>Creating account...</span>
                 </span>
+              ) : !role ? (
+                <span>Select a Role to Continue</span>
               ) : (
                 'Create Free Account'
               )}
@@ -431,6 +475,14 @@ export function SignupForm({
           Privacy Policy
         </Link>.
       </FieldDescription>
+
+      {/* Verify Email OTP Modal */}
+      <VerifyEmailOtpModal
+        isOpen={isVerifyEmailOpen}
+        onClose={() => setIsVerifyEmailOpen(false)}
+        initialEmail={email}
+        onVerified={() => setIsEmailVerified(true)}
+      />
     </div>
   );
 }

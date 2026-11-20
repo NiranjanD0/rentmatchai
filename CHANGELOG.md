@@ -5,6 +5,14 @@ All notable changes to RentMatch AI will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-11-21
+
+### Fixed
+- Fixed Google Sign-In button becoming non-functional after switching between `/login` and `/signup` routes without full page refresh:
+  - Initialized `scriptLoaded` state from `window.google?.accounts?.id` to detect already loaded Google Identity Services (GIS) on client-side route transitions.
+  - Added `id="google-identity-services"` and `onReady` listener to Next.js `<Script>` to handle repeated component mounting across SPA navigations.
+  - Kept Google button overlay DOM container always mounted and active with `requestAnimationFrame` render measurement to ensure the Google OAuth popup triggers accurately even during curtain or fade animations.
+
 ## [0.2.1] - 2026-11-20
 
 ### Added

@@ -49,6 +49,10 @@ interface GoogleAuthButtonProps {
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
+const isGoogleLoaded = (): boolean => {
+  return typeof window !== 'undefined' && Boolean(window.google?.accounts?.id);
+};
+
 export function GoogleAuthButton({
   mode = 'signin',
   preferredRole,
@@ -61,7 +65,7 @@ export function GoogleAuthButton({
   const containerRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const { loginWithGoogle } = useAuth();
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [scriptLoaded, setScriptLoaded] = useState<boolean>(isGoogleLoaded);
   const [scriptError, setScriptError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -97,9 +101,32 @@ export function GoogleAuthButton({
     credentialHandlerRef.current = handleCredential;
   }, [handleCredential]);
 
-  // Initialize Google Identity Services
+  // Check if Google script is already loaded on window or polls until ready (for client-side SPA transitions)
   useEffect(() => {
-    if (!scriptLoaded || scriptError || !GOOGLE_CLIENT_ID) return;
+    if (isGoogleLoaded()) {
+      setScriptLoaded(true);
+      return;
+    }
+
+    const checkInterval = setInterval(() => {
+      if (isGoogleLoaded()) {
+        setScriptLoaded(true);
+        clearInterval(checkInterval);
+      }
+    }, 50);
+
+    const timeout = setTimeout(() => {
+      clearInterval(checkInterval);
+    }, 4000);
+
+    return () => {
+      clearInterval(checkInterval);
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  const renderGoogleButton = useCallback(() => {
+    if (!GOOGLE_CLIENT_ID || !isGoogleLoaded()) return;
     const googleId = window.google?.accounts?.id;
     const overlay = overlayRef.current;
     if (!googleId || !overlay) return;
@@ -125,7 +152,25 @@ export function GoogleAuthButton({
     } catch (err: unknown) {
       console.warn('Google Identity Services render failed:', err);
     }
-  }, [scriptLoaded, scriptError, mode]);
+  }, [mode]);
+
+  // Render Google GIS button whenever script is loaded or mode changes, plus on animation completion
+  useEffect(() => {
+    if (!scriptLoaded || scriptError) return;
+
+    renderGoogleButton();
+
+    // Re-render on next frame in case container is currently animating in (e.g. page-curtains or blur-fade)
+    const rafId = requestAnimationFrame(() => {
+      renderGoogleButton();
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+    };
+  }, [scriptLoaded, scriptError, renderGoogleButton]);
+
+  const isButtonDisabled = disabled || isSubmitting;
 
   const handleFallbackClick = () => {
     if (isButtonDisabled) return;
@@ -133,7 +178,7 @@ export function GoogleAuthButton({
       onError(new Error('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not configured.'));
       return;
     }
-    if (scriptError || !window.google?.accounts?.id) {
+    if (scriptError || !isGoogleLoaded()) {
       onError(
         new Error(
           'Google Identity Services is unreachable. Please check your internet connection or ad blocker.'
@@ -141,9 +186,15 @@ export function GoogleAuthButton({
       );
       return;
     }
-    // Attempt prompt if rendered button was not clicked
+
     try {
-      window.google?.accounts?.id?.prompt?.();
+      const googleId = window.google?.accounts?.id;
+      googleId?.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: (resp) => credentialHandlerRef.current(resp),
+      });
+      renderGoogleButton();
+      googleId?.prompt?.();
     } catch (err: unknown) {
       onError(
         new Error(
@@ -153,14 +204,14 @@ export function GoogleAuthButton({
     }
   };
 
-  const isButtonDisabled = disabled || isSubmitting;
-
   return (
     <>
       <Script
+        id="google-identity-services"
         src="https://accounts.google.com/gsi/client"
         strategy="afterInteractive"
         onLoad={() => setScriptLoaded(true)}
+        onReady={() => setScriptLoaded(true)}
         onError={() => setScriptError(true)}
       />
 
@@ -168,7 +219,7 @@ export function GoogleAuthButton({
         ref={containerRef}
         className={`relative w-full overflow-hidden rounded-xl ${className}`}
       >
-        {/* Visual Custom Button (Matching fb4c61d styling exactly) */}
+        {/* Visual Custom Button */}
         <button
           type="button"
           onClick={handleFallbackClick}
@@ -197,11 +248,11 @@ export function GoogleAuthButton({
         </button>
 
         {/* Invisible Google GIS Overlay: Captures click directly into Google's official popup */}
-        {scriptLoaded && !scriptError && (
+        {GOOGLE_CLIENT_ID && !scriptError && (
           <div
             ref={overlayRef}
             className={`absolute inset-0 opacity-[0.0001] flex items-center justify-center overflow-hidden scale-110 ${
-              isButtonDisabled
+              isButtonDisabled || !scriptLoaded
                 ? 'pointer-events-none cursor-not-allowed'
                 : 'cursor-pointer'
             }`}

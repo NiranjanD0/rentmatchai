@@ -5,6 +5,17 @@ All notable changes to RentMatch AI will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] - 2026-11-23
+
+### Changed
+- Refactored dashboard views to remove hyper-rounded "capsule" styling in favor of standard clean dashboard cards and buttons:
+  - Replaced `rounded-3xl` header banners, key metric tiles, empty states, and comparison matrix tables with standard clean `rounded-xl`.
+  - Replaced `rounded-full` action buttons with `rounded-lg`.
+  - Replaced `rounded-full` status badges and criteria tags with `rounded-md`.
+  - Standardized form inputs and search fields to `rounded-lg`.
+  - Updated segmented control tabs and toggle containers to `rounded-lg` with `rounded-md` active tab buttons.
+  - Normalized across Tenant Dashboard, Landlord Dashboard, Properties Portfolio, Profile, Shortlist, Compare, and Explore views.
+
 ## [0.2.2] - 2026-11-21
 
 ### Fixed

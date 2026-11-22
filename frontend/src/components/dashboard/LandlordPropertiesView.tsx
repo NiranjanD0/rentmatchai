@@ -110,7 +110,7 @@ export default function LandlordPropertiesView() {
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 select-none">
       {/* 1. Page Header & Actions */}
-      <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
+      <div className="relative overflow-hidden rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
@@ -124,7 +124,7 @@ export default function LandlordPropertiesView() {
           <div className="flex items-center gap-3 shrink-0">
             <Button
               onClick={openAddProperty}
-              className="gap-2 h-11 px-6 rounded-full bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
+              className="gap-2 h-11 px-6 rounded-lg bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
             >
               <Plus size={16} strokeWidth={2.5} />
               <span>Add New Property</span>
@@ -134,7 +134,7 @@ export default function LandlordPropertiesView() {
 
         {/* 2. Portfolio Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800/80">
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-50/80 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60">
+          <div className="p-4 sm:p-5 rounded-xl bg-zinc-50/80 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60">
             <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
               Total Properties
             </span>
@@ -146,7 +146,7 @@ export default function LandlordPropertiesView() {
             </div>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-50/80 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60">
+          <div className="p-4 sm:p-5 rounded-xl bg-zinc-50/80 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60">
             <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">
               Active Listings
             </span>
@@ -158,7 +158,7 @@ export default function LandlordPropertiesView() {
             </div>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-50/80 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60">
+          <div className="p-4 sm:p-5 rounded-xl bg-zinc-50/80 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60">
             <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
               Paused / Drafts
             </span>
@@ -170,7 +170,7 @@ export default function LandlordPropertiesView() {
             </div>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-50/80 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60">
+          <div className="p-4 sm:p-5 rounded-xl bg-zinc-50/80 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60">
             <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
               Live Rent Roll
             </span>
@@ -194,7 +194,7 @@ export default function LandlordPropertiesView() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by title, location, BHK..."
-            className="w-full h-10 pl-10 pr-9 rounded-2xl text-xs bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800/90 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-hidden focus:ring-2 focus:ring-[#E8510E]/30 transition-all shadow-2xs"
+            className="w-full h-10 pl-10 pr-9 rounded-lg text-xs bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800/90 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-hidden focus:ring-2 focus:ring-[#E8510E]/30 transition-all shadow-2xs"
           />
           {searchQuery && (
             <button
@@ -210,10 +210,10 @@ export default function LandlordPropertiesView() {
         {/* Filter Pills + Sort & View Mode */}
         <div className="flex flex-wrap items-center gap-3">
           {/* Status Tabs */}
-          <div className="inline-flex p-1 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80">
+          <div className="inline-flex p-1 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80">
             <button
               type="button"
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${
                 statusFilter === 'ALL'
                   ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
@@ -224,7 +224,7 @@ export default function LandlordPropertiesView() {
             </button>
             <button
               type="button"
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${
                 statusFilter === 'ACTIVE'
                   ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
@@ -236,7 +236,7 @@ export default function LandlordPropertiesView() {
             </button>
             <button
               type="button"
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${
                 statusFilter === 'INACTIVE'
                   ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
@@ -253,7 +253,7 @@ export default function LandlordPropertiesView() {
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value as typeof sortOption)}
-              className="h-9 px-3 rounded-xl text-xs font-semibold bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800/90 text-zinc-700 dark:text-zinc-300 cursor-pointer shadow-2xs focus:outline-hidden"
+              className="h-9 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800/90 text-zinc-700 dark:text-zinc-300 cursor-pointer shadow-2xs focus:outline-hidden"
             >
               <option value="newest">Sort: Default</option>
               <option value="rent-high">Rent: High to Low</option>
@@ -263,11 +263,11 @@ export default function LandlordPropertiesView() {
           </div>
 
           {/* View Mode Toggle */}
-          <div className="inline-flex p-1 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80">
+          <div className="inline-flex p-1 rounded-lg bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/80">
             <button
               type="button"
               onClick={() => setViewMode('table')}
-              className={`p-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`p-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${
                 viewMode === 'table'
                   ? 'bg-white dark:bg-zinc-900 text-zinc-950 dark:text-white shadow-2xs'
                   : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
@@ -380,7 +380,7 @@ export default function LandlordPropertiesView() {
                         type="button"
                         onClick={() => togglePropertyStatus(p.id)}
                         title="Click to toggle status"
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold cursor-pointer transition-all active:scale-95 ${
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold cursor-pointer transition-all active:scale-95 ${
                           p.status === PROPERTY_STATUS.ACTIVE
                             ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20'
                             : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700/60 hover:bg-zinc-200/80 dark:hover:bg-zinc-700/80'
@@ -459,8 +459,8 @@ export default function LandlordPropertiesView() {
           </div>
         )
       ) : myProperties.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800 p-10 sm:p-14 text-center bg-white/60 dark:bg-zinc-900/40">
-          <div className="size-14 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 flex items-center justify-center mb-4">
+        <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-800 p-10 sm:p-14 text-center bg-white/60 dark:bg-zinc-900/40">
+          <div className="size-14 mx-auto rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-400 flex items-center justify-center mb-4">
             <Building2 size={24} />
           </div>
           <h3 className="text-base font-bold text-zinc-950 dark:text-white">
@@ -471,7 +471,7 @@ export default function LandlordPropertiesView() {
           </p>
         </div>
       ) : (
-        <div className="rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 p-8 sm:p-12 text-center bg-white dark:bg-zinc-900/40">
+        <div className="rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 p-8 sm:p-12 text-center bg-white dark:bg-zinc-900/40">
           <AlertCircle size={28} className="text-zinc-400 mx-auto mb-2" />
           <h3 className="text-sm font-bold text-zinc-950 dark:text-white">
             No matching properties
@@ -486,7 +486,7 @@ export default function LandlordPropertiesView() {
               setSearchQuery('');
               setStatusFilter('ALL');
             }}
-            className="text-xs rounded-full cursor-pointer"
+            className="text-xs rounded-lg cursor-pointer"
           >
             Clear Filters
           </Button>

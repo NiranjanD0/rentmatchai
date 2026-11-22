@@ -161,7 +161,7 @@ function DashboardExploreContent() {
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 tabular-nums">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-semibold bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 tabular-nums">
               <span className="size-1.5 rounded-full bg-emerald-500" />
               {results.length} Available
             </span>
@@ -235,7 +235,7 @@ function DashboardExploreContent() {
 
       {/* 2. Filter Options Panel */}
       {showFilters && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs space-y-4 transition-all">
+        <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs space-y-4 transition-all">
           {/* Locality Chips */}
           <div>
             <div className="flex items-center justify-between mb-2">
@@ -398,8 +398,8 @@ function DashboardExploreContent() {
         </div>
       ) : (
         /* Empty State */
-        <div className="py-16 px-6 text-center rounded-3xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs">
-          <div className="size-14 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 flex items-center justify-center mb-4">
+        <div className="py-16 px-6 text-center rounded-xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs">
+          <div className="size-14 mx-auto rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 flex items-center justify-center mb-4">
             <Compass size={28} />
           </div>
           <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white">
@@ -410,7 +410,7 @@ function DashboardExploreContent() {
           </p>
           <Button
             onClick={resetFilters}
-            className="h-9 text-xs px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 font-semibold gap-2 shadow-xs cursor-pointer active:scale-[0.98]"
+            className="h-9 text-xs px-4 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 font-semibold gap-2 shadow-xs cursor-pointer active:scale-[0.98]"
           >
             <RotateCcw size={13} />
             <span>Reset All Filters</span>
@@ -431,7 +431,7 @@ export function DashboardExploreSkeleton() {
             <Skeleton className="h-4 w-72 rounded-md" />
           </div>
           <div className="flex items-center gap-2">
-            <Skeleton className="h-7 w-24 rounded-full" />
+            <Skeleton className="h-7 w-24 rounded-md" />
             <Skeleton className="h-8 w-20 rounded-xl" />
           </div>
         </div>
@@ -442,7 +442,7 @@ export function DashboardExploreSkeleton() {
         </div>
       </div>
 
-      <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs space-y-4">
+      <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs space-y-4">
         <div className="space-y-2">
           <Skeleton className="h-3.5 w-28 rounded" />
           <div className="flex gap-2 overflow-hidden">

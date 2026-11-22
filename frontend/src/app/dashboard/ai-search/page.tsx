@@ -304,7 +304,7 @@ export default function AISearchPage() {
         {/* Sub-header inside Chat Pane */}
         <div className="h-12 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/80 dark:bg-zinc-900/40 backdrop-blur-xs shrink-0 transition-colors duration-200">
           <div className="flex items-center gap-2 text-xs">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 font-semibold">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 font-semibold">
               <Sparkles size={13} className="text-zinc-700 dark:text-zinc-300" />
               <span>RentMatch AI Agent</span>
             </span>
@@ -475,7 +475,7 @@ export default function AISearchPage() {
                       key={idx}
                       type="button"
                       onClick={() => handleSendMessage(item)}
-                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
+                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-lg bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
                     >
                       {item}
                     </button>

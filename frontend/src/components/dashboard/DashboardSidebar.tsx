@@ -259,7 +259,7 @@ export function DashboardSidebar({
                 badge={
                   shortlistCount > 0 ? (
                     <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-md ${
                         pathname === '/dashboard/shortlist' || pathname === '/shortlist'
                           ? 'bg-zinc-800 text-zinc-100 dark:bg-zinc-200 dark:text-zinc-900'
                           : 'bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/60'
@@ -331,7 +331,7 @@ export function DashboardSidebar({
                 badge={
                   myPropertiesCount > 0 ? (
                     <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-md ${
                         pathname === '/dashboard/properties'
                           ? 'bg-zinc-800 text-zinc-100 dark:bg-zinc-200 dark:text-zinc-900'
                           : 'bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/60'

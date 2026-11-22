@@ -91,7 +91,7 @@ function ProfileContent() {
         </p>
         <button
           type="button"
-          className="inline-flex items-center gap-2 rounded-full bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 font-bold px-6 py-2.5 text-xs shadow-xs active:scale-95 transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 font-bold px-6 py-2.5 text-xs shadow-xs active:scale-95 transition-all cursor-pointer"
           onClick={() => navigateWithCurtains('/login', 'Login')}
         >
           Login to Continue
@@ -182,13 +182,13 @@ function ProfileContent() {
   return (
     <div className="w-full max-w-5xl mx-auto space-y-8 select-none">
       {/* 1. Profile Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
+      <div className="relative overflow-hidden rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start sm:items-center gap-4 sm:gap-6">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center font-black text-xl sm:text-2xl shadow-md shrink-0">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 flex items-center justify-center font-black text-xl sm:text-2xl shadow-md shrink-0">
               {user.avatar && !user.avatar.includes('dicebear') ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={user.avatar} alt={user.firstName} className="w-full h-full object-cover rounded-3xl" />
+                <img src={user.avatar} alt={user.firstName} className="w-full h-full object-cover rounded-xl" />
               ) : (
                 <span>{userInitials}</span>
               )}
@@ -199,7 +199,7 @@ function ProfileContent() {
                 <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 dark:text-white tracking-tight">
                   {fullName}
                 </h1>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-2xs">
                   {isLister ? (
                     <>
                       <Building2 size={12} />
@@ -212,7 +212,7 @@ function ProfileContent() {
                     </>
                   )}
                 </span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                   <ShieldCheck size={12} /> Verified Account
                 </span>
               </div>
@@ -239,7 +239,7 @@ function ProfileContent() {
           {isLister && (
             <button
               type="button"
-              className="inline-flex items-center gap-2 py-2.5 px-5 rounded-full bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 cursor-pointer self-start md:self-auto shrink-0"
+              className="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 cursor-pointer self-start md:self-auto shrink-0"
               onClick={() => navigateWithCurtains('/dashboard/properties', 'My Properties')}
             >
               <Building2 size={14} />
@@ -250,10 +250,10 @@ function ProfileContent() {
       </div>
 
       {/* 2. Apple Segmented Control Tabs */}
-      <div className="inline-flex p-1.5 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 max-w-full overflow-x-auto">
+      <div className="inline-flex p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 max-w-full overflow-x-auto">
         <button
           type="button"
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
             activeTab === 'personal'
               ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white shadow-xs'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
@@ -266,7 +266,7 @@ function ProfileContent() {
 
         <button
           type="button"
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
             activeTab === 'security'
               ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white shadow-xs'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
@@ -282,7 +282,7 @@ function ProfileContent() {
         {/* TAB 1: Personal Details & Preferences */}
         {activeTab === 'personal' && (
           <div className="max-w-3xl">
-            <div className="p-6 sm:p-9 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/90 dark:bg-[#211E1B] shadow-xs">
+            <div className="p-6 sm:p-9 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/90 dark:bg-[#211E1B] shadow-xs">
               <div className="mb-6 pb-4 border-b border-zinc-100 dark:border-zinc-850">
                 <h2 className="text-xl sm:text-2xl font-black text-zinc-950 dark:text-white tracking-tight">
                   Personal Information
@@ -304,7 +304,7 @@ function ProfileContent() {
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       required
-                      className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
+                      className="w-full px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                     />
                   </div>
 
@@ -317,7 +317,7 @@ function ProfileContent() {
                       type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
+                      className="w-full px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                     />
                   </div>
                 </div>
@@ -332,7 +332,7 @@ function ProfileContent() {
                       type="email"
                       value={user.email}
                       disabled
-                      className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/60 text-xs sm:text-sm text-zinc-500 dark:text-zinc-500 cursor-not-allowed"
+                      className="w-full px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/60 text-xs sm:text-sm text-zinc-500 dark:text-zinc-500 cursor-not-allowed"
                     />
                   </div>
 
@@ -346,7 +346,7 @@ function ProfileContent() {
                       placeholder="+91 98765 43210"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
+                      className="w-full px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                     />
                   </div>
                 </div>
@@ -362,13 +362,13 @@ function ProfileContent() {
                       placeholder="e.g. Apex Realty Gandhinagar"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
+                      className="w-full px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                     />
                   </div>
                 )}
 
                 {isTenant && (
-                  <div className="p-5 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-zinc-50/70 dark:bg-zinc-900/50 space-y-4">
+                  <div className="p-5 rounded-lg border border-zinc-200/90 dark:border-zinc-800/90 bg-zinc-50/70 dark:bg-zinc-900/50 space-y-4">
                     <div className="flex items-center gap-2">
                       <Sparkles size={16} className="text-zinc-950 dark:text-white" />
                       <h3 className="text-sm font-bold text-zinc-950 dark:text-white">
@@ -389,7 +389,7 @@ function ProfileContent() {
                           type="number"
                           value={budgetMax}
                           onChange={(e) => setBudgetMax(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
                         />
                       </div>
 
@@ -401,7 +401,7 @@ function ProfileContent() {
                           id="pf-bhk"
                           value={preferredBhk}
                           onChange={(e) => setPreferredBhk(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
                         >
                           <option value="1">1 BHK</option>
                           <option value="2">2 BHK</option>
@@ -419,7 +419,7 @@ function ProfileContent() {
                           type="text"
                           value={targetLocation}
                           onChange={(e) => setTargetLocation(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white"
                         />
                       </div>
                     </div>
@@ -429,7 +429,7 @@ function ProfileContent() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+                    className="inline-flex items-center gap-2 py-3 px-6 rounded-lg bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
                     disabled={isUpdating}
                   >
                     <span>{isUpdating ? 'Saving Changes...' : 'Save Profile Details'}</span>
@@ -443,7 +443,7 @@ function ProfileContent() {
         {/* TAB 2: Security & Password */}
         {activeTab === 'security' && (
           <div className="max-w-xl">
-            <div className="p-6 sm:p-9 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-xs">
+            <div className="p-6 sm:p-9 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-xs">
               <div className="mb-6 pb-4 border-b border-zinc-100 dark:border-zinc-850">
                 <h2 className="text-xl sm:text-2xl font-black text-zinc-950 dark:text-white tracking-tight flex items-center gap-2">
                   <KeyRound size={20} className="text-zinc-500" />
@@ -466,7 +466,7 @@ function ProfileContent() {
                     placeholder="Enter current password"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
+                    className="w-full px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                   />
                 </div>
 
@@ -482,7 +482,7 @@ function ProfileContent() {
                       placeholder="Min. 8 characters"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
+                      className="w-full px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                     />
                   </div>
 
@@ -497,7 +497,7 @@ function ProfileContent() {
                       placeholder="Repeat new password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
+                      className="w-full px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"
                     />
                   </div>
                 </div>
@@ -505,7 +505,7 @@ function ProfileContent() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+                    className="inline-flex items-center gap-2 py-3 px-6 rounded-lg bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 text-xs font-bold tracking-tight shadow-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
                     disabled={passwordUpdating}
                   >
                     <span>{passwordUpdating ? 'Updating Password...' : 'Update Password'}</span>

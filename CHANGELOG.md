@@ -5,6 +5,15 @@ All notable changes to RentMatch AI will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.4] - 2026-11-23
+
+### Changed
+- Implemented global OKLCH color system and Tailwind v4 inline theme configuration:
+  - Configured `:root` and `.dark` with monochromatic OKLCH palette, Geist typography tokens, and refined elevation shadow variables.
+  - Linked CSS variables across Tailwind v4 `@theme inline` for `--color-card`, `--color-primary`, `--color-background`, `--color-foreground`, `--color-sidebar-*`, etc.
+  - Standardized base `body` and `.app` elements to reference dynamic CSS variables (`var(--background)` / `var(--foreground)`).
+  - Synchronized across `frontend/src/styles.css`, `frontend/src/app/globals.css`, and viewport meta configurations in `layout.tsx`.
+
 ## [0.2.3] - 2026-11-23
 
 ### Changed

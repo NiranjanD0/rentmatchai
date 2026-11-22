@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -28,7 +28,7 @@ export function LoginForm({
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectParam = searchParams.get('redirect');
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const { notify } = useToast();
   const { navigateWithCurtains } = usePageCurtains();
 
@@ -39,6 +39,13 @@ export function LoginForm({
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setLoading(false);
+      setIsRedirecting(false);
+    }
+  }, [isAuthenticated]);
 
   // Validate redirect parameter to ensure safe relative internal path
   const getSafeDestination = (userRole?: string) => {

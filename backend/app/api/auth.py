@@ -1,3 +1,4 @@
+import logging
 from typing import Literal
 import socket
 import urllib3.util.connection as urllib3_conn
@@ -12,6 +13,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select, func
 
 from requests.adapters import HTTPAdapter
+from google.auth.exceptions import GoogleAuthError, TransportError
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
@@ -31,6 +33,7 @@ from app.schemas.user import UserCreate, UserResponse
 from app.schemas.auth import Token
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 
 class GoogleAuthRequest(BaseModel):
@@ -116,16 +119,28 @@ def google_auth(auth_in: GoogleAuthRequest, db: Session = Depends(get_db)):
             req,
             client_id
         )
+    except TransportError as e:
+        logger.warning("Google token verification unavailable: %s", e)
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Could not reach Google to verify the sign-in. Please try again.",
+        ) from e
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid or expired Google token: {str(e)}",
-        )
-    except Exception as e:
+        ) from e
+    except GoogleAuthError as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Google token verification failed: {str(e)}",
-        )
+            detail=f"Invalid or expired Google token: {str(e)}",
+        ) from e
+    except Exception as e:
+        logger.exception("Unexpected error while verifying Google sign-in")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred while verifying Google sign-in.",
+        ) from e
 
     email = idinfo.get("email")
     google_sub = idinfo.get("sub")

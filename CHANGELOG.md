@@ -5,6 +5,22 @@ All notable changes to RentMatch AI will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-11-23
+
+### Added
+- Recreated Settings Profile Page matching reference design system at `/dashboard/profile` and `/settings`:
+  - Added Settings header with search input and `⌘K` keyboard shortcut badge.
+  - Implemented segmented horizontal settings navigation tabs (`My details`, `Profile`, `Password`, `Team`, `Plan`, `Billing`, `Email`, `Notifications` with badge count `2`, `Integrations`, `API`).
+  - Implemented 2-column profile form layout with horizontal dividers:
+    - Username field with `untitledui.com/` prefix addon box.
+    - Website field with `https://` prefix addon box.
+    - Photo row with circular avatar preview, `Delete`, and `Update` actions supporting local file upload.
+    - Bio row with rich-text formatting toolbar (Bold, Italic, Underline, Link, Align, List), help icon tooltip, and dynamic character counter.
+    - Job title field with `Show my job title in my profile` checkbox option.
+    - Alternative contact email input with leading mail icon.
+  - Added action buttons (Cancel & Save changes) wired to `useAuth()` profile updating and toast notifications.
+  - Added `frontend/src/app/settings/page.tsx` redirecting cleanly to `/dashboard/profile`.
+
 ## [0.2.6] - 2026-11-23
 
 ### Fixed

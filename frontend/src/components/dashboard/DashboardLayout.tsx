@@ -49,7 +49,7 @@ export function DashboardLayout({
     if (pathname === '/dashboard/shortlist') return 'My Shortlist';
     if (pathname === '/dashboard/compare') return 'Compare Properties';
     if (pathname === '/dashboard/properties') return 'My Properties';
-    if (pathname === '/dashboard/profile') return 'Profile & Settings';
+    if (pathname === '/dashboard/profile') return 'Settings';
     if (pathname === '/dashboard/landlord') return 'Landlord Dashboard';
     if (pathname === '/dashboard/tenant') return 'Tenant Dashboard';
     if (pathname === '/dashboard') return isLister ? 'Landlord Dashboard' : 'Tenant Dashboard';

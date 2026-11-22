@@ -501,7 +501,7 @@ export default function AuthModal({
                     <input
                       id="reg-password"
                       type={showPassword ? 'text' : 'password'}
-                      placeholder="Min. 6 chars"
+                      placeholder="Min. 8 chars"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required

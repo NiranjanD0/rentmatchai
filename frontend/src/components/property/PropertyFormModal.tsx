@@ -319,7 +319,7 @@ export default function PropertyFormModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
         transition={{ type: 'spring', damping: 26, stiffness: 300 }}
-        className="relative w-full max-w-5xl rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-2xl shadow-zinc-950/20 dark:shadow-black/70 flex flex-col max-h-[90svh] overflow-hidden"
+        className="relative w-full max-w-5xl rounded-3xl border border-border bg-card shadow-2xl shadow-zinc-950/20 dark:shadow-black/70 flex flex-col max-h-[90svh] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header (Pinned) */}
@@ -676,7 +676,7 @@ export default function PropertyFormModal({
           </div>
 
           {/* Actions Footer (Pinned) */}
-          <div className="px-6 sm:px-8 py-4 border-t border-zinc-100 dark:border-zinc-850 flex items-center justify-end gap-3 bg-white/95 dark:bg-[#211E1B]/95 backdrop-blur-xs shrink-0">
+          <div className="px-6 sm:px-8 py-4 border-t border-zinc-100 dark:border-zinc-850 flex items-center justify-end gap-3 bg-card/95 backdrop-blur-xs shrink-0">
             <button
               type="button"
               className="py-2.5 px-5 rounded-full border border-zinc-200 dark:border-zinc-800 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer active:scale-95"

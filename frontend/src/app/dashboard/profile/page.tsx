@@ -282,7 +282,7 @@ function ProfileContent() {
         {/* TAB 1: Personal Details & Preferences */}
         {activeTab === 'personal' && (
           <div className="max-w-3xl">
-            <div className="p-6 sm:p-9 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/90 dark:bg-[#211E1B] shadow-xs">
+            <div className="p-6 sm:p-9 rounded-xl border border-border bg-card shadow-xs">
               <div className="mb-6 pb-4 border-b border-zinc-100 dark:border-zinc-850">
                 <h2 className="text-xl sm:text-2xl font-black text-zinc-950 dark:text-white tracking-tight">
                   Personal Information
@@ -443,7 +443,7 @@ function ProfileContent() {
         {/* TAB 2: Security & Password */}
         {activeTab === 'security' && (
           <div className="max-w-xl">
-            <div className="p-6 sm:p-9 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-xs">
+            <div className="p-6 sm:p-9 rounded-xl border border-border bg-card shadow-xs">
               <div className="mb-6 pb-4 border-b border-zinc-100 dark:border-zinc-850">
                 <h2 className="text-xl sm:text-2xl font-black text-zinc-950 dark:text-white tracking-tight flex items-center gap-2">
                   <KeyRound size={20} className="text-zinc-500" />

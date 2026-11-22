@@ -185,7 +185,7 @@ export function SignupForm({
               {role === USER_ROLES.TENANT && (
                 <motion.div
                   layoutId="activeRoleTabSignup"
-                  className="absolute inset-0 bg-white dark:bg-[#211E1B] rounded-xl shadow-xs -z-10"
+                  className="absolute inset-0 bg-card rounded-xl shadow-xs -z-10"
                   transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                 />
               )}
@@ -216,7 +216,7 @@ export function SignupForm({
               {role === USER_ROLES.PROPERTY_LISTER && (
                 <motion.div
                   layoutId="activeRoleTabSignup"
-                  className="absolute inset-0 bg-white dark:bg-[#211E1B] rounded-xl shadow-xs -z-10"
+                  className="absolute inset-0 bg-card rounded-xl shadow-xs -z-10"
                   transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                 />
               )}

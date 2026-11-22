@@ -58,7 +58,7 @@ export function DashboardLayout({
 
   return (
     <DashboardGuard>
-      <div className="h-[100dvh] w-full flex bg-zinc-50 dark:bg-[#171513] text-zinc-900 dark:text-zinc-100 overflow-hidden select-none transition-colors duration-200">
+      <div className="h-[100dvh] w-full flex bg-background text-foreground overflow-hidden select-none transition-colors duration-200">
         {/* Desktop Fixed Left Sidebar (maintains 68px width in layout flow so main content never shifts on hover) */}
         <div className="hidden lg:block shrink-0 w-[68px] h-[100dvh] sticky top-0 z-30">
           <DashboardSidebar />
@@ -88,7 +88,7 @@ export function DashboardLayout({
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
                 transition={{ type: 'spring', damping: 26, stiffness: 300 }}
-                className="relative w-72 max-w-[85vw] h-full bg-white dark:bg-[#211E1B] border-r border-zinc-200 dark:border-zinc-800 shadow-2xl z-50 overflow-hidden flex flex-col"
+                className="relative w-72 max-w-[85vw] h-full bg-sidebar border-r border-sidebar-border shadow-2xl z-50 overflow-hidden flex flex-col"
               >
                 <DashboardSidebar
                   isMobileDrawer={true}
@@ -100,10 +100,10 @@ export function DashboardLayout({
         </AnimatePresence>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-w-0 h-[100dvh] bg-zinc-50 dark:bg-[#171513] transition-colors duration-200 overflow-hidden">
+        <div className="flex-1 flex flex-col min-w-0 h-[100dvh] bg-background transition-colors duration-200 overflow-hidden">
           {/* Top Bar (Liquid frosted glass) */}
           <header
-            className="shrink-0 h-16 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/85 dark:bg-[#211E1B]/90 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-colors duration-200 z-10"
+            className="shrink-0 h-16 border-b border-border bg-background/85 dark:bg-background/90 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-colors duration-200 z-10"
             style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
           >
             {/* Left: Mobile hamburger or Page Title */}

@@ -5,6 +5,14 @@ All notable changes to RentMatch AI will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.6] - 2026-11-23
+
+### Fixed
+- Replaced legacy hardcoded dark/beige hex values (`#171513`, `#211E1B`, `#F9F5EF`) with semantic tokens (`bg-background`, `bg-sidebar`, `bg-card`, `border-border`, `border-sidebar-border`) across Dashboard and Property views:
+  - Updated `DashboardLayout`, `DashboardSidebar`, `DashboardShellSkeleton`, and `DropdownAccountCard` to consume standard sidebar and background tokens.
+  - Standardized `dashboard/ai-search`, `dashboard/profile`, `table.tsx`, `page-curtains.tsx`, and `properties/[id]` views.
+  - Converted property and auth modals (`DeleteConfirmModal`, `PropertyFormModal`, `EnquiryModal`, `AuthModal`, `ForgotPasswordModal`, `VerifyEmailOtpModal`, `signup-form`) to semantic cards.
+
 ## [0.2.5] - 2026-11-23
 
 ### Fixed

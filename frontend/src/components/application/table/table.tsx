@@ -122,7 +122,7 @@ const TableCardRoot = ({
             <div
                 {...props}
                 className={cx(
-                    "overflow-hidden rounded-2xl sm:rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] shadow-2xs",
+                    "overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-card shadow-2xs",
                     className
                 )}
             >
@@ -151,7 +151,7 @@ const TableCardHeader = ({ title, badge, description, contentTrailing, className
     return (
         <div
             className={cx(
-                "relative flex flex-col items-start gap-4 border-b border-zinc-100 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] px-4 md:flex-row md:items-center",
+                "relative flex flex-col items-start gap-4 border-b border-border bg-card px-4 md:flex-row md:items-center",
                 size === "sm" ? "py-3.5 md:px-5" : "py-5 md:px-6",
                 className,
             )}

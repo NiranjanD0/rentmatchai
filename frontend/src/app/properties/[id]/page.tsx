@@ -125,7 +125,7 @@ function PropertyDetailsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F5EF] dark:bg-[#171513] text-zinc-950 dark:text-zinc-50 pb-24 sm:pb-32">
+    <div className="min-h-screen bg-background text-foreground pb-24 sm:pb-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
         {/* Back Navigation Bar */}
         <div className="mb-6 flex items-center justify-between">
@@ -311,7 +311,7 @@ function PropertyDetailsContent() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-8 space-y-10">
             {/* Section 1: The Space */}
-            <section className="p-7 sm:p-9 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] shadow-xs">
+            <section className="p-7 sm:p-9 rounded-3xl border border-border bg-card shadow-xs">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 block mb-1">
                 THE SPACE
               </span>
@@ -354,7 +354,7 @@ function PropertyDetailsContent() {
             </section>
 
             {/* Section 2: Amenities */}
-            <section className="p-7 sm:p-9 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] shadow-xs">
+            <section className="p-7 sm:p-9 rounded-3xl border border-border bg-card shadow-xs">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 block mb-1">
                 AMENITIES &amp; SPECIFICATIONS
               </span>
@@ -409,7 +409,7 @@ function PropertyDetailsContent() {
             </section>
 
             {/* Section 4: Visit Checklist Questions */}
-            <section className="p-7 sm:p-9 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] shadow-xs">
+            <section className="p-7 sm:p-9 rounded-3xl border border-border bg-card shadow-xs">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 block mb-1">
                 BE PREPARED FOR A VISIT
               </span>
@@ -443,7 +443,7 @@ function PropertyDetailsContent() {
           {/* Right Sticky Rent Box */}
           <aside className="lg:col-span-4">
             <BlurFade delay={0.2} inView>
-              <div className="sticky top-24 relative overflow-hidden rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-[#211E1B] p-6 sm:p-8 shadow-xl shadow-zinc-950/5 dark:shadow-black/50">
+              <div className="sticky top-24 relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-xl shadow-zinc-950/5 dark:shadow-black/50">
                 <BorderBeam
                   size={80}
                   duration={7}

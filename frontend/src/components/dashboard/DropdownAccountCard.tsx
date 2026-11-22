@@ -61,7 +61,7 @@ export const DropdownAccountCardMD = ({
     <DropdownMenu onOpenChange={onOpenChange}>
       <div className="relative flex items-center h-10 w-full">
         {/* Floating/Prominent Profile Picture (perfectly aligned with sidebar icon axis) */}
-        <div className="absolute left-1 top-1/2 -translate-y-1/2 z-20 size-10 rounded-full shrink-0 flex items-center justify-center ring-2 ring-white dark:ring-[#211E1B] shadow-md bg-zinc-100 dark:bg-zinc-800 pointer-events-none">
+        <div className="absolute left-1 top-1/2 -translate-y-1/2 z-20 size-10 rounded-full shrink-0 flex items-center justify-center ring-2 ring-sidebar shadow-md bg-zinc-100 dark:bg-zinc-800 pointer-events-none">
           <Avatar
             size="md"
             src={avatarUrl}

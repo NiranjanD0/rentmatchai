@@ -14,7 +14,7 @@ export default function LoginPage() {
   const isDark = resolvedTheme === "dark";
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-4 sm:p-6 bg-[#F9F5EF] dark:bg-[#171513] transition-colors">
+    <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-4 sm:p-6 bg-background text-foreground transition-colors">
       {/* Aceternity Spotlight Effect */}
       <Spotlight
         className="-top-40 left-0 md:left-60 md:-top-20"

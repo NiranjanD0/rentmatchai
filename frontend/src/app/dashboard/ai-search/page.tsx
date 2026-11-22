@@ -298,13 +298,13 @@ export default function AISearchPage() {
   ];
 
   return (
-    <div className="h-full w-full flex overflow-hidden bg-zinc-50 dark:bg-[#171513] text-zinc-900 dark:text-zinc-100 select-none transition-colors duration-200">
+    <div className="h-full w-full flex overflow-hidden bg-background text-foreground select-none transition-colors duration-200">
       {/* Center Chat Thread Area */}
-      <div className="flex-1 flex flex-col h-full min-w-0 relative bg-zinc-50 dark:bg-[#171513] transition-colors duration-200">
+      <div className="flex-1 flex flex-col h-full min-w-0 relative bg-background transition-colors duration-200">
         {/* Sub-header inside Chat Pane */}
         <div className="h-12 border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 flex items-center justify-between bg-white/80 dark:bg-zinc-900/40 backdrop-blur-xs shrink-0 transition-colors duration-200">
           <div className="flex items-center gap-2 text-xs">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 font-semibold">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 font-semibold">
               <Sparkles size={13} className="text-zinc-700 dark:text-zinc-300" />
               <span>RentMatch AI Agent</span>
             </span>
@@ -460,7 +460,7 @@ export default function AISearchPage() {
         </div>
 
         {/* Input & Suggestions Footer Area */}
-        <div className="p-4 sm:p-6 pt-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pb-6 border-t border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-[#211E1B]/80 backdrop-blur-md shrink-0 transition-colors duration-200">
+        <div className="p-4 sm:p-6 pt-0 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pb-6 border-t border-border bg-card/90 backdrop-blur-md shrink-0 transition-colors duration-200">
           <div className="max-w-3xl mx-auto space-y-3">
             {/* Quick Suggestions Chips */}
             {messages.length <= 3 && (
@@ -475,7 +475,7 @@ export default function AISearchPage() {
                       key={idx}
                       type="button"
                       onClick={() => handleSendMessage(item)}
-                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
+                      className="shrink-0 text-[11px] px-2.5 py-1 rounded-lg bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 dark:bg-zinc-900 dark:border-zinc-800 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
                     >
                       {item}
                     </button>

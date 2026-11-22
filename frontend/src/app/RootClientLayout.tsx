@@ -27,7 +27,7 @@ function FooterSlot() {
   const isLegalPage = pathname === '/privacy' || pathname === '/terms';
   if (isAuthPage || isDashboardPage || isLegalPage) return null;
   return (
-    <footer className="border-t border-zinc-200/80 dark:border-zinc-800/80 bg-[#F9F5EF] dark:bg-[#171513] text-zinc-600 dark:text-zinc-400">
+    <footer className="border-t border-border bg-background text-muted-foreground">
       <BlurFade delay={0.1} inView>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
@@ -93,7 +93,7 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
   } = useAuth();
 
   return (
-    <div className="app min-h-screen bg-[#F9F5EF] dark:bg-[#171513] text-zinc-900 dark:text-zinc-100 transition-colors">
+    <div className="app min-h-screen bg-background text-foreground transition-colors">
 
       {/* Shared Navigation Bar (hidden completely on auth pages) */}
       <React.Suspense fallback={<div className="h-20 sm:h-24 w-full" />}>

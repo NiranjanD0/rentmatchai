@@ -60,7 +60,7 @@ function SidebarButton({
       <div className="w-8 h-8 shrink-0 flex items-center justify-center relative">
         <Icon size={16} strokeWidth={1.8} className="shrink-0" />
         {!isExpanded && collapsedBadge && (
-          <span className="absolute -top-0.5 -right-0.5 min-w-3.5 h-3.5 px-0.5 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 text-[8px] font-bold flex items-center justify-center shadow-xs pointer-events-none ring-2 ring-white dark:ring-[#211E1B]">
+          <span className="absolute -top-0.5 -right-0.5 min-w-3.5 h-3.5 px-0.5 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 text-[8px] font-bold flex items-center justify-center shadow-xs pointer-events-none ring-2 ring-sidebar">
             {collapsedBadge}
           </span>
         )}
@@ -165,7 +165,7 @@ export function DashboardSidebar({
             }
           : undefined
       }
-      className={`h-full flex flex-col justify-between bg-white dark:bg-[#211E1B] text-zinc-700 dark:text-zinc-300 border-r border-zinc-200 dark:border-zinc-800/80 select-none transition-[width,box-shadow] duration-250 ease-out ${
+      className={`h-full flex flex-col justify-between bg-sidebar text-sidebar-foreground border-r border-sidebar-border select-none transition-[width,box-shadow] duration-250 ease-out ${
         isMobileDrawer
           ? 'w-full p-4'
           : isExpanded
@@ -259,7 +259,7 @@ export function DashboardSidebar({
                 badge={
                   shortlistCount > 0 ? (
                     <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-md ${
                         pathname === '/dashboard/shortlist' || pathname === '/shortlist'
                           ? 'bg-zinc-800 text-zinc-100 dark:bg-zinc-200 dark:text-zinc-900'
                           : 'bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/60'
@@ -331,7 +331,7 @@ export function DashboardSidebar({
                 badge={
                   myPropertiesCount > 0 ? (
                     <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-md ${
                         pathname === '/dashboard/properties'
                           ? 'bg-zinc-800 text-zinc-100 dark:bg-zinc-200 dark:text-zinc-900'
                           : 'bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/60'

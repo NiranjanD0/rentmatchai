@@ -5,6 +5,62 @@ All notable changes to RentMatch AI will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-11-23
+
+### Added
+- Recreated Settings Profile Page matching reference design system at `/dashboard/profile` and `/settings`:
+  - Added Settings header with search input and `⌘K` keyboard shortcut badge.
+  - Implemented segmented horizontal settings navigation tabs (`My details`, `Profile`, `Password`, `Team`, `Plan`, `Billing`, `Email`, `Notifications` with badge count `2`, `Integrations`, `API`).
+  - Implemented 2-column profile form layout with horizontal dividers:
+    - Username field with `untitledui.com/` prefix addon box.
+    - Website field with `https://` prefix addon box.
+    - Photo row with circular avatar preview, `Delete`, and `Update` actions supporting local file upload.
+    - Bio row with rich-text formatting toolbar (Bold, Italic, Underline, Link, Align, List), help icon tooltip, and dynamic character counter.
+    - Job title field with `Show my job title in my profile` checkbox option.
+    - Alternative contact email input with leading mail icon.
+  - Added action buttons (Cancel & Save changes) wired to `useAuth()` profile updating and toast notifications.
+  - Added `frontend/src/app/settings/page.tsx` redirecting cleanly to `/dashboard/profile`.
+
+## [0.2.6] - 2026-11-23
+
+### Fixed
+- Replaced legacy hardcoded dark/beige hex values (`#171513`, `#211E1B`, `#F9F5EF`) with semantic tokens (`bg-background`, `bg-sidebar`, `bg-card`, `border-border`, `border-sidebar-border`) across Dashboard and Property views:
+  - Updated `DashboardLayout`, `DashboardSidebar`, `DashboardShellSkeleton`, and `DropdownAccountCard` to consume standard sidebar and background tokens.
+  - Standardized `dashboard/ai-search`, `dashboard/profile`, `table.tsx`, `page-curtains.tsx`, and `properties/[id]` views.
+  - Converted property and auth modals (`DeleteConfirmModal`, `PropertyFormModal`, `EnquiryModal`, `AuthModal`, `ForgotPasswordModal`, `VerifyEmailOtpModal`, `signup-form`) to semantic cards.
+
+## [0.2.5] - 2026-11-23
+
+### Fixed
+- Restored Navbar Login button visibility across light and dark modes:
+  - Re-added missing `--color-1` through `--color-5` variables across `:root`, `.dark`, and Tailwind v4 `@theme inline` in `frontend/src/styles.css` and `frontend/src/app/globals.css`.
+  - Added CSS variable fallbacks (`var(--color-N, <hsl>)`) inside `rainbowButtonVariants` gradients in `rainbow-button.tsx` to prevent style invalidation when variables are uninitialized.
+  - Specified high-contrast solid backgrounds and text utilities (`bg-zinc-950 text-white dark:bg-white dark:text-zinc-950`) and wrapped button content with relative `z-10` layering to guarantee crisp contrast over the ambient animated glow.
+- Applied global OKLCH theme variables across landing page and client layouts:
+  - Replaced hardcoded legacy `#F9F5EF` (beige) and `#171513` / `#211E1B` (warm dark) with semantic tokens `bg-background`, `bg-card`, and `border-border` in `Navbar.tsx`, `RootClientLayout.tsx`, `page.tsx`, `login/page.tsx`, `signup/page.tsx`, `privacy/page.tsx`, and `terms/page.tsx`.
+  - Standardized `ToggleTheme` button styles to use semantic `border-border`, `bg-card`, and `text-foreground`.
+  - Updated legacy `.dark` utility classes in `frontend/src/styles.css` to consume `var(--card)`, `var(--background)`, and `var(--border)`.
+
+## [0.2.4] - 2026-11-23
+
+### Changed
+- Implemented global OKLCH color system and Tailwind v4 inline theme configuration:
+  - Configured `:root` and `.dark` with monochromatic OKLCH palette, Geist typography tokens, and refined elevation shadow variables.
+  - Linked CSS variables across Tailwind v4 `@theme inline` for `--color-card`, `--color-primary`, `--color-background`, `--color-foreground`, `--color-sidebar-*`, etc.
+  - Standardized base `body` and `.app` elements to reference dynamic CSS variables (`var(--background)` / `var(--foreground)`).
+  - Synchronized across `frontend/src/styles.css`, `frontend/src/app/globals.css`, and viewport meta configurations in `layout.tsx`.
+
+## [0.2.3] - 2026-11-23
+
+### Changed
+- Refactored dashboard views to remove hyper-rounded "capsule" styling in favor of standard clean dashboard cards and buttons:
+  - Replaced `rounded-3xl` header banners, key metric tiles, empty states, and comparison matrix tables with standard clean `rounded-xl`.
+  - Replaced `rounded-full` action buttons with `rounded-lg`.
+  - Replaced `rounded-full` status badges and criteria tags with `rounded-md`.
+  - Standardized form inputs and search fields to `rounded-lg`.
+  - Updated segmented control tabs and toggle containers to `rounded-lg` with `rounded-md` active tab buttons.
+  - Normalized across Tenant Dashboard, Landlord Dashboard, Properties Portfolio, Profile, Shortlist, Compare, and Explore views.
+
 ## [0.2.2] - 2026-11-21
 
 ### Fixed

@@ -51,11 +51,11 @@ export default function TenantDashboardView() {
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 select-none">
-      {/* 1. Welcome Header Banner (Apple translucent frosted card) */}
-      <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
+      {/* 1. Welcome Header Banner (standard clean card) */}
+      <div className="relative overflow-hidden rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-700/60 shadow-2xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-700/60 shadow-2xs">
               <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <span>Verified Renter · {targetLocation}</span>
             </div>
@@ -70,7 +70,7 @@ export default function TenantDashboardView() {
           <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0">
             <Button
               onClick={() => navigateWithCurtains('/dashboard/ai-search', 'AI Search')}
-              className="h-10 text-xs px-5 rounded-full bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 font-bold gap-2 shadow-sm cursor-pointer active:scale-95 transition-all"
+              className="h-10 text-xs px-5 rounded-lg bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 font-bold gap-2 shadow-sm cursor-pointer active:scale-95 transition-all"
             >
               <Sparkles size={14} />
               <span>AI Search</span>
@@ -78,7 +78,7 @@ export default function TenantDashboardView() {
             <Button
               variant="outline"
               onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-              className="h-10 text-xs px-5 rounded-full border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 font-semibold gap-2 cursor-pointer shadow-2xs active:scale-95 transition-all"
+              className="h-10 text-xs px-5 rounded-lg border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 font-semibold gap-2 cursor-pointer shadow-2xs active:scale-95 transition-all"
             >
               <Compass size={14} />
               <span>Browse All Homes</span>
@@ -90,13 +90,13 @@ export default function TenantDashboardView() {
         <div className="mt-6 pt-5 border-t border-zinc-100 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-zinc-500 dark:text-zinc-400 font-medium">Search Criteria:</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-medium border border-zinc-200/50 dark:border-zinc-700/50">
+            <span className="px-2.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-medium border border-zinc-200/50 dark:border-zinc-700/50">
               {preferredBhk}
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-medium border border-zinc-200/50 dark:border-zinc-700/50 tabular-nums">
+            <span className="px-2.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-medium border border-zinc-200/50 dark:border-zinc-700/50 tabular-nums">
               Under {budgetMax}/mo
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-medium border border-zinc-200/50 dark:border-zinc-700/50">
+            <span className="px-2.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-medium border border-zinc-200/50 dark:border-zinc-700/50">
               {targetLocation}
             </span>
           </div>
@@ -112,16 +112,16 @@ export default function TenantDashboardView() {
         </div>
       </div>
 
-      {/* 2. Key Metrics Row (Apple-grade tactile tiles with tabular figures) */}
+      {/* 2. Key Metrics Row (standard clean tiles with tabular figures) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1: Saved Homes */}
         <div
           onClick={() => navigateWithCurtains('/dashboard/shortlist', 'My Shortlist')}
-          className="group p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
+          className="group p-6 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Shortlisted Homes</span>
-            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
+            <div className="size-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <Heart size={15} />
             </div>
           </div>
@@ -139,11 +139,11 @@ export default function TenantDashboardView() {
         {/* Metric 2: Available Rentals */}
         <div
           onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-          className="group p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
+          className="group p-6 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Available Homes</span>
-            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
+            <div className="size-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <Compass size={15} />
             </div>
           </div>
@@ -161,11 +161,11 @@ export default function TenantDashboardView() {
         {/* Metric 3: Best Match Score */}
         <div
           onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-          className="group p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
+          className="group p-6 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Top Match Rating</span>
-            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
+            <div className="size-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <Sparkles size={15} />
             </div>
           </div>
@@ -183,11 +183,11 @@ export default function TenantDashboardView() {
         {/* Metric 4: Renter Verification */}
         <div
           onClick={() => navigateWithCurtains('/dashboard/profile?tab=personal', 'Profile')}
-          className="group p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
+          className="group p-6 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Account Safety</span>
-            <div className="size-9 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-2xs">
+            <div className="size-9 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-2xs">
               <ShieldCheck size={16} />
             </div>
           </div>
@@ -239,8 +239,8 @@ export default function TenantDashboardView() {
             ))}
           </div>
         ) : (
-          <div className="rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800 p-8 sm:p-10 text-center bg-white/50 dark:bg-zinc-900/30">
-            <div className="size-12 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 flex items-center justify-center mb-3">
+          <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-800 p-8 sm:p-10 text-center bg-white/50 dark:bg-zinc-900/30">
+            <div className="size-12 mx-auto rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500 flex items-center justify-center mb-3">
               <Heart size={20} />
             </div>
             <h3 className="text-sm font-bold text-zinc-950 dark:text-white">
@@ -252,7 +252,7 @@ export default function TenantDashboardView() {
             <Button
               size="sm"
               onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-              className="text-xs rounded-full bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 cursor-pointer font-bold px-5 active:scale-95 shadow-xs"
+              className="text-xs rounded-lg bg-zinc-950 hover:bg-zinc-850 text-white dark:bg-white dark:hover:bg-zinc-150 dark:text-zinc-950 cursor-pointer font-bold px-5 active:scale-95 shadow-xs"
             >
               Browse Listings
             </Button>

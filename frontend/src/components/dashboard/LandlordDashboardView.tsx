@@ -71,7 +71,7 @@ export default function LandlordDashboardView() {
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 select-none">
       {/* 1. Welcome & Portfolio Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
+      <div className="relative overflow-hidden rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md p-6 sm:p-8 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
@@ -84,13 +84,13 @@ export default function LandlordDashboardView() {
         </div>
       </div>
 
-      {/* 2. Key Metrics Row (Apple tactile tiles with tabular nums) */}
+      {/* 2. Key Metrics Row (standard clean tiles with tabular nums) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1: Total Portfolio Listings */}
-        <div className="p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
+        <div className="p-6 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Total Properties</span>
-            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
+            <div className="size-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <Building2 size={15} />
             </div>
           </div>
@@ -106,10 +106,10 @@ export default function LandlordDashboardView() {
         </div>
 
         {/* Metric 2: Active / Occupancy Status */}
-        <div className="p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
+        <div className="p-6 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Active Listings</span>
-            <div className="size-9 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-2xs">
+            <div className="size-9 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-2xs">
               <CheckCircle2 size={16} />
             </div>
           </div>
@@ -125,10 +125,10 @@ export default function LandlordDashboardView() {
         </div>
 
         {/* Metric 3: Total Monthly Rental Value */}
-        <div className="p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
+        <div className="p-6 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Monthly Yield</span>
-            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
+            <div className="size-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <TrendingUp size={15} />
             </div>
           </div>
@@ -146,11 +146,11 @@ export default function LandlordDashboardView() {
         {/* Metric 4: Drafts & Inactive Units */}
         <div
           onClick={() => navigateWithCurtains('/dashboard/properties', 'My Properties')}
-          className="group p-6 rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
+          className="group p-6 rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:scale-[0.98]"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Drafts / Inactive</span>
-            <div className="size-9 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
+            <div className="size-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center shadow-2xs">
               <Building2 size={15} />
             </div>
           </div>
@@ -183,7 +183,7 @@ export default function LandlordDashboardView() {
               variant="outline"
               size="sm"
               onClick={() => navigateWithCurtains('/dashboard/properties', 'My Properties')}
-              className="text-xs h-9 rounded-full border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white cursor-pointer"
+              className="text-xs h-9 rounded-lg border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white cursor-pointer"
             >
               <span>Manage All ({myProperties.length})</span>
               <ArrowUpRight size={13} />
@@ -265,7 +265,7 @@ export default function LandlordDashboardView() {
                         <button
                           type="button"
                           onClick={() => togglePropertyStatus(p.id)}
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold cursor-pointer transition-colors active:scale-95 ${
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-bold cursor-pointer transition-colors active:scale-95 ${
                             p.status === PROPERTY_STATUS.ACTIVE
                               ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                               : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700/60'
@@ -313,8 +313,8 @@ export default function LandlordDashboardView() {
             </TableCard.Root>
           )
         ) : (
-          <div className="rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800 p-8 sm:p-10 text-center bg-white/50 dark:bg-zinc-900/30">
-            <div className="size-12 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 flex items-center justify-center mb-3">
+          <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-800 p-8 sm:p-10 text-center bg-white/50 dark:bg-zinc-900/30">
+            <div className="size-12 mx-auto rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500 flex items-center justify-center mb-3">
               <Building2 size={20} />
             </div>
             <h3 className="text-sm font-bold text-zinc-950 dark:text-white">

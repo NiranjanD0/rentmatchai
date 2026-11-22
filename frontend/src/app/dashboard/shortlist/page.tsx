@@ -23,7 +23,7 @@ export function DashboardShortlistSkeleton() {
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Skeleton className="h-7 w-36 rounded-lg bg-zinc-200/80 dark:bg-zinc-800/80" />
-            <Skeleton className="h-5 w-20 rounded-full bg-zinc-200/60 dark:bg-zinc-800/60" />
+            <Skeleton className="h-5 w-20 rounded-md bg-zinc-200/60 dark:bg-zinc-800/60" />
           </div>
           <Skeleton className="h-4 w-64 sm:w-80 rounded-md bg-zinc-200/60 dark:bg-zinc-800/60" />
         </div>
@@ -104,7 +104,7 @@ function DashboardShortlistContent() {
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
               My Shortlist
             </h2>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 tabular-nums">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-semibold bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700/60 tabular-nums">
               <Bookmark size={11} className="fill-zinc-400 dark:fill-zinc-500" />
               {savedProperties.length} Saved
             </span>
@@ -199,8 +199,8 @@ function DashboardShortlistContent() {
         </div>
       ) : savedProperties.length > 0 ? (
         /* Filtered Empty State */
-        <div className="py-16 px-6 text-center rounded-3xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs">
-          <div className="size-14 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 flex items-center justify-center mb-4">
+        <div className="py-16 px-6 text-center rounded-xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs">
+          <div className="size-14 mx-auto rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 flex items-center justify-center mb-4">
             <Search size={26} />
           </div>
           <h3 className="text-base font-bold text-zinc-900 dark:text-white">
@@ -213,15 +213,15 @@ function DashboardShortlistContent() {
             variant="outline"
             size="sm"
             onClick={() => setSearchQuery('')}
-            className="text-xs cursor-pointer"
+            className="text-xs cursor-pointer rounded-lg"
           >
             Clear Search
           </Button>
         </div>
       ) : (
         /* Empty Shortlist State */
-        <div className="py-20 px-6 text-center rounded-3xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs">
-          <div className="size-16 mx-auto rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 flex items-center justify-center mb-4 border border-zinc-200 dark:border-zinc-700/60">
+        <div className="py-20 px-6 text-center rounded-xl bg-white dark:bg-zinc-900/60 border border-zinc-200/90 dark:border-zinc-800/80 shadow-2xs">
+          <div className="size-16 mx-auto rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 flex items-center justify-center mb-4 border border-zinc-200 dark:border-zinc-700/60">
             <Heart size={28} className="fill-zinc-300 dark:fill-zinc-700" />
           </div>
           <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white">
@@ -232,7 +232,7 @@ function DashboardShortlistContent() {
           </p>
           <Button
             onClick={() => navigateWithCurtains('/dashboard/explore', 'Find Properties')}
-            className="h-10 text-xs px-5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 font-semibold gap-2 shadow-xs cursor-pointer active:scale-[0.99]"
+            className="h-10 text-xs px-5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-900 font-semibold gap-2 shadow-xs cursor-pointer active:scale-[0.99]"
           >
             <Compass size={15} />
             <span>Find Available Properties</span>

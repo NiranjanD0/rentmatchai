@@ -140,8 +140,8 @@ function ProfileContent() {
     setPasswordError('');
     setPasswordSuccess(false);
 
-    if (newPassword.length < 6) {
-      const msg = 'New password must be at least 6 characters.';
+    if (newPassword.length < 8) {
+      const msg = 'New password must be at least 8 characters.';
       setPasswordError(msg);
       showToast(msg, 'error', 'Password Too Short');
       return;
@@ -479,7 +479,7 @@ function ProfileContent() {
                       id="new-pass"
                       type="password"
                       required
-                      placeholder="Min. 6 characters"
+                      placeholder="Min. 8 characters"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs sm:text-sm text-zinc-950 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all"

@@ -17,10 +17,10 @@ export default function PrivacyPolicyPage() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="min-h-screen bg-[#F9F5EF] dark:bg-[#171513] text-zinc-950 dark:text-zinc-50 transition-colors"
+      className="min-h-screen bg-background text-foreground transition-colors"
     >
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-[#F9F5EF]/85 dark:bg-[#171513]/85 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <button
             type="button"

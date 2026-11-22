@@ -88,13 +88,13 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F9F5EF] dark:bg-[#171513] text-zinc-950 dark:text-zinc-50 transition-colors duration-200 overflow-x-hidden font-nunito">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-200 overflow-x-hidden font-nunito">
       {/* ===================== HERO SECTION: ACETERNITY SPOTLIGHT + MAGIC PARTICLES ===================== */}
-      <section className="relative w-full -mt-18 sm:-mt-20 min-h-[100svh] flex flex-col justify-center items-center pt-24 pb-24 sm:pt-28 sm:pb-32 overflow-hidden border-b border-zinc-200/80 dark:border-zinc-800/80">
+      <section className="relative w-full -mt-18 sm:-mt-20 min-h-[100svh] flex flex-col justify-center items-center pt-24 pb-24 sm:pt-28 sm:pb-32 overflow-hidden border-b border-border/80">
         {/* Aceternity Spotlight Effect */}
         <Spotlight
           className="-top-40 left-0 md:left-60 md:-top-20"
-          fill={isDark ? '#F5EFE7' : '#EAE4DC'}
+          fill={isDark ? '#262626' : '#EAE4DC'}
         />
 
         {/* Magic UI Interactive Particles Background */}
@@ -112,7 +112,7 @@ export default function HomePage() {
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center my-auto -translate-y-2 sm:-translate-y-6">
           {/* Eyebrow Kicker with Magic UI AnimatedShinyText */}
           <BlurFade delay={0.1} inView>
-            <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 rounded-full border border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-[#211E1B]/80 backdrop-blur-md mb-6 shadow-2xs hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors">
+            <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 rounded-full border border-border/80 bg-card/80 backdrop-blur-md mb-6 shadow-2xs hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors">
               <span className="h-1.5 w-1.5 rounded-full bg-[#E8510E] dark:bg-[#F06A32] animate-pulse" />
               <AnimatedShinyText className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-700 dark:text-zinc-300">
                 Direct Rental Platform · Gandhinagar &amp; Ahmedabad
@@ -147,7 +147,7 @@ export default function HomePage() {
               <ShimmerButton
                 onClick={() => navigateWithCurtains('/signup', 'Create Account')}
                 shimmerColor={isDark ? '#F06A32' : '#FFFFFF'}
-                background={isDark ? '#211E1B' : '#000000'}
+                background={isDark ? '#141414' : '#000000'}
                 className="font-bold py-3.5 px-8 text-xs tracking-tight shadow-xl hover:shadow-2xl transition-all active:scale-95 cursor-pointer rounded-full"
               >
                 <span className="flex items-center gap-2 text-white">
@@ -168,7 +168,7 @@ export default function HomePage() {
             return (
               <div
                 key={idx}
-                className="flex items-center gap-2 mx-4 px-3 py-1.5 rounded-full bg-white dark:bg-[#211E1B] border border-zinc-200/80 dark:border-zinc-800/80 text-xs font-semibold text-zinc-700 dark:text-zinc-300 shadow-2xs whitespace-nowrap"
+                className="flex items-center gap-2 mx-4 px-3 py-1.5 rounded-full bg-card border border-border/80 text-xs font-semibold text-foreground shadow-2xs whitespace-nowrap"
               >
                 <Icon size={13} className="text-zinc-900 dark:text-zinc-100 shrink-0" />
                 <span>{item.label}</span>
@@ -238,7 +238,7 @@ export default function HomePage() {
 
             {/* The RentMatch AI Standard with Magic UI BorderBeam */}
             <BlurFade delay={0.3} inView>
-              <div className="relative rounded-3xl border border-zinc-950 dark:border-[#332A24] bg-white dark:bg-[#211E1B] p-7 sm:p-9 shadow-xl shadow-zinc-950/5 dark:shadow-black/40 flex flex-col justify-between backdrop-blur-xl h-full overflow-hidden">
+              <div className="relative rounded-3xl border border-border bg-card p-7 sm:p-9 shadow-xl shadow-zinc-950/5 dark:shadow-black/40 flex flex-col justify-between backdrop-blur-xl h-full overflow-hidden">
                 <BorderBeam
                   size={90}
                   duration={6}
@@ -308,7 +308,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Step 1 */}
             <BlurFade delay={0.2} inView>
-              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+              <div className="rounded-3xl border border-border/80 bg-card p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
                 <div>
                   <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] transition-colors">
                     01
@@ -329,7 +329,7 @@ export default function HomePage() {
 
             {/* Step 2 */}
             <BlurFade delay={0.3} inView>
-              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+              <div className="rounded-3xl border border-border/80 bg-card p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
                 <div>
                   <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] transition-colors">
                     02
@@ -350,7 +350,7 @@ export default function HomePage() {
 
             {/* Step 3 */}
             <BlurFade delay={0.4} inView>
-              <div className="rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+              <div className="rounded-3xl border border-border/80 bg-card p-8 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
                 <div>
                   <div className="font-mono text-2xl font-black text-zinc-400 dark:text-zinc-600 mb-6 group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] transition-colors">
                     03
@@ -391,8 +391,8 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <BlurFade delay={0.1} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
+              <div className="p-7 rounded-3xl border border-border/80 bg-card backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-muted text-foreground group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <ShieldCheck size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -405,8 +405,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.15} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
+              <div className="p-7 rounded-3xl border border-border/80 bg-card backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-muted text-foreground group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <Coins size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -419,8 +419,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.2} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
+              <div className="p-7 rounded-3xl border border-border/80 bg-card backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-muted text-foreground group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <Sparkles size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -433,8 +433,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.25} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
+              <div className="p-7 rounded-3xl border border-border/80 bg-card backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-muted text-foreground group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <MessageCircle size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -447,8 +447,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.3} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
+              <div className="p-7 rounded-3xl border border-border/80 bg-card backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-muted text-foreground group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <Compass size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -461,8 +461,8 @@ export default function HomePage() {
             </BlurFade>
 
             <BlurFade delay={0.35} inView>
-              <div className="p-7 rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#211E1B] backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
-                <div className="w-10 h-10 rounded-2xl bg-[#F2ECE2] text-zinc-950 dark:bg-[#2A2622] dark:text-[#F5EFE7] group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
+              <div className="p-7 rounded-3xl border border-border/80 bg-card backdrop-blur-md hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full group">
+                <div className="w-10 h-10 rounded-2xl bg-muted text-foreground group-hover:text-[#E8510E] dark:group-hover:text-[#F06A32] flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-all">
                   <Clock size={20} />
                 </div>
                 <h3 className="text-base font-bold text-zinc-950 dark:text-white mb-1.5">
@@ -483,7 +483,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* For Tenants */}
             <BlurFade delay={0.2} inView>
-              <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#211E1B] p-8 sm:p-12 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full">
+              <div className="rounded-3xl border border-border bg-card p-8 sm:p-12 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">
                     For Renters &amp; Students
@@ -512,7 +512,7 @@ export default function HomePage() {
                 <button
                   type="button"
                   onClick={() => navigateWithCurtains('/signup', 'Join as Tenant')}
-                  className="w-full py-3.5 px-6 rounded-full bg-[#000000] hover:bg-[#1A1A1A] dark:bg-[#F5EFE7] dark:hover:bg-white text-white dark:text-[#171513] text-xs font-bold tracking-tight text-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
+                  className="w-full py-3.5 px-6 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold tracking-tight text-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
                 >
                   Join as Tenant
                 </button>
@@ -521,7 +521,7 @@ export default function HomePage() {
 
             {/* For Landlords */}
             <BlurFade delay={0.3} inView>
-              <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#211E1B] p-8 sm:p-12 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full">
+              <div className="rounded-3xl border border-border bg-card p-8 sm:p-12 flex flex-col justify-between hover:border-[#E8510E]/40 dark:hover:border-[#F06A32]/40 transition-colors h-full">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">
                     For Property Owners
@@ -550,7 +550,7 @@ export default function HomePage() {
                 <button
                   type="button"
                   onClick={() => navigateWithCurtains('/signup', 'Create Landlord Account')}
-                  className="w-full py-3.5 px-6 rounded-full border border-[#000000] dark:border-[#332A24] bg-transparent hover:bg-[#000000] hover:text-white dark:hover:bg-[#F5EFE7] dark:hover:text-[#171513] text-[#000000] dark:text-[#F5EFE7] text-xs font-bold tracking-tight text-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
+                  className="w-full py-3.5 px-6 rounded-full border border-border bg-transparent hover:bg-foreground hover:text-background text-foreground text-xs font-bold tracking-tight text-center transition-all cursor-pointer shadow-xs active:scale-[0.98]"
                 >
                   List Property Free
                 </button>

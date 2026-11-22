@@ -342,7 +342,7 @@ export const ToggleTheme = ({
             <button
                 type="button"
                 className={cn(
-                    "p-2 rounded-full border border-black/15 dark:border-[#332A24] bg-white dark:bg-[#211E1B] text-black dark:text-[#F5EFE7] transition-colors opacity-0",
+                    "p-2 rounded-full border border-border bg-card text-foreground transition-colors opacity-0",
                     className
                 )}
                 aria-label="Toggle theme"
@@ -359,7 +359,7 @@ export const ToggleTheme = ({
             onClick={toggleTheme}
             aria-label="Toggle theme"
             className={cn(
-                "p-2 rounded-full border border-black/15 dark:border-[#332A24] bg-white dark:bg-[#211E1B] text-black dark:text-[#F5EFE7] hover:bg-black hover:text-white dark:hover:bg-[#F5EFE7] dark:hover:text-[#171513] transition-all duration-200 cursor-pointer shadow-xs active:scale-95",
+                "p-2 rounded-full border border-border bg-card text-foreground hover:bg-foreground hover:text-background transition-all duration-200 cursor-pointer shadow-xs active:scale-95",
                 className
             )}
             {...props}

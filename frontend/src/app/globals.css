@@ -94,6 +94,12 @@
   --sidebar-accent-foreground: oklch(0 0 0);
   --sidebar-primary-foreground: oklch(1.00 0 0);
 
+  --color-1: hsl(0 100% 63%);
+  --color-2: hsl(270 100% 63%);
+  --color-3: hsl(210 100% 63%);
+  --color-4: hsl(195 100% 63%);
+  --color-5: hsl(90 100% 63%);
+
   /* Compatibility aliases */
   --card-bg: var(--card);
   --line: var(--border);
@@ -110,23 +116,23 @@
 body {
   margin: 0;
   min-width: 320px;
-  background: #ffffff !important;
-  color: #09090b;
+  background: var(--background);
+  color: var(--foreground);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .dark body {
-  background: #000000 !important;
-  color: #fafafa;
+  background: var(--background) !important;
+  color: var(--foreground);
 }
 
 .app {
-  background: #ffffff;
+  background: var(--background);
   min-height: 100vh;
 }
 
 .dark .app {
-  background: #000000 !important;
+  background: var(--background) !important;
 }
 
 
@@ -3601,6 +3607,12 @@ footer > small {
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
+  --color-color-5: var(--color-5);
+  --color-color-4: var(--color-4);
+  --color-color-3: var(--color-3);
+  --color-color-2: var(--color-2);
+  --color-color-1: var(--color-1);
 }
 
 .dark {
@@ -3639,6 +3651,12 @@ footer > small {
   --destructive-foreground: oklch(0 0 0);
   --sidebar-accent-foreground: oklch(1.00 0 0);
   --sidebar-primary-foreground: oklch(0 0 0);
+
+  --color-1: hsl(0 100% 63%);
+  --color-2: hsl(270 100% 63%);
+  --color-3: hsl(210 100% 63%);
+  --color-4: hsl(195 100% 63%);
+  --color-5: hsl(90 100% 63%);
 
   /* Compatibility aliases */
   --card-bg: var(--card);

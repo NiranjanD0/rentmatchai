@@ -5,6 +5,18 @@ All notable changes to RentMatch AI will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.5] - 2026-11-23
+
+### Fixed
+- Restored Navbar Login button visibility across light and dark modes:
+  - Re-added missing `--color-1` through `--color-5` variables across `:root`, `.dark`, and Tailwind v4 `@theme inline` in `frontend/src/styles.css` and `frontend/src/app/globals.css`.
+  - Added CSS variable fallbacks (`var(--color-N, <hsl>)`) inside `rainbowButtonVariants` gradients in `rainbow-button.tsx` to prevent style invalidation when variables are uninitialized.
+  - Specified high-contrast solid backgrounds and text utilities (`bg-zinc-950 text-white dark:bg-white dark:text-zinc-950`) and wrapped button content with relative `z-10` layering to guarantee crisp contrast over the ambient animated glow.
+- Applied global OKLCH theme variables across landing page and client layouts:
+  - Replaced hardcoded legacy `#F9F5EF` (beige) and `#171513` / `#211E1B` (warm dark) with semantic tokens `bg-background`, `bg-card`, and `border-border` in `Navbar.tsx`, `RootClientLayout.tsx`, `page.tsx`, `login/page.tsx`, `signup/page.tsx`, `privacy/page.tsx`, and `terms/page.tsx`.
+  - Standardized `ToggleTheme` button styles to use semantic `border-border`, `bg-card`, and `text-foreground`.
+  - Updated legacy `.dark` utility classes in `frontend/src/styles.css` to consume `var(--card)`, `var(--background)`, and `var(--border)`.
+
 ## [0.2.4] - 2026-11-23
 
 ### Changed

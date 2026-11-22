@@ -56,6 +56,12 @@
   --sidebar-accent-foreground: oklch(0 0 0);
   --sidebar-primary-foreground: oklch(1.00 0 0);
 
+  --color-1: hsl(0 100% 63%);
+  --color-2: hsl(270 100% 63%);
+  --color-3: hsl(210 100% 63%);
+  --color-4: hsl(195 100% 63%);
+  --color-5: hsl(90 100% 63%);
+
   /* Compatibility aliases */
   --card-bg: var(--card);
   --line: var(--border);
@@ -3774,6 +3780,12 @@ footer > small {
   --sidebar-accent-foreground: oklch(1.00 0 0);
   --sidebar-primary-foreground: oklch(0 0 0);
 
+  --color-1: hsl(0 100% 63%);
+  --color-2: hsl(270 100% 63%);
+  --color-3: hsl(210 100% 63%);
+  --color-4: hsl(195 100% 63%);
+  --color-5: hsl(90 100% 63%);
+
   /* Compatibility aliases */
   --card-bg: var(--card);
   --line: var(--border);
@@ -3839,15 +3851,15 @@ footer > small {
 }
 
 .dark .theme-toggle-btn {
-  background: #211E1B;
-  border-color: #332A24;
-  color: #F5EFE7;
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--foreground);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .dark .theme-toggle-btn:hover {
-  background: #2A2622;
-  border-color: #5A524A;
+  background: var(--accent);
+  border-color: var(--border);
 }
 
 .dark .search-panel,
@@ -3858,42 +3870,42 @@ footer > small {
 .dark .user-profile-trigger,
 .dark .detail-box,
 .dark .profile-banner-card {
-  background: #211E1B;
-  border-color: #332A24;
-  color: #F5EFE7;
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--card-foreground);
 }
 
 .dark .natural-input,
 .dark .quick-field {
-  background: #171513;
-  border-color: #332A24;
-  color: #F5EFE7;
+  background: var(--muted);
+  border-color: var(--border);
+  color: var(--foreground);
 }
 
 .dark .natural-input textarea,
 .dark .quick-field input,
 .dark .quick-field select {
-  color: #F5EFE7;
+  color: var(--foreground);
 }
 
 .dark .role-callout-banner {
-  background: #211E1B;
-  border-color: #332A24;
+  background: var(--card);
+  border-color: var(--border);
 }
 
 .dark .btn-text-signin {
-  color: #B9AFA4;
+  color: var(--muted-foreground);
 }
 
 .dark .btn-text-signin:hover {
-  background: #2A2622;
-  color: #F06A32;
+  background: var(--accent);
+  color: var(--foreground);
 }
 
 .dark footer {
-  border-top-color: #332A24 !important;
-  background: #171513 !important;
-  color: #B9AFA4 !important;
+  border-top-color: var(--border) !important;
+  background: var(--background) !important;
+  color: var(--muted-foreground) !important;
 }
 
 /* Top Announcement Bar */

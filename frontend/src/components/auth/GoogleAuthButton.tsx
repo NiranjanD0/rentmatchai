@@ -177,7 +177,7 @@ export function GoogleAuthButton({
       <Script
         src="https://accounts.google.com/gsi/client"
         strategy="afterInteractive"
-        onLoad={() => setScriptLoaded(true)}
+        onReady={() => setScriptLoaded(true)}
         onError={() => setScriptError(true)}
       />
 
